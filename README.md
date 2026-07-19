@@ -8,23 +8,21 @@
 
 *An AI companion that talks, reacts, moves, and remembers — driven entirely by a large language model, running entirely on your machine.*
 
-![Platform](https://img.shields.io/badge/platform-Windows-0078D6?logo=windows&logoColor=white)
+![Windows](https://img.shields.io/badge/platform-Windows-0078D6?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMy40IDkuNiAyLjF2OS4zSDB6TTEwLjggMS45IDI0IDB2MTEuNEgxMC44ek0wIDEyLjZoOS42djkuM0wwIDIwLjZ6TTEwLjggMTIuNkgyNFYyNGwtMTMuMi0xLjh6Ii8%2BPC9zdmc%2B)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
-![Claude](https://img.shields.io/badge/Anthropic-Claude-D97757)
+![Claude](https://img.shields.io/badge/Anthropic-Claude-D97757?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMTIgM3YxOE0zIDEyaDE4TTUuNiA1LjZsMTIuOCAxMi44TTE4LjQgNS42IDUuNiAxOC40Ii8%2BPC9nPjwvc3ZnPg%3D%3D)
 ![OpenAI](https://img.shields.io/badge/OpenAI-compatible-412991?logo=openai&logoColor=white)
-![Local First](https://img.shields.io/badge/local--first-no%20telemetry-2ea44f)
+![Local First](https://img.shields.io/badge/local--first-no%20telemetry-2ea44f?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyIDFhNSA1IDAgMCAwLTUgNXYzSDZhMiAyIDAgMCAwLTIgMnY5YTIgMiAwIDAgMCAyIDJoMTJhMiAyIDAgMCAwIDItMnYtOWEyIDIgMCAwIDAtMi0yaC0xVjZhNSA1IDAgMCAwLTUtNVptLTMgOFY2YTMgMyAwIDEgMSA2IDB2M1oiLz48L3N2Zz4%3D)
 
 <p>
 <a href="https://pump.fun/">
-  <img src="https://img.shields.io/badge/pump.fun-Buy%20%24YUMI-2FD57C?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNiIgZmlsbD0iI2ZmZiIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00NSAxMiAxMikiPjxyZWN0IHg9IjciIHk9IjMiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiM1NGQ4OGEiLz48cmVjdCB4PSI3IiB5PSIzIiB3aWR0aD0iMTAiIGhlaWdodD0iOSIgcng9IjUiIGZpbGw9IiM4YmVkYjciLz48L2c+PC9zdmc+&logoColor=white" alt="pump.fun" height="36"/>
+  <img src="https://img.shields.io/badge/pump.fun-Buy%20%24YUMI-2FD57C?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPGcgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1IDEyIDEyKSI%2BPHJlY3QgeD0iNC41IiB5PSIwLjUiIHdpZHRoPSIxNSIgaGVpZ2h0PSIyMyIgcng9IjcuNSIgZmlsbD0iIzBmOGE0ZCIvPjxyZWN0IHg9IjQuNSIgeT0iMC41IiB3aWR0aD0iMTUiIGhlaWdodD0iMTEuNSIgcng9IjcuNSIgZmlsbD0iIzJmYjY3MyIvPjwvZz48L3N2Zz4%3D" alt="pump.fun" height="38"/>
 </a>
 &nbsp;&nbsp;
 <a href="https://x.com/">
-  <img src="https://img.shields.io/badge/Follow%20on-X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" height="36"/>
+  <img src="https://img.shields.io/badge/Follow%20on-X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" height="38"/>
 </a>
 </p>
-
-<sub>⚠️ social links are placeholders — swap in the real pump.fun / X URLs</sub>
 
 </div>
 
