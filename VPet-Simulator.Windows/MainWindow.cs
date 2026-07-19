@@ -1373,11 +1373,11 @@ namespace VPet_Simulator.Windows
                     Topmost = true;
                 }
 
-                //Close if it does not exist
-                var modpath = new DirectoryInfo(ModPath + @"\0000_core\pet\vup");
+                //Close if the core module is missing
+                var modpath = new DirectoryInfo(ModPath + @"\0000_core\pet\aigirl");
                 if (!modpath.Exists)
                 {
-                    MessageBoxX.Show("Missing module Core, cannot start.", "启动错误 boot error", Panuon.WPF.UI.MessageBoxIcon.Error);
+                    MessageBoxX.Show("Missing module Core, cannot start.", "Boot error", Panuon.WPF.UI.MessageBoxIcon.Error);
                     Close();
                     return;
                 }
