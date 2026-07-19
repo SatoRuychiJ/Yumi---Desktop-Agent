@@ -14,45 +14,45 @@ namespace VPet_Simulator.Windows.Interface
     {
         public override string ItemType => "Food";
         /// <summary>
-        /// 食物类型
+        /// Food type
         /// </summary>
         public enum FoodType
         {
             /// <summary>
-            /// 食物 (默认)
+            /// Food (default)
             /// </summary>
             Food,
             /// <summary>
-            /// 收藏 (自定义)
+            /// Favorite (custom)
             /// </summary>
             Star,
             /// <summary>
-            /// 正餐
+            /// Meal
             /// </summary>
             Meal,
             /// <summary>
-            /// 零食
+            /// Snack
             /// </summary>
             Snack,
             /// <summary>
-            /// 饮料
+            /// Drink
             /// </summary>
             Drink,
             /// <summary>
-            /// 功能性
+            /// Functional
             /// </summary>
             Functional,
             /// <summary>
-            /// 药品
+            /// Medicine
             /// </summary>
             Drug,
             /// <summary>
-            /// 礼品
+            /// Gift
             /// </summary>
             Gift,
         }
         /// <summary>
-        /// 食物类型
+        /// Food type
         /// </summary>
         [Line(type: ConvertType.ToEnum, ignoreCase: true)]
         public FoodType Type { get; set; } = FoodType.Food;
@@ -73,7 +73,7 @@ namespace VPet_Simulator.Windows.Interface
         public double Likability { get; set; }
 
         /// <summary>
-        /// 描述(ToBetterBuy)
+        /// Description (ToBetterBuy)
         /// </summary>
 
         public override string Description
@@ -105,29 +105,29 @@ namespace VPet_Simulator.Windows.Interface
 
        
         /// <summary>
-        /// 是否已收藏
+        /// Whether favorited
         /// </summary>
         public override bool Star { get; set; }
        
         public bool? isoverload = null;
         /// <summary>
-        /// 当前物品推荐价格
+        /// Current recommended price for the item
         /// </summary>
         public double RealPrice => ((Exp / 3 + Strength / 5 + StrengthDrink / 3 + StrengthFood / 2 + Feeling / 6) / 3 + Health + Likability * 10);
         /// <summary>
-        /// 该食物是否超模
+        /// Whether this food is overpowered
         /// </summary>
         public bool IsOverLoad()
         {
             if (isoverload == null)
             {
                 double relp = RealPrice;
-                isoverload = Price < (relp - 10) * 0.7;// Price > (relp + 10) * 1.3;// || Price < (relp - 10) * 0.7;//30%容错
+                isoverload = Price < (relp - 10) * 0.7;// Price > (relp + 10) * 1.3;// || Price < (relp - 10) * 0.7;//30% tolerance
             }
             return isoverload.Value;
         }
         /// <summary>
-        /// 加载物品图片
+        /// Load the item image
         /// </summary>
         public void LoadImageSource(IMainWindow imw)
         {
@@ -161,12 +161,12 @@ namespace VPet_Simulator.Windows.Interface
             }
         }
         /// <summary>
-        /// 食用时显示的动画
+        /// Animation shown when eating
         /// </summary>
         [Line(ignoreCase: true)]
         public string Graph { get; set; } = null;
         /// <summary>
-        /// 获取食用时显示的动画
+        /// Get the animation shown when eating
         /// </summary>
         public string GetGraph()
         {
@@ -184,7 +184,7 @@ namespace VPet_Simulator.Windows.Interface
                 return Graph;
         }
         /// <summary>
-        /// 克隆食物对象
+        /// Clone the food object
         /// </summary>
         public Food Clone()
         {

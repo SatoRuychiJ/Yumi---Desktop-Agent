@@ -13,17 +13,17 @@ internal class MPMOD
 {
     public static void LoadImage(MPFriends mw, DirectoryInfo di, string pre = "")
     {
-        //加载其他放在文件夹的图片
+        // Load other images placed directly in the folder
         foreach (FileInfo fi in di.EnumerateFiles("*.png"))
         {
             mw.ImageSources.AddSource(pre + fi.Name.ToLowerInvariant().Substring(0, fi.Name.Length - 4), fi.FullName);
         }
-        //加载其他放在文件夹中文件夹的图片
+        // Load images placed in subfolders
         foreach (DirectoryInfo fordi in di.EnumerateDirectories())
         {
             LoadImage(mw, fordi, pre + fordi.Name + "_");
         }
-        //加载标志好的图片和图片设置
+        // Load the tagged images and image settings
         foreach (FileInfo fi in di.EnumerateFiles("*.lps"))
         {
             var tmp = new LpsDocument(File.ReadAllText(fi.FullName));
@@ -45,7 +45,7 @@ internal class MPMOD
         LpsDocument modlps = new LpsDocument(File.ReadAllText(directory.FullName + @"\info.lps"));
         Name = modlps.FindLine("vupmod").Info;
 
-        //MOD未加载时支持翻译
+        // Support translations even when the MOD is not loaded
         foreach (var line in modlps.FindAllLine("lang"))
         {
             List<ILine> ls = new List<ILine>();
@@ -65,7 +65,7 @@ internal class MPMOD
             switch (di.Name.ToLowerInvariant())
             {
                 case "pet":
-                    //宠物模型                           
+                    // Pet model
                     foreach (FileInfo fi in di.EnumerateFiles("*.lps"))
                     {
                         LpsDocument lps = new LpsDocument(File.ReadAllText(fi.FullName));
@@ -73,7 +73,7 @@ internal class MPMOD
                         {
                             var name = lps.First().Info;
                             if (name == "默认虚拟桌宠")
-                                name = "vup";//旧版本名称兼容
+                                name = "vup";// Compatibility with legacy names
                             var p = mw.Pets.FirstOrDefault(x => x.Name == name);
                             if (p == null)
                             {

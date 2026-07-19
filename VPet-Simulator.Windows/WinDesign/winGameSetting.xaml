@@ -46,7 +46,7 @@
                 SelectionChanged="MainTab_SelectionChanged" Grid.Column="1">
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <!-- AIDeskPet: 浅色内容面板(DARKPrimaryText现为浅色), 默认深字可读 -->
+                    <!-- AIDeskPet: light content panel (DARKPrimaryText is now light); dark text is readable by default -->
                     <Border Margin="0,5,0,10" Background="{DynamicResource DARKPrimaryText}" CornerRadius="15"
                             TextElement.Foreground="#FF1A1523">
                         <ContentControl Margin="10,5" Content="{Binding}" />
@@ -775,7 +775,7 @@
                                         Foreground="{DynamicResource DARKPrimaryDarker}" Text="{ll:Str '\{0:F2} 秒',
                                                   ValueSource={Binding ElementName=PressLengthSlider,
                                                                        Path=Value}}" />
-                                <!--  {Binding ElementName=PressLengthSlider,Path=Value,StringFormat={}{0:f2} 秒}  -->
+                                <!--  {Binding ElementName=PressLengthSlider,Path=Value,StringFormat={}{0:f2} sec}  -->
                             </Grid>
                             <TextBox x:Name="TextBoxHostName" Grid.Row="2" Grid.Column="2" FontSize="16"
                                     Style="{DynamicResource StandardTextBoxStyle}" pu:ShadowHelper.BlurRadius="15"

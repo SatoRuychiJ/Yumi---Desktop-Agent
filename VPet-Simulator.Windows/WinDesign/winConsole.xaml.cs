@@ -14,7 +14,7 @@ using static VPet_Simulator.Core.GraphInfo;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winConsole.xaml 的交互逻辑
+    /// Interaction logic for winConsole.xaml
     /// </summary>
     public partial class winConsole : Window
     {
@@ -94,14 +94,14 @@ namespace VPet_Simulator.Windows
             else
                 mw.Main.Say(sayinfosteam);
 
-            // 将 SayTextBox.Text 按每段3-5个字切分到 str 里
+            // Split SayTextBox.Text into segments of 3-5 characters each into str
             List<string> str = new List<string>();
             string text = SayTextBox.Text;
             Random rand = new Random();
             int idx = 0;
             while (idx < text.Length)
             {
-                int len = rand.Next(3, 6); // 3-5个字
+                int len = rand.Next(3, 6); // 3-5 characters
                 if (idx + len > text.Length)
                     len = text.Length - idx;
                 str.Add(text.Substring(idx, len));

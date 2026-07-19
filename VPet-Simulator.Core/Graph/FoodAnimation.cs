@@ -13,20 +13,20 @@ using static VPet_Simulator.Core.IGraph;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 食物动画 支持显示前中后3层夹心动画
-    /// 不一定只用于食物,只是叫这个名字
+    /// Food animation, supports a 3-layer sandwich animation (front/middle/back)
+    /// Not necessarily only used for food, it is just named this way
     /// </summary>
     public class FoodAnimation : IRunImage
     {
         /// <summary>
-        /// 创建食物动画 第二层夹心为运行时提供
+        /// Create a food animation; the second (middle) sandwich layer is provided at runtime
         /// </summary>
-        /// <param name="graphCore">动画核心</param>
-        /// <param name="graphinfo">动画信息</param>
-        /// <param name="front_Lay">前层 动画名</param>
-        /// <param name="back_Lay">后层 动画名</param>
-        /// <param name="animations">中间层运动轨迹</param>
-        /// <param name="isLoop">是否循环</param>
+        /// <param name="graphCore">Animation core</param>
+        /// <param name="graphinfo">Animation info</param>
+        /// <param name="front_Lay">Front layer animation name</param>
+        /// <param name="back_Lay">Back layer animation name</param>
+        /// <param name="animations">Middle layer motion path</param>
+        /// <param name="isLoop">Whether to loop</param>
         public FoodAnimation(GraphCore graphCore, GraphInfo graphinfo, string front_Lay,
             string back_Lay, ILine animations, bool isLoop = false)
         {
@@ -53,29 +53,29 @@ namespace VPet_Simulator.Core
             graph.AddGraph(pa);
         }
         /// <summary>
-        /// 前层名字
+        /// Front layer name
         /// </summary>
         public string Front_Lay;
         /// <summary>
-        /// 后层名字
+        /// Back layer name
         /// </summary>
         public string Back_Lay;
         /// <summary>
-        /// 所有动画帧
+        /// All animation frames
         /// </summary>
         public List<Animation> Animations;
 
         /// <summary>
-        /// 是否循环播放
+        /// Whether to loop playback
         /// </summary>
         public bool IsLoop { get; set; }
 
         /// <summary>
-        /// 动画信息
+        /// Animation info
         /// </summary>
         public GraphInfo GraphInfo { get; private set; }
         /// <summary>
-        /// 是否准备完成
+        /// Whether preparation is complete
         /// </summary>
         public bool IsReady { get; set; } = false;
         public bool IsFail => false;
@@ -85,12 +85,12 @@ namespace VPet_Simulator.Core
 
         int nowid;
         /// <summary>
-        /// 图片资源
+        /// Image resource
         /// </summary>
         public string Path { get; set; }
         private GraphCore GraphCore;
         /// <summary>
-        /// 单帧动画
+        /// Single-frame animation
         /// </summary>
         public class Animation
         {
@@ -101,14 +101,14 @@ namespace VPet_Simulator.Core
             public bool IsVisiable = true;
             public double Width;
             /// <summary>
-            /// 帧时间
+            /// Frame time
             /// </summary>
             public int Time;
             /// <summary>
-            /// 创建单帧动画
+            /// Create a single-frame animation
             /// </summary>
             /// <param name="parent">FoodAnimation</param>
-            /// <param name="time">持续时间</param>
+            /// <param name="time">Duration</param>
             /// <param name="wx"></param>
             public Animation(FoodAnimation parent, int time, Thickness wx, double width, double rotate = 0, bool isVisiable = true, double opacity = 1)
             {
@@ -121,7 +121,7 @@ namespace VPet_Simulator.Core
                 Opacity = opacity;
             }
             /// <summary>
-            /// 创建单帧动画
+            /// Create a single-frame animation
             /// </summary>
             public Animation(FoodAnimation parent, ISub sub)
             {
@@ -143,11 +143,11 @@ namespace VPet_Simulator.Core
                 }
             }
             /// <summary>
-            /// 运行该图层
+            /// Run this layer
             /// </summary>
             public void Run(FrameworkElement This, TaskControl Control)
             {
-                //先显示该图层
+                //First show this layer
                 This.Dispatcher.Invoke(() =>
                 {
                     if (IsVisiable)
@@ -165,9 +165,9 @@ namespace VPet_Simulator.Core
                     }
 
                 });
-                //然后等待帧时间毫秒
+                //Then wait for the frame time in milliseconds
                 Thread.Sleep(Time);
-                //判断是否要下一步
+                //Decide whether to proceed to the next step
                 switch (Control.Type)
                 {
                     case TaskControl.ControlType.Stop:
@@ -181,7 +181,7 @@ namespace VPet_Simulator.Core
                             if (parent.IsLoop)
                             {
                                 parent.nowid = 0;
-                                //让循环动画重新开始立线程,不stackoverflow
+                                //Restart the loop animation on a new thread to avoid stackoverflow
                                 Task.Run(() => parent.Animations[0].Run(This, Control));
                                 return;
                             }
@@ -195,9 +195,9 @@ namespace VPet_Simulator.Core
                                 //parent.endwilldo = () => parent.Dispatcher.Invoke(Hidden);
                                 //parent.Dispatcher.Invoke(Hidden);
                                 Control.Type = TaskControl.ControlType.Status_Stoped;
-                                //等待其他两个动画完成
-                                Control.EndAction?.Invoke(); //运行结束动画时事件
-                                ////延时隐藏
+                                //Wait for the other two animations to finish
+                                Control.EndAction?.Invoke(); //Event fired when the end animation runs
+                                ////Delayed hide
                                 //Task.Run(() =>
                                 //{
                                 //    Thread.Sleep(25);
@@ -205,8 +205,8 @@ namespace VPet_Simulator.Core
                                 //});
                                 return;
                             }
-                        //要下一步,现在就隐藏图层
-                        //隐藏该图层
+                        //Proceeding to the next step, hide the layer now
+                        //Hide this layer
                         //parent.Dispatcher.Invoke(Hidden);
                         parent.Animations[parent.nowid].Run(This, Control);
                         return;
@@ -245,7 +245,7 @@ namespace VPet_Simulator.Core
         public void Run(Decorator parant, ImageSource image, Action EndAction = null)
         {
             if (Control?.PlayState == true)
-            {//如果当前正在运行,重置状态
+            {//If currently running, reset the state
                 Control.Stop(() => Run(parant, EndAction));
                 return;
             }
@@ -270,7 +270,7 @@ namespace VPet_Simulator.Core
                 if (FoodGrid.Food.Source != image)
                 {
                     if (FoodGrid.Food.Source is BitmapImage bitmapImage)
-                    {//内存回收
+                    {//Memory reclamation
                         bitmapImage.StreamSource?.Dispose();
                     }
                     FoodGrid.Food.Source = image;

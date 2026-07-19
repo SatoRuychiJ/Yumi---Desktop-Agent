@@ -3,7 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:pu="https://opensource.panuon.com/wpf-ui"
   xmlns:pucore="clr-namespace:Panuon.WPF;assembly=Panuon.WPF">
-  <!-- AIDeskPet 终端紫主题兜底色 (与 mod/0000_core/theme/terminal.lps 保持一致) -->
+  <!-- AIDeskPet terminal purple theme fallback colors (kept in sync with mod/0000_core/theme/terminal.lps) -->
   <SolidColorBrush x:Key="Primary" Color="#FF1A1523" />
   <SolidColorBrush x:Key="PrimaryTrans" Color="#DD1A1523" />
   <SolidColorBrush x:Key="PrimaryTrans4" Color="#441A1523" />

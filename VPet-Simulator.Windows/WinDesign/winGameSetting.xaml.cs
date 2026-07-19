@@ -28,7 +28,7 @@ using Item = Steamworks.Ugc.Item;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winGameSetting.xaml 的交互逻辑
+    /// Interaction logic for winGameSetting.xaml
     /// </summary>
     public partial class winGameSetting : WindowX
     {
@@ -188,7 +188,7 @@ namespace VPet_Simulator.Windows
 #else
             GameVerison.Content = "游戏版本".Translate() + $"v{mw.Version} x86";
 #endif
-            //关于ui
+            // About UI
             if (mw.IsSteamUser)
             {
                 runUserName.Text = SteamClient.Name;
@@ -239,7 +239,7 @@ namespace VPet_Simulator.Windows
             }
             runabVer.Text = $"v{mw.Version} ({mw.version})";
 
-            //mod列表
+            // Mod list
             ShowModList();
             ListMod.SelectedIndex = 0;
             ShowMod((string)((ListBoxItem)ListMod.SelectedItem).Content);
@@ -250,7 +250,7 @@ namespace VPet_Simulator.Windows
             };
             voicetimer.Tick += Voicetimer_Tick;
 
-            //为侧边添加目录           
+            // Add entries to the sidebar
             ListMenuItems.Add(listmenuswith("置于顶层", 0, TopMostBox));
             ListMenuItems.Add(listmenuswith("开机启动", 0, StartUpBox));
             ListMenuItems.Add(listmenuswith("宠物动画", 0, PetBox));
@@ -271,7 +271,7 @@ namespace VPet_Simulator.Windows
 
             ListMenuItems.Add(listmenuswith("自定义链接", 3, btn_DIY));
 
-            // AIDeskPet: 诊断/MOD管理/关于 页已隐藏, 左栏对应项移除
+            // AIDeskPet: Diagnostics/MOD management/About pages hidden, corresponding sidebar entries removed
 
             foreach (var v in ListMenuItems)
                 ListMenu.Items.Add(v);
@@ -305,7 +305,7 @@ namespace VPet_Simulator.Windows
         private ListBoxItem listmenuswith(string content, int page, FrameworkElement element)
         {
             var lbi = new ListBoxItem() { Content = content.Translate() };
-            // AIDeskPet: 改用 Selected 事件, 保证点击后左栏高亮跟随 + tab 跳转 (原 PreviewMouseLeftButtonDown 会与选中逻辑冲突)
+            // AIDeskPet: switched to the Selected event so the sidebar highlight follows the click + tab jump (the original PreviewMouseLeftButtonDown conflicted with the selection logic)
             lbi.Selected += (_, _) =>
             {
                 if (page >= 0 && page <= 6)
@@ -452,7 +452,7 @@ namespace VPet_Simulator.Windows
                 ButtonEnable.IsEnabled = false;
                 ButtonDisEnable.IsEnabled = true;
             }
-            //发布steam等功能
+            // Publish to Steam and other features
             if (mw.IsSteamUser)
             {
                 if (mod.ItemID == 1)
@@ -638,7 +638,7 @@ namespace VPet_Simulator.Windows
         }
         private async void ButtonPublish_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // AIDeskPet: 创意工坊(Steam appid 1920960)MOD 上传已移除
+            // AIDeskPet: Workshop (Steam appid 1920960) MOD upload removed
             await Task.CompletedTask;
         }
 
@@ -715,7 +715,7 @@ namespace VPet_Simulator.Windows
 
         private void hyper_moreInfo(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         public new void Show()
@@ -781,44 +781,44 @@ namespace VPet_Simulator.Windows
         #region Link
         private void Git_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         private void Steam_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         private void Github_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         private void LB_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         private void VPET_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
         private void VUP_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: 原团队链接已移除 */ }
+            { /* AIDeskPet: original team link removed */ }
         }
 
         private void Group_Click(object sender, RoutedEventArgs e)
         {
             if (LocalizeCore.CurrentCulture.StartsWith("zh"))
-                { /* AIDeskPet: 原团队链接已移除 */ }
+                { /* AIDeskPet: original team link removed */ }
             else
-                { /* AIDeskPet: 原团队链接已移除 */ }
+                { /* AIDeskPet: original team link removed */ }
         }
         private void sendkey_click(object sender, RoutedEventArgs e)
         {
             if (LocalizeCore.CurrentCulture.StartsWith("zh"))
-                { /* AIDeskPet: 原团队链接已移除 */ }
+                { /* AIDeskPet: original team link removed */ }
             else if (LocalizeCore.CurrentCulture == "null")
                 ExtensionFunction.StartURL("https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.sendkeys?view=windowsdesktop-7.0#remarks");
             else
@@ -949,14 +949,14 @@ namespace VPet_Simulator.Windows
             petloader ??= mw.Pets[0];
 
             if (mw.PrefixSave == "" && petloader.PetName != mw.Pets[PetBox.SelectedIndex].PetName)
-            {//多一个名称判断, 如果宠物名称一致,则切换皮肤不提示多开
+            {// Extra name check: if the pet names match, switching skins doesn't prompt for multi-instance
                 switch (MessageBoxX.Show("是否多开一个新的桌宠使用 {0} 皮肤\n各自存档独立保存,互不影响\n支持同时显示多个宠物".Translate(mw.Pets[PetBox.SelectedIndex].Name.Translate()),
                     "是否多开".Translate(), MessageBoxButton.YesNoCancel))
                 {
                     case MessageBoxResult.Yes:
                         var savename = mw.Pets[PetBox.SelectedIndex].Name;
                         petbox_back();
-                        //如果有这个皮肤的多开,自动多开
+                        // If a multi-instance of this skin exists, open it automatically
                         if (App.MutiSaves.Contains(savename))
                         {
                             if (App.MainWindows.FirstOrDefault(x => x.PrefixSave.Trim('-') == savename) != null)
@@ -1041,7 +1041,7 @@ namespace VPet_Simulator.Windows
                     if (mw.TalkBoxCurr != null)
                         mw.TalkBoxCurr.Setting();
                     else
-                        { /* AIDeskPet: 原游戏创意工坊外链已移除 */ }
+                        { /* AIDeskPet: original game workshop external link removed */ }
                     break;
                 case "LB":
                     //Task.Run(() =>
@@ -1284,7 +1284,7 @@ namespace VPet_Simulator.Windows
             voicetimer.Stop();
             switch (MainTab.SelectedIndex)
             {
-                case 2://启动音量探测
+                case 2:// Start volume detection
                     voicetimer.Start();
                     break;
                 case 4:
@@ -1343,7 +1343,7 @@ namespace VPet_Simulator.Windows
                 mw.Core.Save = mw.GameSavesData.GameSave;
                 mw.GameSavesData.GameSave.Event_LevelUp += mw.LevelUP;
 
-                if (oldsave.HashCheck) // 对于重开无作弊的玩家保留统计
+                if (oldsave.HashCheck) // Keep stats for players who restart without cheating
                 {
                     mw.GameSavesData.Statistics = oldsave.Statistics;
                     if (oldsave.GameSave.Money > 10000000 || oldsave.GameSave.Money < -1000000000 || oldsave.GameSave.Exp > 100000000 || oldsave.GameSave.Exp < -10000000000)
@@ -1448,7 +1448,7 @@ namespace VPet_Simulator.Windows
 
         private void btn_fixdata_Click(object sender, RoutedEventArgs e)
         {
-            // AIDeskPet: 原 aiopen.exlb.net 数据修复(依赖 Steam 时长/金钱系统)已移除
+            // AIDeskPet: original aiopen.exlb.net data repair (depended on Steam playtime/money system) removed
         }
 
         private void ConsoleBox_Checked(object sender, RoutedEventArgs e)
@@ -1521,7 +1521,7 @@ namespace VPet_Simulator.Windows
 
         private void BC_Click(object sender, RoutedEventArgs e)
         {
-            { /* AIDeskPet: bettercontribution 商店链接已移除 */ }
+            { /* AIDeskPet: bettercontribution store link removed */ }
         }
 
         private void SwitchHideFromTaskControl_OnChecked(object sender, RoutedEventArgs e)

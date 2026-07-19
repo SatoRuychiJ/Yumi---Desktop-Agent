@@ -5,151 +5,151 @@ using System.Text;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 多人模式传输的消息
+/// Message transmitted in multiplayer mode
 /// </summary>
 public struct MPMessage
 {
     /// <summary>
-    /// 消息类型
+    /// Message type
     /// </summary>
     public enum MSGType
     {
         /// <summary>
-        /// 一般是出错或者空消息
+        /// Usually an error or empty message
         /// </summary>
         Empty,
         /// <summary>
-        /// 聊天消息 (chat)
+        /// Chat message (chat)
         /// </summary>
         Chat,
         /// <summary>
-        /// 显示动画 (graphinfo)
+        /// Show animation (graphinfo)
         /// </summary>
         DispayGraph,
         /// <summary>
-        /// 交互 (Interact)
+        /// Interaction (Interact)
         /// </summary>
         Interact,
         /// <summary>
-        /// 喂食 (Feed)
+        /// Feed (Feed)
         /// </summary>
         Feed,
     }
     /// <summary>
-    /// 消息类型 MOD作者可以随便抽个不是MSGTYPE的数避免冲突,支持负数
+    /// Message type. MOD authors can pick any number not in MSGTYPE to avoid conflicts; negative numbers are supported
     /// </summary>
     [Line] public int Type { get; set; }
 
     /// <summary>
-    /// 消息内容
+    /// Message content
     /// </summary>
     [Line] private string Content { get; set; }
     /// <summary>
-    /// 被操作者 (显示动画用)
+    /// The target being acted on (used for showing animations)
     /// </summary>
     [Line] public ulong To { get; set; }
 
     public static byte[] ConverTo(MPMessage data) => Encoding.UTF8.GetBytes(LPSConvert.SerializeObject(data).ToString());
     public static MPMessage ConverTo(byte[] data) => LPSConvert.DeserializeObject<MPMessage>(new LPS(Encoding.UTF8.GetString(data)));
     /// <summary>
-    /// 设置消息内容(类)
+    /// Set the message content (class)
     /// </summary>
     public void SetContent(object content)
     {
         Content = LPSConvert.GetObjectString(content, convertNoneLineAttribute: true);
     }
     /// <summary>
-    /// 获取消息内容(类)
+    /// Get the message content (class)
     /// </summary>
-    /// <typeparam name="T">类类型</typeparam>
+    /// <typeparam name="T">Class type</typeparam>
     public T GetContent<T>()
     {
         return (T)LPSConvert.GetStringObject(Content, typeof(T), convertNoneLineAttribute: true);
     }
     /// <summary>
-    /// 设置消息内容(字符串)
+    /// Set the message content (string)
     /// </summary>
     public void SetContent(string content)
     {
         Content = content;
     }
     /// <summary>
-    /// 获取消息内容(字符串)
+    /// Get the message content (string)
     /// </summary>
     public string GetContent()
     {
         return Content;
     }
     /// <summary>
-    /// 聊天结构
+    /// Chat structure
     /// </summary>
     public struct Chat
     {
         /// <summary>
-        /// 聊天内容
+        /// Chat content
         /// </summary>
         public string Content { get; set; }
         /// <summary>
-        /// 消息类型
+        /// Message type
         /// </summary>
         public enum Type
         {
             /// <summary>
-            /// 私有
+            /// Private
             /// </summary>
             Private,
             /// <summary>
-            /// 半公开
+            /// Semi-public
             /// </summary>
             Internal,
             /// <summary>
-            /// 公开
+            /// Public
             /// </summary>
             Public
         }
         /// <summary>
-        /// 聊天类型
+        /// Chat type
         /// </summary>
         public Type ChatType { get; set; }
         /// <summary>
-        /// 发送者名字
+        /// Sender name
         /// </summary>
         public string SendName { get; set; }
         /// <summary>
-        /// 接受者名字
+        /// Receiver name
         /// </summary>
         public string ToName { get; set; }
     }
     /// <summary>
-    /// 交互结构
+    /// Interaction structure
     /// </summary>
     public struct Feed
     {
         /// <summary>
-        /// 对方是否启用了数据计算 (并且未丢失小标)
+        /// Whether the other side has data calculation enabled (and has not lost the indicator)
         /// </summary>
         public bool EnableFunction { get; set; }
         /// <summary>
-        /// 食物/物品
+        /// Food/item
         /// </summary>
         [Line()]
         public Food Item { get; set; }
     }
     /// <summary>
-    /// 交互类型
+    /// Interaction type
     /// </summary>
     public enum Interact
     {
         /// <summary>
-        /// 摸身体 
+        /// Pet the body
         /// </summary>
         TouchHead,
         /// <summary>
-        /// 摸头
+        /// Pat the head
         /// </summary>
         TouchBody,
         /// <summary>
-        /// 捏脸
+        /// Pinch the face
         /// </summary>
         TouchPinch,
     }

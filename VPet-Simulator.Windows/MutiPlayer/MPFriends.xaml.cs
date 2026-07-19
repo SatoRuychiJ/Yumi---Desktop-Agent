@@ -26,7 +26,7 @@ using ToolBar = VPet_Simulator.Core.ToolBar;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// MPFriends.xaml 的交互逻辑
+/// Interaction logic for MPFriends.xaml
 /// </summary>
 public partial class MPFriends : WindowX, IMPFriend
 {
@@ -126,7 +126,7 @@ public partial class MPFriends : WindowX, IMPFriend
             ImageSources.AddRange(mw.ImageSources);
 
 
-            //加载所有MOD
+            // Load all MODs
             List<DirectoryInfo> Path = new List<DirectoryInfo>();
             Path.AddRange(new DirectoryInfo(mw.ModPath).EnumerateDirectories());
 
@@ -136,7 +136,7 @@ public partial class MPFriends : WindowX, IMPFriend
                 Path.Add(new DirectoryInfo(ws.Name));
             }
 
-            //加载lobby传过来的数据
+            // Load the data passed in from the lobby
             string tmp = lb.GetMemberData(friend, "save");
             while (string.IsNullOrEmpty(tmp))
             {
@@ -171,7 +171,7 @@ public partial class MPFriends : WindowX, IMPFriend
             }
             Dispatcher.Invoke(() =>
             {
-                // AIDeskPet: 存档校验像素标志已移除
+                // AIDeskPet: save-validation pixel marker removed
                 if (tmp == "True")
                 {
                 }
@@ -242,18 +242,18 @@ public partial class MPFriends : WindowX, IMPFriend
 
     public ulong LobbyID => lb.Id;
     /// <summary>
-    /// 是否显示吃东西动画
+    /// Whether to show the eating animation
     /// </summary>
     bool showeatanm = true;
     /// <summary>
-    /// 显示吃东西(夹层)动画
+    /// Show the eating (sandwiched) animation
     /// </summary>
-    /// <param name="graphName">夹层动画名</param>
-    /// <param name="imageSource">被夹在中间的图片</param>
+    /// <param name="graphName">Sandwich animation name</param>
+    /// <param name="imageSource">Image sandwiched in the middle</param>
     public void DisplayFoodAnimation(string graphName, ImageSource imageSource)
     {
         if (showeatanm)
-        {//显示动画
+        {// Show the animation
             showeatanm = false;
             Main.Display(graphName, imageSource, () =>
             {
@@ -280,8 +280,8 @@ public partial class MPFriends : WindowX, IMPFriend
     {
         get
         {
-            // 这里假设 winMutiPlayer 有一个静态方法用于转换头像
-            // 如果有缓存可用则直接返回，否则同步获取
+            // Assume winMutiPlayer has a static method for converting the avatar
+            // Return the cached value if available, otherwise fetch synchronously
             var avatarTask = friend.GetMediumAvatarAsync();
             avatarTask.Wait();
             var img = avatarTask.Result;
@@ -289,7 +289,7 @@ public partial class MPFriends : WindowX, IMPFriend
         }
     }
     /// <summary>
-    /// 喂食显示动画
+    /// Feeding display animation
     /// </summary>
     /// <param name="byname"></param>
     /// <param name="feed"></param>
@@ -311,14 +311,14 @@ public partial class MPFriends : WindowX, IMPFriend
         }
     }
     /// <summary>
-    /// 加载游戏
+    /// Load the game
     /// </summary>
-    /// <param name="Path">MOD地址</param>
+    /// <param name="Path">MOD path</param>
     public async Task GameLoad(List<DirectoryInfo> Path)
     {
         Path = Path.Distinct().ToList();
         await Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "Loading MOD"));
-        //加载mod
+        // Load mods
         foreach (DirectoryInfo di in Path)
         {
             if (!File.Exists(di.FullName + @"\info.lps"))
@@ -329,12 +329,12 @@ public partial class MPFriends : WindowX, IMPFriend
 
         await Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "尝试加载游戏MOD".Translate()));
 
-        //当前桌宠动画
+        // Current pet animation
         var petloader = Pets.Find(x => x.Name == SetPetGraph);
         petloader ??= Pets[0];
 
 
-        //加载数据合理化:食物       
+        // Sanitize loaded data: food
         foreach (Food f in Foods)
         {
             if (f.IsOverLoad())
@@ -397,7 +397,7 @@ public partial class MPFriends : WindowX, IMPFriend
             Main.EventTimer.AutoReset = false;
             Main.EventTimer.Enabled = false;
 
-            //清空资源
+            // Clear resources
             Main.Resources = Application.Current.Resources;
             Main.MsgBar.This.Resources = Application.Current.Resources;
             Main.ToolBar.Resources = Application.Current.Resources;
@@ -438,7 +438,7 @@ public partial class MPFriends : WindowX, IMPFriend
 
             //Main.WorkCheck = mf.WorkCheck;
 
-            //添加捏脸动画(若有)
+            // Add the face-pinch animation (if any)
             if (Core.Graph.GraphConfig.Data.ContainsLine("pinch"))
             {
                 var pin = Core.Graph.GraphConfig.Data["pinch"];
@@ -504,7 +504,7 @@ public partial class MPFriends : WindowX, IMPFriend
     }
 
     /// <summary>
-    /// 显示捏脸情况
+    /// Show the face-pinch state
     /// </summary>
     public bool DisplayPinch()
     {
@@ -551,7 +551,7 @@ public partial class MPFriends : WindowX, IMPFriend
         }
     }
     /// <summary>
-    /// 显示摸头情况 (无任何计算和传导)
+    /// Show the head-pat state (no calculation or propagation)
     /// </summary>
     public void DisplayNOCALTouchHead()
     {
@@ -577,7 +577,7 @@ public partial class MPFriends : WindowX, IMPFriend
            Main.DisplayCEndtoNomal(graphname))));
     }
     /// <summary>
-    /// 显示摸身体情况 (无任何计算和传导)
+    /// Show the body-touch state (no calculation or propagation)
     /// </summary>
     public void DisplayNOCALTouchBody()
     {
@@ -603,7 +603,7 @@ public partial class MPFriends : WindowX, IMPFriend
          Main.DisplayCEndtoNomal(graphname))));
     }
     /// <summary>
-    /// 显示摸身体情况 (无任何计算和传导)
+    /// Show the body-touch state (no calculation or propagation)
     /// </summary>
     public void DisplayNOCALTouchPinch()
     {
@@ -629,7 +629,7 @@ public partial class MPFriends : WindowX, IMPFriend
     }
 
     /// <summary>
-    /// 收到被互动通知
+    /// Received an interaction notification
     /// </summary>
     public void ActiveInteract(string byname, Interact interact)
     {
@@ -638,7 +638,7 @@ public partial class MPFriends : WindowX, IMPFriend
             return;
         }
         if (InConvenience())
-        {//忙碌时候只显示消息
+        {// Only show a message when busy
             switch (interact)
             {
                 case Interact.TouchHead:
@@ -670,7 +670,7 @@ public partial class MPFriends : WindowX, IMPFriend
 
 
     /// <summary>
-    /// 播放关闭动画并关闭,如果10秒后还未关闭则强制关闭
+    /// Play the shutdown animation and close; force close if still open after 10 seconds
     /// </summary>
     public void Quit()
     {
@@ -691,7 +691,7 @@ public partial class MPFriends : WindowX, IMPFriend
     }
 
     /// <summary>
-    /// 智能化显示后续过度动画
+    /// Intelligently display the following transition animation
     /// </summary>
     public void DisplayAuto(GraphInfo gi)
     {
@@ -727,7 +727,7 @@ public partial class MPFriends : WindowX, IMPFriend
         }
     }
     /// <summary>
-    /// 根据好友数据显示动画
+    /// Display animation based on friend data
     /// </summary>
     public bool DisplayGraph(GraphInfo gi)
     {

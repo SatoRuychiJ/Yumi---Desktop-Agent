@@ -10,7 +10,7 @@ using static VPet_Simulator.Core.WorkTimer.FinishWorkInfo;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// WorkTimer.xaml 的交互逻辑
+    /// Interaction logic for WorkTimer.xaml
     /// </summary>
     public partial class WorkTimer : Viewbox
     {
@@ -19,73 +19,73 @@ namespace VPet_Simulator.Core
         {
             InitializeComponent();
             this.m = m;
-            //数据相关计算挪到MainLogic
-            //这里只显示UI
+            //data-related calculations moved to MainLogic
+            //this only displays the UI
             m.TimeUIHandle += M_TimeUIHandle;
         }
         /// <summary>
-        /// 显示模式
-        /// 0 = 默认
-        /// 1 = 剩余时间
-        /// 2 = 已获取(金钱/等级)
+        /// Display mode
+        /// 0 = default
+        /// 1 = remaining time
+        /// 2 = earned (money/level)
         /// </summary>
         public int DisplayType = 0;
         /// <summary>
-        /// 累计获得的钱/经验值
+        /// Accumulated money/experience earned
         /// </summary>
         public double GetCount;
         /// <summary>
-        /// 开始时间
+        /// Start time
         /// </summary>
         public DateTime StartTime;
         /// <summary>
-        /// 完成工作信息
+        /// Finished work info
         /// </summary>
         public struct FinishWorkInfo
         {
             /// <summary>
-            /// 当前完成工作
+            /// The completed work
             /// </summary>
             public Work work;
             /// <summary>
-            /// 当前完成工作收入
+            /// Income from the completed work
             /// </summary>
             public double count;
             /// <summary>
-            /// 当前完成工作花费时间 (分钟)
+            /// Time spent on the completed work (minutes)
             /// </summary>
             public double spendtime;
             /// <summary>
-            /// 停止工作的原因
+            /// Reason for stopping the work
             /// </summary>
             public enum StopReason
             {
                 /// <summary>
-                /// 时间结束完成
+                /// Completed by time running out
                 /// </summary>
                 TimeFinish,
                 /// <summary>
-                /// 玩家手动停止
+                /// Manually stopped by the player
                 /// </summary>
                 MenualStop,
                 /// <summary>
-                /// 因为状态等停止
+                /// Stopped due to state, etc.
                 /// </summary>
                 StateFail,
                 /// <summary>
-                /// 其他原因
+                /// Other reasons
                 /// </summary>
                 Other,
             }
             /// <summary>
-            /// 停止原因
+            /// Stop reason
             /// </summary>
             public StopReason Reason;
             /// <summary>
-            /// 完成工作信息
+            /// Finished work info
             /// </summary>
-            /// <param name="work">当前工作</param>
-            /// <param name="count">当前盈利(自动计算附加)</param>
+            /// <param name="work">the current work</param>
+            /// <param name="count">current profit (bonus calculated automatically)</param>
             public FinishWorkInfo(Work work, double count, StopReason reason)
             {
                 this.work = work;
@@ -94,10 +94,10 @@ namespace VPet_Simulator.Core
                 this.Reason = reason;
             }
             /// <summary>
-            /// 完成工作信息
+            /// Finished work info
             /// </summary>
-            /// <param name="work">当前工作</param>
-            /// <param name="count">当前盈利(自动计算附加)</param>
+            /// <param name="work">the current work</param>
+            /// <param name="count">current profit (bonus calculated automatically)</param>
             public FinishWorkInfo(Work work, double count, DateTime starttime, StopReason reason)
             {
                 this.work = work;
@@ -107,7 +107,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// UI相关显示
+        /// UI-related display
         /// </summary>
         /// <param name="m"></param>
         private void M_TimeUIHandle(Main m)
@@ -117,7 +117,7 @@ namespace VPet_Simulator.Core
             TimeSpan tleft;
             if (ts.TotalMinutes > m.NowWork.Time)
             {
-                //学完了,停止
+                //finished studying, stop
                 //ts = TimeSpan.FromMinutes(MaxTime);
                 //tleft = TimeSpan.Zero;
                 //PBLeft.Value = MaxTime;
@@ -233,7 +233,7 @@ namespace VPet_Simulator.Core
             DisplayUI();
         }
         /// <summary>
-        /// 停止工作
+        /// Stop working
         /// </summary>
         /// <param name="then"></param>
         public void Stop(Action @then = null, StopReason reason = StopReason.MenualStop)
@@ -252,7 +252,7 @@ namespace VPet_Simulator.Core
             Stop(reason: StopReason.MenualStop);
         }
         /// <summary>
-        /// 任务完成时调用该参数
+        /// Invoked when the task is completed
         /// </summary>
         public event Action<FinishWorkInfo> E_FinishWork;
     }

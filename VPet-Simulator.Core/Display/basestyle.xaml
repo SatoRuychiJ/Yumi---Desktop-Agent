@@ -215,7 +215,7 @@
     <Style x:Key="StandardComboBoxStyle" BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="{x:Type ComboBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Height" Value="30" />
-        <!-- AIDeskPet: DARKPrimaryText 现为浅色, 下拉框浅底深字自动可读 -->
+        <!-- AIDeskPet: DARKPrimaryText is now light, so combo box has dark text on light background for automatic readability -->
         <Setter Property="Background" Value="{DynamicResource DARKPrimaryText}" />
         <Setter Property="Foreground" Value="#FF1A1523" />
         <Setter Property="BorderThickness" Value="1.5" />
@@ -253,7 +253,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Height" Value="30" />
         <Setter Property="Background" Value="{DynamicResource DARKPrimaryText}" />
-        <!-- AIDeskPet: DARKPrimaryText 现为浅色, 输入框浅底深字 -->
+        <!-- AIDeskPet: DARKPrimaryText is now light, so text box has dark text on light background -->
         <Setter Property="Foreground" Value="#FF1A1523" />
         <Setter Property="CaretBrush" Value="{DynamicResource DARKPrimary}" />
         <Setter Property="BorderThickness" Value="1.5" />
@@ -299,9 +299,9 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="pu:MenuHelper.TopLevelDropDownVerticalOffset" Value="-25" />
         <Setter Property="BorderBrush" Value="{DynamicResource DARKPrimaryDarker}" />
-        <!-- AIDeskPet: 工具栏保持深色(DARKPrimaryText已改浅色, 改用Primary) -->
+        <!-- AIDeskPet: Toolbar stays dark (DARKPrimaryText changed to light, use Primary instead) -->
         <Setter Property="Background" Value="{DynamicResource Primary}" />
-        <!-- 深色主题下默认前景改为亮紫, 避免黑字黑底看不清 -->
+        <!-- In dark theme, change default foreground to bright purple to avoid black text on black background -->
         <Setter Property="Foreground" Value="{DynamicResource DARKPrimary}" />
         <Setter Property="pu:MenuHelper.TopLevelItemsForeground" Value="{DynamicResource DARKPrimary}" />
         <Setter Property="pu:MenuHelper.SubmenuItemsForeground" Value="{DynamicResource DARKPrimary}" />

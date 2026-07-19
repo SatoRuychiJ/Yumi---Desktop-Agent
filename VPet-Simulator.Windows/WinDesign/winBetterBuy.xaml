@@ -49,7 +49,7 @@
                                 Foreground="{DynamicResource DARKPrimaryText}" FontSize="16" Cursor="Hand"
                                 Click="BtnSearch_Click" />
                     </Grid>
-                    <!-- AIDeskPet: 金钱系统已移除 -->
+                    <!-- AIDeskPet: money system removed -->
                     <TextBlock VerticalAlignment="Center" Margin="20,0,0,0" FontSize="16" FontWeight="Bold"
                             Visibility="Collapsed">
                             <Run Text="{ll:Str 金钱}" />: $ <Run x:Name="rMoney" Loaded="rMoney_Loaded" Text="" />
@@ -118,7 +118,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                    <!-- AIDeskPet: 金钱系统已移除, 不显示价格 -->
+                                    <!-- AIDeskPet: money system removed, price not shown -->
                                     <TextBlock x:Name="TxtPrice" VerticalAlignment="Bottom" Visibility="Collapsed"
                                             Text="{Binding Price, StringFormat='$ 0.0'}" FontWeight="Bold" FontSize="18"
                                             Foreground="{DynamicResource DARKPrimary}" />

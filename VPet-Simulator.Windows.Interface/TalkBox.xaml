@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ll="clr-namespace:LinePutScript.Localization.WPF;assembly=LinePutScript.Localization.WPF" mc:Ignorable="d"
         xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" Height="500" Width="500" VerticalAlignment="Top">
-    <!-- AIDeskPet: 终端风格聊天框 -->
+    <!-- AIDeskPet: terminal-style chat box -->
     <Border Background="{DynamicResource Primary}" BorderBrush="{DynamicResource DARKPrimaryDark}" BorderThickness="2"
             VerticalAlignment="Top" Margin="5" CornerRadius="8" Padding="8,8,8,5"
             TextElement.FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI">

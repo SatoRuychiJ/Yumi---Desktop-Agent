@@ -15,15 +15,15 @@ using static VPet_Simulator.Windows.Interface.ScheduleTask;
 namespace VPet_Simulator.Windows;
 
 public partial class MainWindow
-{//主窗口部分数据
+{//Part of the main window data
 
 
     /// <summary>
-    /// 版本号
+    /// Version number
     /// </summary>
     public int version { get; } = 11068;
     /// <summary>
-    /// 版本号
+    /// Version number
     /// </summary>
     public string Version => $"{version / 10000}.{version % 10000 / 100}.{version % 100:00}";
     /// <summary>
@@ -42,7 +42,7 @@ public partial class MainWindow
 
     public List<ClickText> ClickTexts { get; set; } = new List<ClickText>();
     /// <summary>
-    /// 所有食物
+    /// All foods
     /// </summary>
     public List<Food> Foods { get; } = new List<Food>();
     public List<Photo> Photos { get; } = new List<Photo>();
@@ -87,46 +87,46 @@ public partial class MainWindow
     public ImageResources ImageSources { get; set; } = new ImageResources();
     public Resources FileSources { get; set; } = new Resources();
     /// <summary>
-    /// 动态资源, 用于给插件MOD存储共享的数据
+    /// Dynamic resources, used by plugin MODs to store shared data
     /// </summary>
     public Dictionary<string, object> DynamicResources { get; set; } = new Dictionary<string, object>();
 
     /// <summary>
-    /// 所有三方插件
+    /// All third-party plugins
     /// </summary>
     public List<MainPlugin> Plugins { get; } = new List<MainPlugin>();
     /// <summary>
-    /// 所有字体(位置)
+    /// All fonts (locations)
     /// </summary>
     public List<IFont> Fonts { get; } = new List<IFont>();
     /// <summary>
-    /// 所有主题
+    /// All themes
     /// </summary>
     public List<Theme> Themes = new List<Theme>();
     /// <summary>
-    /// 当前启用主题
+    /// Currently active theme
     /// </summary>
     public Theme Theme = null;
 
     /// <summary>
-    /// 日程表
+    /// Schedule
     /// </summary>
     public ScheduleTask ScheduleTask { get; set; }
 
     /// <summary>
-    /// 物品栏 桌宠有的物品
+    /// Inventory, items the pet owns
     /// </summary>
     public List<Item> Items { get; set; } = new List<Item>();
 
     
 
     /// <summary>
-    /// 所有可用套餐
+    /// All available packages
     /// </summary>
     public List<PackageFull> SchedulePackage { get; set; } = new List<PackageFull>();
 
     /// <summary>
-    /// 活动日志 不会保存
+    /// Activity log, not persisted
     /// </summary>
     public ObservableCollection<ActivityLog> ActivityLogs { get; set; } = new ObservableCollection<ActivityLog>();
 }

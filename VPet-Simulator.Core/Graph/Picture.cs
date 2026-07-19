@@ -14,14 +14,14 @@ using static VPet_Simulator.Core.Picture;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// Picture.xaml 的交互逻辑
+    /// Interaction logic for Picture.xaml
     /// </summary>
     public class Picture : IImageRun
     {
         /// <summary>
-        /// 新建新静态图像
+        /// Create a new static image
         /// </summary>
-        /// <param name="path">图片路径</param>
+        /// <param name="path">Image path</param>
         public Picture(GraphCore graphCore, string path, GraphInfo graphinfo, int length = 1000, bool isloop = false)
         {
             GraphInfo = graphinfo;
@@ -62,19 +62,19 @@ namespace VPet_Simulator.Core
             graph.AddGraph(pa);
         }
         /// <summary>
-        /// 图片资源
+        /// Image resource
         /// </summary>
         public string Path { get; set; }
         private GraphCore GraphCore;
         public bool IsLoop { get; set; }
         /// <summary>
-        /// 播放持续时间 毫秒
+        /// Playback duration in milliseconds
         /// </summary>
         public int Length { get; set; }
-        //public bool StoreMemory => true;//经过测试,储存到内存好处多多,不储存也要占用很多内存,干脆存了吧
+        //public bool StoreMemory => true;//After testing, storing in memory has many benefits; not storing still uses a lot of memory, so just store it
 
         /// <summary>
-        /// 动画信息
+        /// Animation info
         /// </summary>
         public GraphInfo GraphInfo { get; private set; }
 
@@ -89,7 +89,7 @@ namespace VPet_Simulator.Core
         public void Run(Decorator parant, Action EndAction = null)
         {
             if (Control?.PlayState == true)
-            {//如果当前正在运行,重置状态
+            {//If currently running, reset the state
                 Control.SetContinue();
                 Control.EndAction = EndAction;
                 return;
@@ -136,13 +136,13 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 通过控制器运行
+        /// Run through the controller
         /// </summary>
         /// <param name="Control"></param>
         public void Run(TaskControl Control)
         {
             Thread.Sleep(Length);
-            //判断是否要下一步
+            //Determine whether to proceed to the next step
             switch (Control.Type)
             {
                 case TaskControl.ControlType.Stop:
@@ -162,7 +162,7 @@ namespace VPet_Simulator.Core
                     else
                     {
                         Control.Type = TaskControl.ControlType.Status_Stoped;
-                        Control.EndAction?.Invoke(); //运行结束动画时事件
+                        Control.EndAction?.Invoke(); //Event triggered when the animation finishes running
                     }
                     return;
             }
@@ -171,7 +171,7 @@ namespace VPet_Simulator.Core
         public Task Run(Image img, Action EndAction = null)
         {
             if (Control?.PlayState == true)
-            {//如果当前正在运行,重置状态
+            {//If currently running, reset the state
                 Control.EndAction = null;
                 Control.Type = TaskControl.ControlType.Stop;
             }
@@ -189,16 +189,16 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 可以通过图片模块运行该动画
+        /// This animation can be run through the picture module
         /// </summary>
         public interface IImageRun : IGraph
         {
             /// <summary>
-            /// 指定图像图像控件准备运行该动画
+            /// Specify the image control to prepare running this animation
             /// </summary>
-            /// <param name="img">用于显示的Image</param>
-            /// <param name="EndAction">结束动画</param>
-            /// <returns>准备好的线程</returns>
+            /// <param name="img">Image used for display</param>
+            /// <param name="EndAction">End animation</param>
+            /// <returns>The prepared thread</returns>
             Task Run(System.Windows.Controls.Image img, Action EndAction = null);
         }
         public void Dispose()

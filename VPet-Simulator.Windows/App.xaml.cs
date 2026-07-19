@@ -11,7 +11,7 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// App.xaml 的交互逻辑
+    /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
@@ -27,7 +27,7 @@ namespace VPet_Simulator.Windows
         }
         public static string[] Args { get; set; }
         /// <summary>
-        /// 多存档系统名称
+        /// Multi-save system names
         /// </summary>
         public static List<string> MutiSaves { get; set; } = new List<string>();
 
@@ -39,7 +39,7 @@ namespace VPet_Simulator.Windows
         {
             Args = e.Args;
 
-            //旧版本多开bug修复
+            //Fix for old-version multi-instance bug
             if (File.Exists(ExtensionValue.BaseDirectory + @"\Setting-.lps"))
                 File.Delete(ExtensionValue.BaseDirectory + @"\Setting-.lps");
 
@@ -71,7 +71,7 @@ namespace VPet_Simulator.Windows
         {
             var expt = e.ToString();
             if (ErrorReport.Contains(expt))
-                return;//防止重复报错
+                return;//Prevent duplicate error reports
             ErrorReport.Add(expt);
             if (expt.Contains("MainWindow.Close") || expt.Contains("System.Windows.Window.DragMove") ||
                 expt.Contains("winConsole"))

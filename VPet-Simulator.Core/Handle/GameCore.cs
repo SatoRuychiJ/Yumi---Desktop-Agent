@@ -5,55 +5,55 @@ using System.Windows;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 游戏使用资源
+    /// Resources used by the game
     /// </summary>
     public class GameCore
     {
         /// <summary>
-        /// 控制器
+        /// Controller
         /// </summary>
         public IController Controller;
         /// <summary>
-        /// 触摸范围和事件列表
+        /// List of touch areas and events
         /// </summary>
         public List<TouchArea> TouchEvent = new List<TouchArea>();
         /// <summary>
-        /// 图形核心
+        /// Graphics core
         /// </summary>
         public GraphCore Graph;
         /// <summary>
-        /// 游戏数据
+        /// Game data
         /// </summary>
         public IGameSave Save;
     }
     /// <summary>
-    /// 触摸范围事件
+    /// Touch area event
     /// </summary>
     public class TouchArea
     {
         /// <summary>
-        /// 位置
+        /// Position
         /// </summary>
         public Point Locate;
         /// <summary>
-        /// 大小
+        /// Size
         /// </summary>
         public Size Size;
         /// <summary>
-        /// 如果是触发的内容
+        /// Action to run when triggered
         /// </summary>
         public Func<bool> DoAction;
         /// <summary>
-        /// 否:立即触发/是:长按触发
+        /// No: trigger immediately / Yes: trigger on long press
         /// </summary>
         public bool IsPress;
         /// <summary>
-        /// 创建个触摸范围事件
+        /// Create a touch area event
         /// </summary>
-        /// <param name="locate">位置</param>
-        /// <param name="size">大小</param>
-        /// <param name="doAction">如果是触发的内容</param>
-        /// <param name="isPress">否:立即触发/是:长按触发</param>
+        /// <param name="locate">Position</param>
+        /// <param name="size">Size</param>
+        /// <param name="doAction">Action to run when triggered</param>
+        /// <param name="isPress">No: trigger immediately / Yes: trigger on long press</param>
         public TouchArea(Point locate, Size size, Func<bool> doAction, bool isPress = false)
         {
             Locate = locate;
@@ -62,10 +62,10 @@ namespace VPet_Simulator.Core
             IsPress = isPress;
         }
         /// <summary>
-        /// 判断是否成功触发该点击事件
+        /// Determine whether this click event was successfully triggered
         /// </summary>
-        /// <param name="point">位置</param>
-        /// <returns>是否成功</returns>
+        /// <param name="point">Position</param>
+        /// <returns>Whether successful</returns>
         public bool Touch(Point point)
         {
             double inx = point.X - Locate.X;

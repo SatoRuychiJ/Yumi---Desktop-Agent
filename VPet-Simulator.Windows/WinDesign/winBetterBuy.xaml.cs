@@ -15,7 +15,7 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winBetterBuy.xaml 的交互逻辑
+    /// Interaction logic for winBetterBuy.xaml
     /// </summary>
     public partial class winBetterBuy : WindowX
     {
@@ -44,7 +44,7 @@ namespace VPet_Simulator.Windows
             nibuytimes.Maximum = Math.Max(2, mw.Core.Save.StrengthMax / 100);
             nibuytimes.Value = mw.GameSavesData["betterbuysetting"].GetInt("double", 1);
 
-            showeatanm = true;//逃出
+            showeatanm = true;// Escape
             if (_searchTextBox != null)
                 _searchTextBox.Text = "";
             if (LsbCategory.SelectedIndex == (int)type)
@@ -54,7 +54,7 @@ namespace VPet_Simulator.Windows
             if (rMoney != null)
                 rMoney.Text = mw.Core.Save.Money.ToString("f2");
 
-            //喜好度刷新
+            // Refresh preference levels
             foreach (var sub in mw.GameSavesData["buytime"])
             {
                 var name = sub.Name;
@@ -65,7 +65,7 @@ namespace VPet_Simulator.Windows
                     food.NotifyOfPropertyChange("Description");
                 }
             }
-            //没钱了,宠物给你私房钱 (开罗传统)
+            // Out of money; the pet gives you some pocket money (Kairosoft tradition)
             if (mw.Core.Save.Money <= 1)
             {
                 if (mw.GameSavesData[(gbol)"self"])
@@ -210,7 +210,7 @@ namespace VPet_Simulator.Windows
             //PageDetail.RaiseEvent(eventArg);
         }
         /// <summary>
-        /// 是否显示吃东西动画
+        /// Whether to show the eating animation
         /// </summary>
         public bool showeatanm = true;
 
@@ -218,19 +218,19 @@ namespace VPet_Simulator.Windows
         {
             var Button = sender as Button;
             var item = Button.DataContext as Food;
-            //看是什么模式
+            // Determine which mode it is
             if (mw.Set.EnableFunction)
-            {//$1000以内的食物允许赊账
+            {// Food under $1000 can be bought on credit
                 for (int i = 0; i < (int)nibuytimes.Value; i++)
                 {                        
                     if ((item.Price >= 1000 || item.Exp >= 1000) && item.Price >= mw.Core.Save.Money)
-                    {//买不起
+                    {// Can't afford it
                         MessageBoxX.Show("您没有足够金钱来购买 {0}\n您需要 {1:f2} 金钱来购买\n您当前 {2:f2} 拥有金钱"
                             .Translate(item.TranslateName, item.Price, mw.Core.Save.Money)
                             , "金钱不足".Translate());
                         return;
                     }
-                    //看看是否超模
+                    // Check whether it's overpowered
                     if (mw.HashCheck && item.IsOverLoad())
                     {
                         if (MessageBoxX.Show("当前食物/物品属性超模,是否继续使用?\n使用超模食物可能会导致游戏发生不可预料的错误\n使用超模食物不影响大部分成就解锁\n本物品推荐价格为{0:f0}"

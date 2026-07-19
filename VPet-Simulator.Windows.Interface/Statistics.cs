@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 统计
+    /// Statistics
     /// </summary>
     public class Statistics : IGetOBJ<SetObject>
     {
@@ -22,16 +22,16 @@ namespace VPet_Simulator.Windows.Interface
             }
         }
         /// <summary>
-        /// 统计变化通知事件
+        /// Statistics change notification event
         /// </summary>
-        /// <param name="sender">发送的统计(this)</param>
-        /// <param name="name">变动的名称</param>
-        /// <param name="value">变动的值</param>
+        /// <param name="sender">The statistics that raised the event (this)</param>
+        /// <param name="name">Name that changed</param>
+        /// <param name="value">Value that changed</param>
         public delegate void StatisticChangedEventHandler(Statistics sender, string name, SetObject value);
 
         public event StatisticChangedEventHandler StatisticChanged;
         /// <summary>
-        /// 统计数据字典
+        /// Statistics data dictionary
         /// </summary>
         public SortedDictionary<string, SetObject> Data = new SortedDictionary<string, SetObject>();
 
@@ -85,7 +85,7 @@ namespace VPet_Simulator.Windows.Interface
             Data[subName] = value;
         }
         /// <summary>
-        /// 输出统计数据
+        /// Output the statistics data
         /// </summary>
         public List<Sub> ToSubs()
         {

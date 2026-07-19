@@ -10,22 +10,22 @@ using VPet_Simulator.Core;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 活动日志: eg: 工作, 事件等
+/// Activity log: e.g. work, events, etc.
 /// </summary>
 public class ActivityLog
 {
     /// <summary>
-    /// 活动日志: eg: 工作, 事件等
+    /// Activity log: e.g. work, events, etc.
     /// </summary>
     public ActivityLog()
     {
     }
     /// <summary>
-    /// 活动日志: eg: 工作, 事件等
+    /// Activity log: e.g. work, events, etc.
     /// </summary>
-    /// <param name="type">日志类型</param>
-    /// <param name="isDebug">是否是调试日志 (仅在调试模式下显示给玩家)</param>
-    /// <param name="description">日志详细信息</param>
+    /// <param name="type">Log type</param>
+    /// <param name="isDebug">Whether this is a debug log (only shown to the player in debug mode)</param>
+    /// <param name="description">Log details</param>
     public ActivityLog(string type, bool isDebug = false, params string[] description)
     {
         Time = DateTime.Now;
@@ -34,10 +34,10 @@ public class ActivityLog
         IsDebug = isDebug;
     }
     /// <summary>
-    /// 活动日志(非调试日志): eg: 工作, 事件等
+    /// Activity log (non-debug): e.g. work, events, etc.
     /// </summary>
-    /// <param name="type">日志类型</param>
-    /// <param name="description">日志详细信息</param>
+    /// <param name="type">Log type</param>
+    /// <param name="description">Log details</param>
     public ActivityLog(string type, params string[] description)
     {
         Time = DateTime.Now;
@@ -46,28 +46,28 @@ public class ActivityLog
         IsDebug = false;
     }
     /// <summary>
-    /// 日志时间
+    /// Log time
     /// </summary>
     [Line]
     public DateTime Time { get; set; }
     /// <summary>
-    /// 日志类型
+    /// Log type
     /// </summary>
     [Line]
     public string Type { get; set; }
     /// <summary>
-    /// 日志详细信息, `|`分割
+    /// Log details, separated by |
     /// </summary>
     [Line]
     public string Description { get; set; }
 
     /// <summary>
-    /// 是否是调试日志 (仅在调试模式下显示给玩家)
+    /// Whether this is a debug log (only shown to the player in debug mode)
     /// </summary>
     [Line] public bool IsDebug { get; set; }
 
     /// <summary>
-    /// 转换成玩家可读的字符串
+    /// Convert to a player-readable string
     /// </summary>
     public string ToString(Main m)
     {

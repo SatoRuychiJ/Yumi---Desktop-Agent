@@ -28,7 +28,7 @@ using Line = LinePutScript.Line;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : WindowX
     {
@@ -38,14 +38,14 @@ namespace VPet_Simulator.Windows
 
         public MainWindow()
         {
-            //处理ARGS
+            // Process ARGS
             Args = new LPS_D();
             foreach (var str in App.Args)
             {
                 Args.Add(new Line(str));
             }
 
-            //存档前缀
+            // Save file prefix
             if (Args.ContainsLine("prefix"))
             {
                 PrefixSave = '-' + Args["prefix"].Info;
@@ -86,10 +86,10 @@ namespace VPet_Simulator.Windows
             CultureInfo.CurrentCulture.NumberFormat = new CultureInfo("en-US").NumberFormat;
 
 
-            // AIDeskPet: Steam 平台初始化已禁用 (不再以原游戏 appid 1920960 运行); 纯单机产品, IsSteamUser 恒为 false
+            // AIDeskPet: Steam platform initialization disabled (no longer runs as original game appid 1920960); standalone product, IsSteamUser always false
             IsSteamUser = false;
 
-            //更新存档系统
+            // Update save system
             if (Directory.Exists(ExtensionValue.BaseDirectory + @"\BackUP"))
             {
                 if (!Directory.Exists(ExtensionValue.BaseDirectory + @"\Saves"))
@@ -112,7 +112,7 @@ namespace VPet_Simulator.Windows
 
             Task.Run(async () =>
             {
-                //加载所有MOD
+                // Load all MODs
                 List<DirectoryInfo> Path = new List<DirectoryInfo>();
                 Path.AddRange(new DirectoryInfo(ModPath).EnumerateDirectories());
 
@@ -120,7 +120,7 @@ namespace VPet_Simulator.Windows
                 CancellationTokenSource source = new CancellationTokenSource();
                 var tsk = Task.Run(async () =>
                 {
-                    if (IsSteamUser)//如果是steam用户,尝试加载workshop
+                    if (IsSteamUser)// If Steam user, try loading workshop
                     {
                         //Leaderboard? leaderboard = await SteamUserStats.FindLeaderboardAsync("chatgpt_auth");
                         //leaderboard?.ReplaceScore(Function.Rnd.Next());
@@ -189,12 +189,12 @@ namespace VPet_Simulator.Windows
 
 
                 Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "Loading Translate")).Wait();
-                //加载语言 (AIDeskPet: 纯英文软件, 强制英文)
+                // Load language (AIDeskPet: English-only software, force English)
                 LocalizeCore.StoreTranslation = true;
                 Set.Language = "en";
                 LocalizeCore.LoadCulture("en");
 
-                //旧版本设置兼容
+                // Legacy settings compatibility
                 var cgpte = Set.FindLine("CGPT");
                 if (cgpte != null)
                 {
@@ -213,10 +213,10 @@ namespace VPet_Simulator.Windows
                     }
                 }
                 else if (Set["CGPT"][(gstr)"type"] == "OFF")
-                {//为老玩家开启选项聊天功能
+                {// Enable option chat feature for existing players
                     Set["CGPT"][(gstr)"type"] = "LB";
                 }
-                else//新玩家,默认设置为
+                else// New players, default to
                     Set["CGPT"][(gstr)"type"] = "LB";
 
                 await GameLoad(Path);
@@ -234,17 +234,17 @@ namespace VPet_Simulator.Windows
                         Set["v"][(gbol)"CODC"] = true;
                     }
                     Set.SteamID = (long)SteamID;
-                    // AIDeskPet: 访客表(多人联机)功能已移除
+                    // AIDeskPet: Guest list (multiplayer) feature removed
                     SteamMatchmaking.OnLobbyInvite += SteamMatchmaking_OnLobbyInvite;
                     SteamFriends.OnGameLobbyJoinRequested += SteamFriends_OnGameLobbyJoinRequested;
                 }
 
 
-                //这里写的都是限定第一个MW使用的功能, 如果写共通, 请前往
+                // Features here are limited to the first MW only; for common features go to
 
-                //物品初始使用方法
+                // Item default use methods
                 Item.UseAction.Add("Food", [(imw,Item) =>
-                  {//食物: 默认直接吃掉
+                  {// Food: eaten directly by default
                       if(Item is Food food)
                       {
                           imw.TakeItem(food);
@@ -256,7 +256,7 @@ namespace VPet_Simulator.Windows
                       return false;
                   }]);
                 Item.UseAction.Add("Toy", [(imw,Item) =>
-                  {//玩具: 默认播放玩耍动画
+                  {// Toy: plays play animation by default
                        var graph = imw.Core.Graph.FindGraph(Item.Data, AnimatType.A_Start, imw.GameSavesData.GameSave.Mode);
                        imw.ActivityLogs.Add(new ActivityLog("al_take_item", Item.TranslateName));
                       if (graph == null)
@@ -277,11 +277,11 @@ namespace VPet_Simulator.Windows
                         return true;
                   }]);
                 Item.UseAction.Add("Mail", [
-                //排在前面的方法优先级更高
+                // Methods listed first have higher priority
                 (imw,Item) => {
                       switch (Item.Name)
                       {
-                          case "每日礼包": //每日随机礼盒: 打开后获得随机3个物品 每天获得一个
+                          case "每日礼包": // Daily random gift box: opens to grant 3 random items, one obtained per day
                               var moneylimit = Math.Min(20000, (50 * (imw.GameSavesData.GameSave.LevelMax + 1) + imw.GameSavesData.GameSave.Level +1) * 50);
                               var chosenfood = imw.Foods.FindAll(x=>x.Price > 10 && x.Price < moneylimit);
                               if(chosenfood.Count == 0)
@@ -295,7 +295,7 @@ namespace VPet_Simulator.Windows
                       return false;
                   },
                    (imw,Item) =>
-                  {//邮件: 打开后获得物品
+                  {// Mail: receive items when opened
                      var lps = new LpsDocument(Item.Data);
                       List<string> itemnames = new List<string>();
                       foreach(var line in lps)
@@ -313,7 +313,7 @@ namespace VPet_Simulator.Windows
                      return true;
                   }]);
                 Item.UseAction.Add("Tool", [(imw,Item) =>
-                  {//工具: 每个工具有自己的使用方法
+                  {// Tool: each tool has its own use method
                      switch (Item.Name)
                       {
                           case "指南针":
@@ -418,7 +418,7 @@ namespace VPet_Simulator.Windows
             CloseConfirm = false;
             try
             {
-                //关闭所有插件
+                // Close all plugins
                 foreach (MainPlugin mp in Plugins)
                     mp.EndGame();
             }
@@ -445,7 +445,7 @@ namespace VPet_Simulator.Windows
             {
                 Task.Run(() =>
                 {
-                    Thread.Sleep(10000);//等待10秒不退出强退
+                    Thread.Sleep(10000);// Force exit if not closed within 10 seconds
                     Environment.Exit(0);
                 });
                 try
@@ -485,7 +485,7 @@ namespace VPet_Simulator.Windows
                     }
 
                     if (IsSteamUser)
-                        SteamClient.Shutdown();//关掉和Steam的连线
+                        SteamClient.Shutdown();// Close the connection to Steam
                     if (notifyIcon != null)
                     {
                         notifyIcon.Visible = false;
@@ -578,7 +578,7 @@ namespace VPet_Simulator.Windows
 
             }
             GameSavesData = new GameSave_v2(petname.Translate());
-            //看看有没有备份,和备份对比下 (新建游戏)
+            // Check for a backup and compare against it (New Game)
             CheckBackupConsistency(GameSavesData, "New Game");
             Core.Save = GameSavesData.GameSave;
             HashCheck = HashCheck;
@@ -586,7 +586,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 尝试加载指定存档文件
+        /// Try to load the specified save file
         /// </summary>
         /// <param name="saveFilePath"></param>
         /// <returns></returns>
@@ -600,7 +600,7 @@ namespace VPet_Simulator.Windows
 #endif
             var content = File.ReadAllText(saveFilePath);
             GameSave_v2 gs = new GameSave_v2(new LPS(content));
-            // 检查备份一致性
+            // Check backup consistency
             CheckBackupConsistency(gs, new FileInfo(saveFilePath).Name);
 
             if (SavesLoad(new LPS(content)))
@@ -616,7 +616,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 与最新备份对比并提示用户
+        /// Compare against the latest backup and prompt the user
         /// </summary>
         private void CheckBackupConsistency(GameSave_v2 gs, string currentName)
         {
@@ -635,7 +635,7 @@ namespace VPet_Simulator.Windows
                             gs2.GameSave.Exp == gs.GameSave.Exp &&
                             gs2.GameSave.Money == gs.GameSave.Money))
                         {
-                            //和备份不一样,说明可能有问题, 提示用户
+                            // Differs from backup, indicating a possible problem; prompt the user
                             MessageBox.Show("检测到存档和备份不一致\n当前存档:{0} Lv{1} ${4:f0}\n备份存档:{2} Lv{3} ${5:f0}\n如需还原请在设置中加载备份还原存档"
                                 .Translate(currentName, gs.GameSave.Level, bks.Name, gs2.GameSave.Level, gs.GameSave.Money, gs2.GameSave.Money)
                                 , "存档不一致提示".Translate());
@@ -644,7 +644,7 @@ namespace VPet_Simulator.Windows
                     }
                     catch
                     {
-                        //备份损坏了,那就不管了
+                        // Backup is corrupted, so ignore it
                     }
                 }
             }
@@ -698,7 +698,7 @@ namespace VPet_Simulator.Windows
             CloseConfirm = false;
             try
             {
-                //关闭所有插件
+                // Close all plugins
                 foreach (MainPlugin mp in Plugins)
                     mp.EndGame();
             }
@@ -721,11 +721,11 @@ namespace VPet_Simulator.Windows
             //SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
             ((HwndSource)PresentationSource.FromVisual(this)).AddHook((IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
             {
-                //想要让窗口透明穿透鼠标和触摸等，需要同时设置 WS_EX_LAYERED 和 WS_EX_TRANSPARENT 样式，
-                //确保窗口始终有 WS_EX_LAYERED 这个样式，并在开启穿透时设置 WS_EX_TRANSPARENT 样式
-                //但是WPF窗口在未设置 AllowsTransparency = true 时，会自动去掉 WS_EX_LAYERED 样式（在 HwndTarget 类中)，
-                //如果设置了 AllowsTransparency = true 将使用WPF内置的低性能的透明实现，
-                //所以这里通过 Hook 的方式，在不使用WPF内置的透明实现的情况下，强行保证这个样式存在。
+                // To make the window transparent and pass mouse/touch input through, both WS_EX_LAYERED and WS_EX_TRANSPARENT styles must be set.
+                // Ensure the window always has WS_EX_LAYERED, and set WS_EX_TRANSPARENT when hit-through is enabled.
+                // However, when AllowsTransparency = true is not set, a WPF window automatically strips WS_EX_LAYERED (in the HwndTarget class),
+                // and setting AllowsTransparency = true would use WPF's built-in low-performance transparency implementation.
+                // So here we use a Hook to forcibly guarantee this style exists without using WPF's built-in transparency.
                 if (msg == (int)Win32.WM.STYLECHANGING && (long)wParam == (long)Win32.GetWindowLongFields.GWL_EXSTYLE)
                 {
                     var styleStruct = (STYLESTRUCT)Marshal.PtrToStructure(lParam, typeof(STYLESTRUCT));
@@ -756,7 +756,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 设置点击穿透到后面透明的窗口
+        /// Set click-through to the transparent window behind
         /// </summary>
         public void SetTransparentHitThrough()
         {
@@ -794,25 +794,25 @@ namespace VPet_Simulator.Windows
             petHelper?.SetLocation();
         }
         /// <summary>
-        /// 显示输入框
+        /// Show input box
         /// </summary>
-        /// <param name="title">标题</param>
-        /// <param name="text">文本</param>
-        /// <param name="defaulttext">默认文本</param>
-        /// <param name="ENDAction">结束事件</param>
-        /// <param name="AllowMutiLine">是否允许多行输入</param>
-        /// <param name="TextCenter">文本居中</param>
-        /// <param name="CanHide">能否隐藏</param>
+        /// <param name="title">Title</param>
+        /// <param name="text">Text</param>
+        /// <param name="defaulttext">Default text</param>
+        /// <param name="ENDAction">End event</param>
+        /// <param name="AllowMutiLine">Whether multi-line input is allowed</param>
+        /// <param name="TextCenter">Center the text</param>
+        /// <param name="CanHide">Whether it can be hidden</param>
         public void ShowInputBox(string title, string text, string defaulttext, Action<string> ENDAction, bool AllowMutiLine = false, bool TextCenter = true, bool CanHide = false)
         {
             winInputBox.Show(this, title, text, defaulttext, ENDAction, AllowMutiLine, TextCenter, CanHide);
         }
         /// <summary>
-        /// 从VPET服务器获取访客表相关信息的接口
+        /// Interface for retrieving guest list information from the VPET server
         /// </summary>
         public async Task<string> GetVPetRoom(string action, int fixID = 0, ulong lobbyid = 0)
         {
-            // AIDeskPet: 原 exlb.net 联机房间服务器已移除; 联机留待自建后端接入
+            // AIDeskPet: original exlb.net multiplayer room server removed; multiplayer pending a self-hosted backend
             await Task.CompletedTask;
             return "0";
         }

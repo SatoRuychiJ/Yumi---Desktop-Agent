@@ -5,207 +5,207 @@ using System.Windows;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 设置方法接口
+    /// Settings method interface
     /// </summary>
     public interface ISetting
     {
         /// <summary>
-        /// 获取当前缩放倍率
+        /// Get the current zoom multiplier
         /// </summary>
         double ZoomLevel { get; }
 
         /// <summary>
-        /// 设置缩放倍率
+        /// Set the zoom multiplier
         /// </summary>
-        /// <param name="level">缩放等级</param>
+        /// <param name="level">Zoom level</param>
         void SetZoomLevel(double level);
 
         /// <summary>
-        /// 获取当前播放声音的大小
+        /// Get the current playback volume
         /// </summary>
         double VoiceVolume { get; }
 
         /// <summary>
-        /// 设置播放声音的大小
+        /// Set the playback volume
         /// </summary>
-        /// <param name="volume">声音大小</param>
+        /// <param name="volume">Volume</param>
         void SetVoiceVolume(double volume);
 
         /// <summary>
-        /// 获取当前自动保存的频率（分钟）
+        /// Get the current auto-save interval (minutes)
         /// </summary>
         int AutoSaveInterval { get; }
 
         /// <summary>
-        /// 设置自动保存的频率（分钟）
+        /// Set the auto-save interval (minutes)
         /// </summary>
-        /// <param name="interval">保存间隔</param>
+        /// <param name="interval">Save interval</param>
         void SetAutoSaveInterval(int interval);
 
         /// <summary>
-        /// 获取或设置备份保存的最大数量
+        /// Get or set the maximum number of backup saves
         /// </summary>
         int BackupSaveMaxNum { get; set; }
 
         /// <summary>
-        /// 获取当前是否置于顶层
+        /// Get whether currently topmost
         /// </summary>
         bool TopMost { get; }
 
         /// <summary>
-        /// 设置是否置于顶层
+        /// Set whether topmost
         /// </summary>
-        /// <param name="topMost">是否置顶</param>
+        /// <param name="topMost">Whether topmost</param>
         void SetTopMost(bool topMost);
 
         /// <summary>
-        /// 获取或设置上次清理缓存的日期
+        /// Get or set the date the cache was last cleared
         /// </summary>
         DateTime LastCacheDate { get; set; }
 
         /// <summary>
-        /// 获取当前语言
+        /// Get the current language
         /// </summary>
         string Language { get; }
 
         /// <summary>
-        /// 设置语言
+        /// Set the language
         /// </summary>
-        /// <param name="language">语言代码</param>
+        /// <param name="language">Language code</param>
         void SetLanguage(string language);
 
         /// <summary>
-        /// 获取或设置按多久视为长按（毫秒）
+        /// Get or set the hold duration counted as a long press (milliseconds)
         /// </summary>
         int PressLength { get; set; }
 
         /// <summary>
-        /// 获取或设置互动周期
+        /// Get or set the interaction interval
         /// </summary>
         int InteractionCycle { get; set; }
 
         /// <summary>
-        /// 获取当前计算间隔（秒）
+        /// Get the current calculation interval (seconds)
         /// </summary>
         double LogicInterval { get; }
 
         /// <summary>
-        /// 设置计算间隔（秒）
+        /// Set the calculation interval (seconds)
         /// </summary>
-        /// <param name="interval">计算间隔</param>
+        /// <param name="interval">Calculation interval</param>
         void SetLogicInterval(double interval);
 
         /// <summary>
-        /// 获取当前是否允许移动
+        /// Get whether movement is currently allowed
         /// </summary>
         bool AllowMove { get; }
 
         /// <summary>
-        /// 设置是否允许移动
+        /// Set whether movement is allowed
         /// </summary>
-        /// <param name="allowMove">是否允许移动</param>
+        /// <param name="allowMove">Whether movement is allowed</param>
         void SetAllowMove(bool allowMove);
 
         /// <summary>
-        /// 获取当前是否启用智能移动
+        /// Get whether smart move is currently enabled
         /// </summary>
         bool SmartMove { get; }
 
         /// <summary>
-        /// 设置是否启用智能移动
+        /// Set whether smart move is enabled
         /// </summary>
-        /// <param name="smartMove">是否启用智能移动</param>
+        /// <param name="smartMove">Whether smart move is enabled</param>
         void SetSmartMove(bool smartMove);
 
         /// <summary>
-        /// 获取当前是否启用计算等数据功能
+        /// Get whether data features such as calculation are currently enabled
         /// </summary>
         bool EnableFunction { get; }
 
         /// <summary>
-        /// 设置是否启用计算等数据功能
+        /// Set whether data features such as calculation are enabled
         /// </summary>
-        /// <param name="enableFunction">是否启用功能</param>
+        /// <param name="enableFunction">Whether the feature is enabled</param>
         void SetEnableFunction(bool enableFunction);
 
         /// <summary>
-        /// 获取当前智能移动周期（秒）
+        /// Get the current smart move interval (seconds)
         /// </summary>
         int SmartMoveInterval { get; }
 
         /// <summary>
-        /// 设置智能移动周期（秒）
+        /// Set the smart move interval (seconds)
         /// </summary>
-        /// <param name="interval">智能移动周期</param>
+        /// <param name="interval">Smart move interval</param>
         void SetSmartMoveInterval(int interval);
 
         /// <summary>
-        /// 获取或设置消息框是否外置
+        /// Get or set whether the message box is external
         /// </summary>
         bool MessageBarOutside { get; set; }
 
         /// <summary>
-        /// 获取当前是否记录游戏退出位置
+        /// Get whether the game exit position is currently recorded
         /// </summary>
         bool StartRecordLast { get; set; }
 
         /// <summary>
-        /// 获取上次退出位置
+        /// Get the last exit position
         /// </summary>
         Point StartRecordLastPoint { get; }
 
         /// <summary>
-        /// 获取或设置桌宠启动的位置
+        /// Get or set the pet's startup position
         /// </summary>
         Point StartRecordPoint { get; set; }
 
         /// <summary>
-        /// 获取或设置当实时播放音量达到该值时运行音乐动作
+        /// Get or set the real-time volume at which the music action runs
         /// </summary>
         double MusicCatch { get; set; }
 
         /// <summary>
-        /// 获取或设置当实时播放音量达到该值时运行特殊音乐动作
+        /// Get or set the real-time volume at which the special music action runs
         /// </summary>
         double MusicMax { get; set; }
 
         /// <summary>
-        /// 获取或设置桌宠图形渲染的分辨率，越高图形越清晰，重启后生效
+        /// Get or set the pet's graphics rendering resolution; higher is sharper, takes effect after restart
         /// </summary>
         int Resolution { get; set; }
 
         /// <summary>
-        /// 获取或设置是否允许桌宠自动购买食品
+        /// Get or set whether the pet may auto-buy food
         /// </summary>
         bool AutoBuy { get; set; }
 
         /// <summary>
-        /// 获取或设置是否允许桌宠自动购买礼物
+        /// Get or set whether the pet may auto-buy gifts
         /// </summary>
         bool AutoGift { get; set; }
 
         /// <summary>
-        /// 获取或设置在任务切换器(Alt+Tab)中是否隐藏窗口，重启后生效
+        /// Get or set whether to hide the window in the task switcher (Alt+Tab); takes effect after restart
         /// </summary>
         bool HideFromTaskControl { get; set; }
 
         /// <summary>
-        /// 读写自定义游戏设置(给mod准备的接口)
+        /// Read/write custom game settings (interface intended for mods)
         /// </summary>
-        /// <param name="lineName">游戏设置</param>
-        /// <returns>如果找到相同名称的第一个Line,则为该Line; 否则为新建的相同名称Line</returns>
+        /// <param name="lineName">Game setting</param>
+        /// <returns>The first Line with a matching name if found; otherwise a newly created Line with that name</returns>
         ILine this[string lineName] { get; set; }
 
         /// <summary>
-        /// 联机允许交互
+        /// Allow interaction in multiplayer
         /// </summary>
         bool MPNOTouch { get; set; }
         /// <summary>
-        /// 桌宠皮肤(不一定是这个,如果找不到则为默认第0个)
+        /// Pet skin (not necessarily this one; falls back to the default index 0 if not found)
         /// </summary>
         string PetGraph { get; }
         /// <summary>
-        /// 开发者模式
+        /// Developer mode
         /// </summary>
         bool DeBug { get; set; }
     }

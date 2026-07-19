@@ -23,7 +23,7 @@ using Color = System.Windows.Media.Color;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winCharacterPanel.xaml 的交互逻辑
+    /// Interaction logic for winCharacterPanel.xaml
     /// </summary>
     public partial class winCharacterPanel : WindowX
     {
@@ -94,18 +94,18 @@ namespace VPet_Simulator.Windows
             }
 
             /// <summary>
-            /// 统计ID
+            /// Stat ID
             /// </summary>
             public string StatId { get; set; }
 
             /// <summary>
-            /// 统计显示名称
+            /// Stat display name
             /// </summary>
             public string StatName { get; set; }
 
             private double _statCount;
             /// <summary>
-            /// 统计内容
+            /// Stat value
             /// </summary>
             public double StatCount
             {

@@ -17,7 +17,7 @@ using static VPet_Simulator.Windows.Interface.MPMessage;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winMPBetterBuy.xaml 的交互逻辑
+    /// Interaction logic for winMPBetterBuy.xaml
     /// </summary>
     public partial class winMPBetterBuy : WindowX
     {
@@ -178,14 +178,14 @@ namespace VPet_Simulator.Windows
         {
             var Button = sender as Button;
             var item = Button.DataContext as Food;
-            //看是什么模式
+            // Determine which mode it is
             bool EnableFunction = mf.mw.Set.EnableFunction && mf.mw.HashCheck && !item.IsOverLoad()
                 && item.Price >= 1 && item.Price <= (100 * (mf.mw.GameSavesData.GameSave.LevelMax + 1) + mf.mw.GameSavesData.GameSave.Level) * 10 && item.Health >= 0 && item.Exp >= 0 &&
                 item.Likability >= 0 && item.Price + 1000 < mf.mw.GameSavesData.GameSave.Money &&
                 item.Strength >= 0 && item.StrengthDrink >= 0 && item.StrengthFood >= 0 && item.Feeling >= 0;
-            //不吃负面/太贵/太便宜
+            // Don't eat negative/too expensive/too cheap items
 
-            if (EnableFunction)//扣钱
+            if (EnableFunction)// Deduct money
                 mf.mw.GameSavesData.GameSave.Money -= item.Price;
 
             mf.DisplayFoodAnimation(item.GetGraph(), item.ImageSource);

@@ -15,15 +15,15 @@ namespace VPet_Simulator.Core
     public partial class Main
     {
         /// <summary>
-        /// 当前动画类型
+        /// Current animation type
         /// </summary>
         public GraphInfo DisplayType = new GraphInfo("");
         /// <summary>
-        /// 默认循环次数
+        /// Default loop count
         /// </summary>
         public int CountNomal = 0;
         /// <summary>
-        /// 以标准形式显示当前默认状态
+        /// Display the current default state in the standard form
         /// </summary>
         public void DisplayToNomal()
         {
@@ -45,31 +45,31 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 显示默认情况, 默认为默认动画
+        /// Show the default case; defaults to the default animation
         /// </summary>
         public Action DisplayNomal { get; set; }
         /// <summary>
-        /// 尝试触发移动
+        /// Try to trigger movement
         /// </summary>
         public Func<bool> DisplayMove { get; set; }
         /// <summary>
-        /// 显示待机情况 (只有符合条件的才会显示)
+        /// Show the idle state (only displayed if conditions are met)
         /// </summary>
         public Func<bool> DisplayIdel { get; set; }
         /// <summary>
-        /// 显示待机(模式1)情况
+        /// Show the idle (mode 1) state
         /// </summary>
         public Action DisplayIdel_StateONE { get; set; }
         /// <summary>
-        /// 显示摸头情况
+        /// Show the head-pat state
         /// </summary>
         public Action DisplayTouchHead { get; set; }
         /// <summary>
-        /// 显示摸身体情况
+        /// Show the body-touch state
         /// </summary>
         public Action DisplayTouchBody { get; set; }
         /// <summary>
-        /// 显示默认动画
+        /// Show the default animation
         /// </summary>
         public void DisplayDefault()
         {
@@ -77,10 +77,10 @@ namespace VPet_Simulator.Core
             Display(GraphType.Default, AnimatType.Single, DisplayNomal);
         }
         /// <summary>
-        /// 显示结束动画
+        /// Show the end animation
         /// </summary>
-        /// <param name="EndAction">结束后接下来,不结束不运行</param>
-        /// <returns>是否成功结束</returns>
+        /// <param name="EndAction">What follows after ending; not run unless it ends</param>
+        /// <returns>Whether it ended successfully</returns>
         public bool DisplayStop(Action EndAction)
         {
             var graph = Core.Graph.FindGraph(DisplayType.Name, AnimatType.C_End, Core.Save.Mode);
@@ -94,9 +94,9 @@ namespace VPet_Simulator.Core
             return false;
         }
         /// <summary>
-        /// 显示结束动画 无论是否结束,都强制结束
+        /// Show the end animation; force end regardless of whether it ends
         /// </summary>
-        /// <param name="EndAction">结束后接下来,不结束也运行</param>
+        /// <param name="EndAction">What follows after ending; runs even if it does not end</param>
         public void DisplayStopForce(Action EndAction)
         {
             if (!DisplayStop(EndAction))
@@ -104,7 +104,7 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 尝试触发移动
+        /// Try to trigger movement
         /// </summary>
         /// <returns></returns>
         public bool DisplayToMove()
@@ -126,11 +126,11 @@ namespace VPet_Simulator.Core
             return false;
         }
         /// <summary>
-        /// 当发生摸头时触发改方法
+        /// Triggered when a head-pat occurs
         /// </summary>
         public event Action Event_TouchHead;
         /// <summary>
-        /// 显示摸头情况
+        /// Show the head-pat state
         /// </summary>
         public void DisplayToTouchHead()
         {
@@ -164,11 +164,11 @@ namespace VPet_Simulator.Core
                DisplayCEndtoNomal(graphname)));
         }
         /// <summary>
-        /// 当发生摸身体时触发改方法
+        /// Triggered when a body-touch occurs
         /// </summary>
         public event Action Event_TouchBody;
         /// <summary>
-        /// 显示摸身体情况
+        /// Show the body-touch state
         /// </summary>
         public void DisplayToTouchBody()
         {
@@ -202,7 +202,7 @@ namespace VPet_Simulator.Core
              DisplayCEndtoNomal(graphname)));
         }
         /// <summary>
-        /// 显示待机(模式1)情况
+        /// Show the idle (mode 1) state
         /// </summary>
         public void DisplayToIdel_StateONE()
         {
@@ -216,7 +216,7 @@ namespace VPet_Simulator.Core
                 DisplayIdel();
         }
         /// <summary>
-        /// 显示待机(模式1)情况
+        /// Show the idle (mode 1) state
         /// </summary>
         private void DisplayIdel_StateONEing(string graphname)
         {
@@ -236,7 +236,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 显示待机(模式2)情况
+        /// Show the idle (mode 2) state
         /// </summary>
         public void DisplayIdel_StateTWO(string graphname)
         {
@@ -245,7 +245,7 @@ namespace VPet_Simulator.Core
             Display(graphname, AnimatType.A_Start, GraphType.StateTWO, DisplayIdel_StateTWOing);
         }
         /// <summary>
-        /// 显示待机(模式2)情况
+        /// Show the idle (mode 2) state
         /// </summary>
         private void DisplayIdel_StateTWOing(string graphname)
         {
@@ -262,7 +262,7 @@ namespace VPet_Simulator.Core
 
         int looptimes;
         /// <summary>
-        /// 显示待机情况 (只有符合条件的才会显示)
+        /// Show the idle state (only displayed if conditions are met)
         /// </summary>
         public bool DisplayToIdel()
         {
@@ -300,11 +300,11 @@ namespace VPet_Simulator.Core
                 return false;
         }
         /// <summary>
-        /// 显示B循环+C循环+ToNomal
+        /// Show B-loop + C-loop + ToNomal
         /// </summary>
         public Action<string> DisplayBLoopingToNomal(int looplength) => (gn) => DisplayBLoopingToNomal(gn, looplength);
         /// <summary>
-        /// 显示B循环+C循环+ToNomal
+        /// Show B-loop + C-loop + ToNomal
         /// </summary>
         public void DisplayBLoopingToNomal(string graphname, int loopLength)
         {
@@ -316,7 +316,7 @@ namespace VPet_Simulator.Core
 
 
         /// <summary>
-        /// 显示睡觉情况
+        /// Show the sleeping state
         /// </summary>
         public void DisplaySleep(bool force = false)
         {
@@ -331,21 +331,21 @@ namespace VPet_Simulator.Core
                 Display(GraphType.Sleep, AnimatType.A_Start, (x) => DisplayBLoopingToNomal(x, Core.Graph.GraphConfig.GetDuration(x)));
         }
         /// <summary>
-        /// 显示B循环 (强制)
+        /// Show B-loop (forced)
         /// </summary>
         public void DisplayBLoopingForce(string graphname)
         {
             Display(graphname, AnimatType.B_Loop, DisplayBLoopingForce);
         }
 
-        //显示工作现在直接由显示调用,没有DisplayWork, 学习同理
+        // Work display is now called directly by the display; there is no DisplayWork, and studying works the same way
 
         /// <summary>
-        /// 显示拖拽情况
+        /// Show the drag state
         /// </summary>
         public void DisplayRaised()
         {
-            //位置迁移: 254-128           
+            // Position migration: 254-128           
             MainGrid.MouseMove -= MainGrid_MouseWave;
             MainGrid.MouseMove -= MainGrid_MouseMove;
             MainGrid.MouseMove += MainGrid_MouseMove;
@@ -363,7 +363,7 @@ namespace VPet_Simulator.Core
         }
         int rasetype = int.MinValue;
         /// <summary>
-        /// 显示拖拽中
+        /// Show dragging in progress
         /// </summary>
         private void DisplayRaising(string name = null)
         {
@@ -375,7 +375,7 @@ namespace VPet_Simulator.Core
                 case -1:
                     rasetype = int.MinValue;
                     Core.Controller.RePositionActive = !Core.Controller.CheckPosition();
-                    //判断侧边隐藏
+                    // Check side-hide
                     if(!MoveSideHideCheck())
                     {
                         if (string.IsNullOrEmpty(name))
@@ -412,7 +412,7 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 显示结束动画到正常动画 (DisplayToNomal)
+        /// Show the end animation into the normal animation (DisplayToNomal)
         /// </summary>
         public void DisplayCEndtoNomal(string graphname)
         {
@@ -423,33 +423,33 @@ namespace VPet_Simulator.Core
 
 
         /// <summary>
-        /// 显示动画 (自动查找和匹配)
+        /// Show animation (auto find and match)
         /// </summary>
-        /// <param name="Type">动画类型</param>
-        /// <param name="EndAction">动画结束后操作(附带名字)</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="Type">Animation type</param>
+        /// <param name="EndAction">Action after the animation ends (with name)</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(GraphType Type, AnimatType animat, Action<string> EndAction = null)
         {
             var name = Core.Graph.FindName(Type);
             Display(name, animat, EndAction);
         }
         /// <summary>
-        /// 显示动画 根据名字播放
+        /// Show animation by name
         /// </summary>
-        /// <param name="name">动画名称</param>
-        /// <param name="EndAction">动画结束后操作(附带名字)</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="name">Animation name</param>
+        /// <param name="EndAction">Action after the animation ends (with name)</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(string name, AnimatType animat, Action<string> EndAction)
         {
             Display(Core.Graph.FindGraph(name, animat, Core.Save.Mode), new Action(() => EndAction.Invoke(name)));
         }
         /// <summary>
-        /// 显示动画 根据名字和类型查找运行,若无则查找类型
+        /// Show animation by name and type; if not found, search by type
         /// </summary>
-        /// <param name="Type">动画类型</param>
-        /// <param name="name">动画名称</param>
-        /// <param name="EndAction">动画结束后操作(附带名字)</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="Type">Animation type</param>
+        /// <param name="name">Animation name</param>
+        /// <param name="EndAction">Action after the animation ends (with name)</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(string name, AnimatType animat, GraphType Type, Action<string> EndAction = null)
         {
             var list = Core.Graph.FindGraphs(name, animat, Core.Save.Mode)?.FindAll(x => x.GraphInfo.Type == Type);
@@ -459,12 +459,12 @@ namespace VPet_Simulator.Core
                 Display(Type, animat, EndAction);
         }
         /// <summary>
-        /// 显示动画 根据名字和类型查找运行,若无则查找类型
+        /// Show animation by name and type; if not found, search by type
         /// </summary>
-        /// <param name="Type">动画类型</param>
-        /// <param name="name">动画名称</param>
-        /// <param name="EndAction">动画结束后操作</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="Type">Animation type</param>
+        /// <param name="name">Animation name</param>
+        /// <param name="EndAction">Action after the animation ends</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(string name, AnimatType animat, GraphType Type, Action EndAction = null)
         {
             var list = Core.Graph.FindGraphs(name, animat, Core.Save.Mode)?.FindAll(x => x.GraphInfo.Type == Type);
@@ -475,22 +475,22 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 显示动画 (自动查找和匹配)
+        /// Show animation (auto find and match)
         /// </summary>
-        /// <param name="Type">动画类型</param>
-        /// <param name="EndAction">动画结束后操作</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="Type">Animation type</param>
+        /// <param name="EndAction">Action after the animation ends</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(GraphType Type, AnimatType animat, Action EndAction = null)
         {
             var name = Core.Graph.FindName(Type);
             Display(name, animat, EndAction);
         }
         /// <summary>
-        /// 显示动画 根据名字播放
+        /// Show animation by name
         /// </summary>
-        /// <param name="name">动画名称</param>
-        /// <param name="EndAction">动画结束后操作</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="name">Animation name</param>
+        /// <param name="EndAction">Action after the animation ends</param>
+        /// <param name="animat">Animation action: Start Loop End</param>
         public void Display(string name, AnimatType animat, Action EndAction = null)
         {
             Display(Core.Graph.FindGraph(name, animat, Core.Save.Mode), EndAction);
@@ -498,24 +498,24 @@ namespace VPet_Simulator.Core
         bool petgridcrlf = true;
         int nodisplayLoop = 0;
         /// <summary>
-        /// 显示过的动画
+        /// Animation that has been displayed
         /// </summary>
         public event Action<GraphInfo> GraphDisplayHandler;
         /// <summary>
-        /// 显示动画 (自动多层切换)
+        /// Show animation (auto multi-layer switching)
         /// </summary>
-        /// <param name="graph">动画</param>
-        /// <param name="EndAction">结束操作</param>
+        /// <param name="graph">Animation</param>
+        /// <param name="EndAction">End action</param>
         public void Display(IGraph graph, Action EndAction = null)
         {
             if (graph == null)
             {
                 if (nodisplayLoop++ > 20)
-                {//无动画时运行兼容性动画
+                {// Run the compatibility animation when there is no animation
                     if (nodisplayLoop < 100)
                         Display(GraphType.Default, AnimatType.Single, EndAction);
                     else
-                    {//连Nomal都没有, 证明是未完成的动画, 修改设置+退出游戏
+                    {// Even Nomal is missing, proving the animation is incomplete; change settings + exit the game
                         Dispatcher.Invoke(() =>
                         {
                             LabelDisplayText.Text = "未找到可播放动画, 已停止运行桌宠模块".Translate();
@@ -596,9 +596,9 @@ namespace VPet_Simulator.Core
             GC.Collect();
         }
         /// <summary>
-        /// 查找可用与显示的Border (自动多层切换)
+        /// Find an available Border for display (auto multi-layer switching)
         /// </summary>
-        /// <param name="graph">动画</param>
+        /// <param name="graph">Animation</param>
         public Decorator FindDisplayBorder(IGraph graph)
         {
             DisplayType = graph.GraphInfo;
@@ -659,11 +659,11 @@ namespace VPet_Simulator.Core
 
 
         /// <summary>
-        /// 显示夹层动画
+        /// Show interlayer animation
         /// </summary>
-        /// <param name="Type">动画类型</param>
-        /// <param name="img">夹层内容</param>
-        /// <param name="EndAction">动画结束后操作</param>
+        /// <param name="Type">Animation type</param>
+        /// <param name="img">Interlayer content</param>
+        /// <param name="EndAction">Action after the animation ends</param>
         public void Display(GraphType Type, ImageSource img, Action EndAction)
         {
             var name = Core.Graph.FindName(Type);
@@ -675,11 +675,11 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 显示夹层动画
+        /// Show interlayer animation
         /// </summary>
-        /// <param name="name">动画名称</param>
-        /// <param name="img">夹层内容</param>
-        /// <param name="EndAction">动画结束后操作</param>
+        /// <param name="name">Animation name</param>
+        /// <param name="img">Interlayer content</param>
+        /// <param name="EndAction">Action after the animation ends</param>
         public void Display(string name, ImageSource img, Action EndAction)
         {
             var ig = Core.Graph.FindGraph(name, AnimatType.Single, Core.Save.Mode);

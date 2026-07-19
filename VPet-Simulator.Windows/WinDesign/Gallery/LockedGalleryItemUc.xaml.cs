@@ -9,7 +9,7 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows.WinDesign.Gallery
 {
     /// <summary>
-    /// LockedGalleryItemUc.xaml 的交互逻辑
+    /// Interaction logic for LockedGalleryItemUc.xaml
     /// </summary>
     public partial class LockedGalleryItemUc : UserControl
     {
@@ -62,7 +62,7 @@ namespace VPet_Simulator.Windows.WinDesign.Gallery
             return (price / 1000).ToString("N0") + "k";
         }
         private void Button_Click(object sender, RoutedEventArgs e)
-        {//花钱解锁
+        {// Unlock by spending money
             if (mw.GameSavesData.GameSave.Money < Photo.UnlockAble.SellPrice)
             {
                 mw.winGallery.Toast("金钱不足".Translate() + " " + convertk(Photo.UnlockAble.SellPrice),

@@ -10,13 +10,13 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// 游戏设置
+    /// Game settings
     /// </summary>
     internal class Setting : LPS_D, ISetting
     {
         MainWindow mw;
         /// <summary>
-        /// 游戏设置
+        /// Game settings
         /// </summary>
         public Setting(MainWindow mw, string lps) : base(lps)
         {
@@ -35,7 +35,7 @@ namespace VPet_Simulator.Windows
             intercycle = this["gameconfig"].GetInt("intercycle", 200);
             allowmove = !this["gameconfig"].GetBool("allowmove");
             smartmove = this["gameconfig"].GetBool("smartmove");
-            // AIDeskPet: AI助手模式默认关闭数据计算(不会饿/生病), 用户可在设置中手动开启
+            // AIDeskPet: AI assistant mode disables data calculation by default (no hunger/illness); user can enable it manually in settings
             if (this["gameconfig"].Find("nofunction") == null)
                 this["gameconfig"].SetBool("nofunction", true);
             enablefunction = !this["gameconfig"].GetBool("nofunction");
@@ -48,7 +48,7 @@ namespace VPet_Simulator.Windows
 
         private double zoomlevel = 0;
         /// <summary>
-        /// 缩放倍率
+        /// Zoom ratio
         /// </summary>
         public double ZoomLevel
         {
@@ -63,7 +63,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 播放声音大小
+        /// Playback volume
         /// </summary>
         public double VoiceVolume
         {
@@ -71,7 +71,7 @@ namespace VPet_Simulator.Windows
             set => SetFloat("voicevolume", value);
         }
         /// <summary>
-        /// 是否为更大的屏幕
+        /// Whether it is a larger screen
         /// </summary>
         public bool IsBiggerScreen
         {
@@ -79,15 +79,15 @@ namespace VPet_Simulator.Windows
             set => SetBool("bigscreen", value);
         }
         /// <summary>
-        /// 是否启用数据收集
+        /// Whether data collection is enabled
         /// </summary>
         public bool Diagnosis
         {
             get => this["diagnosis"].GetBool("enable");
             set => this["diagnosis"].SetBool("enable", value);
         }
-        ///// <summary> //经过测试,储存到内存好处多多,不储存也要占用很多内存,干脆存了吧
-        ///// 是将图片储存到内存
+        ///// <summary> // Tested: storing to memory has many benefits; not storing still uses a lot of memory, so just store it
+        ///// Whether to store images in memory
         ///// </summary>
         //public bool StoreInMemory
         //{
@@ -95,7 +95,7 @@ namespace VPet_Simulator.Windows
         //    set => this["set"].SetBool("storemem", value);
         //}
         /// <summary>
-        /// 非计算模式下默认模式
+        /// Default mode when not in calculation mode
         /// </summary>
         public IGameSave.ModeType CalFunState
         {
@@ -103,7 +103,7 @@ namespace VPet_Simulator.Windows
             set => this[(gint)"calfunstate"] = (int)value;
         }
         /// <summary>
-        /// 数据收集频率
+        /// Data collection frequency
         /// </summary>
         public int DiagnosisInterval
         {
@@ -112,7 +112,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 自动保存频率 (min)
+        /// Auto-save frequency (min)
         /// </summary>
         public int AutoSaveInterval
         {
@@ -120,7 +120,7 @@ namespace VPet_Simulator.Windows
             set => SetInt("autosave", value);
         }
         /// <summary>
-        /// 备份保存最大数量
+        /// Maximum number of backup saves
         /// </summary>
         public int BackupSaveMaxNum
         {
@@ -128,7 +128,7 @@ namespace VPet_Simulator.Windows
             set => SetInt("bakupsave", value);
         }
         /// <summary>
-        /// 是否置于顶层
+        /// Whether to keep on top
         /// </summary>
         public bool TopMost
         {
@@ -136,7 +136,7 @@ namespace VPet_Simulator.Windows
             set => SetBool("topmost", !value);
         }
         /// <summary>
-        /// 是否显示宠物帮助窗口
+        /// Whether to show the pet help window
         /// </summary>
         public bool PetHelper
         {
@@ -144,7 +144,7 @@ namespace VPet_Simulator.Windows
             set => SetBool("pethelper", value);
         }
         /// <summary>
-        /// 是否鼠标穿透
+        /// Whether mouse click-through is enabled
         /// </summary>
         public bool HitThrough
         {
@@ -152,7 +152,7 @@ namespace VPet_Simulator.Windows
             set => SetBool("hitthrough", value);
         }
         /// <summary>
-        /// 上次清理缓存日期
+        /// Last cache cleanup date
         /// </summary>
         public DateTime LastCacheDate
         {
@@ -160,15 +160,15 @@ namespace VPet_Simulator.Windows
             set => SetDateTime("lastcachedate", value);
         }
         /// <summary>
-        /// 数据收集是否被禁止(当日)
+        /// Whether data collection is disabled (for the day)
         /// </summary>
         public bool DiagnosisDayEnable = true;
         /// <summary>
-        /// 语言
+        /// Language
         /// </summary>
         public string Language
         {
-            // AIDeskPet: 纯英文软件, 恒为英文
+            // AIDeskPet: English-only software, always English
             get => "en";
             set => this[(gstr)"language"] = value;
         }
@@ -183,7 +183,7 @@ namespace VPet_Simulator.Windows
             {
                 var line = FindLine("theme");
                 if (line == null)
-                    return "terminal"; // AIDeskPet: 默认使用终端紫主题
+                    return "terminal"; // AIDeskPet: default to terminal purple theme
                 return line.Info;
             }
             set
@@ -192,11 +192,11 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 当前宠物的储存数据
+        /// Stored data of the current pet
         /// </summary>
         public ILine PetData_OLD => this["petdata"];
         /// <summary>
-        /// 储存顺序次数++
+        /// Save sequence count++
         /// </summary>
         public int SaveTimesPP
         {
@@ -208,7 +208,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 储存顺序次数
+        /// Save sequence count
         /// </summary>
         public int SaveTimes
         {
@@ -219,7 +219,7 @@ namespace VPet_Simulator.Windows
         private int presslength;
         private int intercycle;
         /// <summary>
-        /// 按多久视为长按 单位毫秒
+        /// Duration to count as a long press, in milliseconds
         /// </summary>
         public int PressLength
         {
@@ -231,7 +231,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 互动周期
+        /// Interaction cycle
         /// </summary>
         public int InteractionCycle
         {
@@ -243,7 +243,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 计算间隔 (秒)
+        /// Calculation interval (seconds)
         /// </summary>
         public double LogicInterval
         {
@@ -252,7 +252,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 计算间隔
+        /// Calculation interval
         /// </summary>
         public double PetHelpLeft
         {
@@ -260,7 +260,7 @@ namespace VPet_Simulator.Windows
             set => this["pethelp"].SetFloat("left", value);
         }
         /// <summary>
-        /// 计算间隔
+        /// Calculation interval
         /// </summary>
         public double PetHelpTop
         {
@@ -270,7 +270,7 @@ namespace VPet_Simulator.Windows
 
         bool allowmove;
         /// <summary>
-        /// 允许移动事件
+        /// Allow move events
         /// </summary>
         public bool AllowMove
         {
@@ -283,7 +283,7 @@ namespace VPet_Simulator.Windows
         }
         bool smartmove;
         /// <summary>
-        /// 智能移动
+        /// Smart move
         /// </summary>
         public bool SmartMove
         {
@@ -296,7 +296,7 @@ namespace VPet_Simulator.Windows
         }
         bool enablefunction;
         /// <summary>
-        /// 启用计算等数据功能
+        /// Enable data features such as calculation
         /// </summary>
         public bool EnableFunction
         {
@@ -318,7 +318,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 智能移动周期 (秒)
+        /// Smart move cycle (seconds)
         /// </summary>
         public int SmartMoveInterval
         {
@@ -326,7 +326,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetInt("smartmoveinterval", value);
         }
         /// <summary>
-        /// 消息框外置
+        /// Message bar outside
         /// </summary>
         public bool MessageBarOutside
         {
@@ -334,7 +334,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetBool("msgbarout", value);
         }
         /// <summary>
-        /// 开机启动
+        /// Start on boot
         /// </summary>
         public bool StartUPBoot
         {
@@ -342,7 +342,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetBool("startboot", value);
         }
         /// <summary>
-        /// 开机启动 Steam
+        /// Start Steam on boot
         /// </summary>
         public bool StartUPBootSteam
         {
@@ -350,7 +350,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetBool("startbootsteam", !value);
         }
         /// <summary>
-        /// 桌宠选择内容
+        /// Selected desktop pet
         /// </summary>
         public string PetGraph
         {
@@ -359,7 +359,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 是否记录游戏退出位置 (默认:是)
+        /// Whether to record the game exit position (default: yes)
         /// </summary>
         public bool StartRecordLast
         {
@@ -367,7 +367,7 @@ namespace VPet_Simulator.Windows
             set => this["startrecordlast"].SetBool("enable", !value);
         }
         /// <summary>
-        /// 记录上次退出位置
+        /// Recorded last exit position
         /// </summary>
         public Point StartRecordLastPoint
         {
@@ -386,7 +386,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 设置中桌宠启动的位置
+        /// Configured startup position of the desktop pet
         /// </summary>
         public Point StartRecordPoint
         {
@@ -405,7 +405,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 当实时播放音量达到该值时运行音乐动作
+        /// Triggers the music action when the live playback volume reaches this value
         /// </summary>
         public double MusicCatch
         {
@@ -413,7 +413,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetDouble("musiccatch", value);
         }
         /// <summary>
-        /// 当实时播放音量达到该值时运行特殊音乐动作
+        /// Triggers the special music action when the live playback volume reaches this value
         /// </summary>
         public double MusicMax
         {
@@ -421,7 +421,7 @@ namespace VPet_Simulator.Windows
             set => this["gameconfig"].SetDouble("musicmax", value);
         }
         /// <summary>
-        /// 桌宠图形渲染的分辨率,越高图形越清晰
+        /// Rendering resolution of the desktop pet graphics; higher is sharper
         /// </summary>
         public int Resolution
         {
@@ -431,7 +431,7 @@ namespace VPet_Simulator.Windows
 
         bool autobuy;
         /// <summary>
-        /// 允许桌宠自动购买食品
+        /// Allow the desktop pet to auto-buy food
         /// </summary>
         public bool AutoBuy
         {
@@ -444,7 +444,7 @@ namespace VPet_Simulator.Windows
         }
         bool autogift;
         /// <summary>
-        /// 允许桌宠自动购买礼物
+        /// Allow the desktop pet to auto-buy gifts
         /// </summary>
         public bool AutoGift
         {
@@ -456,7 +456,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 在任务切换器(Alt+Tab)中隐藏窗口
+        /// Hide the window in the task switcher (Alt+Tab)
         /// </summary>
         public bool HideFromTaskControl
         {
@@ -503,7 +503,7 @@ namespace VPet_Simulator.Windows
             }
         }
         /// <summary>
-        /// 消息框外置
+        /// Message bar outside
         /// </summary>
         public bool MPNOTouch
         {
@@ -545,10 +545,10 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 读写自定义游戏设置(给mod准备的接口)
+        /// Read/write custom game settings (an interface intended for mods)
         /// </summary>
-        /// <param name="lineName">游戏设置</param>
-        /// <returns>如果找到相同名称的第一个Line,则为该Line; 否则为新建的相同名称Line</returns>
+        /// <param name="lineName">Game setting</param>
+        /// <returns>The first Line with a matching name if found; otherwise a newly created Line with that name</returns>
         ILine ISetting.this[string lineName]
         {
             get

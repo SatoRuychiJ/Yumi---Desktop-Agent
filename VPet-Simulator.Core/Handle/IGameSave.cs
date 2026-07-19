@@ -3,170 +3,170 @@
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 游戏存档
+    /// Game save
     /// </summary>
     public interface IGameSave
     {
         /// <summary>
-        /// 宠物名字
+        /// Pet name
         /// </summary>
         string Name { get; set; }
         /// <summary>
-        /// 主人称呼
+        /// Owner's title
         /// </summary>
         string HostName { get; set; }
         /// <summary>
-        /// 金钱
+        /// Money
         /// </summary>
         double Money { get; set; }
         /// <summary>
-        /// 经验值
+        /// Experience
         /// </summary>
         double Exp { get; set; }
         /// <summary>
-        /// 经验值加成
+        /// Experience bonus
         /// </summary>
         double ExpBonus { get; }
         /// <summary>
-        /// 等级
+        /// Level
         /// </summary>
         int Level { get; }
         /// <summary>
-        /// 升级所需经验值
+        /// Experience needed to level up
         /// </summary>
         /// <returns></returns>
         int LevelUpNeed();
         /// <summary>
-        /// 体力 0-100
+        /// Strength 0-100
         /// </summary>
         double Strength { get; set; }
         /// <summary>
-        /// 最大体力值
+        /// Maximum strength
         /// </summary>
         double StrengthMax { get; }
         /// <summary>
-        /// 待补充的体力,随着时间缓慢加给桌宠
-        /// </summary>//让游戏更有游戏性
+        /// Strength to be replenished, slowly added to the pet over time
+        /// </summary>//makes the game more engaging
         double StoreStrength { get; set; }
         /// <summary>
-        /// 变化 体力
+        /// Change in strength
         /// </summary>
         double ChangeStrength { get; set; }
         /// <summary>
-        /// 修改体力
+        /// Modify strength
         /// </summary>
         /// <param name="value"></param>
         void StrengthChange(double value);
         /// <summary>
-        /// 饱腹度
+        /// Fullness
         /// </summary>
         double StrengthFood { get; set; }
         /// <summary>
-        /// 待补充的饱腹度,随着时间缓慢加给桌宠
-        /// </summary>//让游戏更有游戏性
+        /// Fullness to be replenished, slowly added to the pet over time
+        /// </summary>//makes the game more engaging
         double StoreStrengthFood { get; set; }
         void StrengthChangeFood(double value);
         /// <summary>
-        /// 变化 食物
+        /// Change in food
         /// </summary>
         double ChangeStrengthFood { get; set; }
         /// <summary>
-        /// 口渴度
+        /// Thirst
         /// </summary>
         double StrengthDrink { get; set; }
 
         /// <summary>
-        /// 待补充的口渴度,随着时间缓慢加给桌宠
-        /// </summary>//让游戏更有游戏性
+        /// Thirst to be replenished, slowly added to the pet over time
+        /// </summary>//makes the game more engaging
         double StoreStrengthDrink { get; set; }
         /// <summary>
-        /// 变化 口渴度
+        /// Change in thirst
         /// </summary>
         double ChangeStrengthDrink { get; set; }
         /// <summary>
-        /// 修改口渴度
+        /// Modify thirst
         /// </summary>
         void StrengthChangeDrink(double value);
         /// <summary>
-        /// 修改心情
+        /// Modify mood
         /// </summary>
         void FeelingChange(double value);
         /// <summary>
-        /// 变化 心情
+        /// Change in mood
         /// </summary>
         double ChangeFeeling { get; set; }
         /// <summary>
-        /// 心情
+        /// Mood
         /// </summary>
         double Feeling { get; set; }
         /// <summary>
-        /// 心情最大值
+        /// Maximum mood
         /// </summary>
         double FeelingMax { get; }
 
         /// <summary>
-        /// 健康(生病)(隐藏)
+        /// Health (illness) (hidden)
         /// </summary>
         double Health { get; set; }
 
         /// <summary>
-        /// 好感度(隐藏)(累加值)
+        /// Likability (hidden) (accumulated value)
         /// </summary>
         double Likability { get; set; }
         /// <summary>
-        /// 好感度(隐藏)(最大值)
+        /// Likability (hidden) (maximum value)
         /// </summary>
         double LikabilityMax { get; }
 
         /// <summary>
-        /// 清除变化
+        /// Clear changes
         /// </summary>
         void CleanChange();
         /// <summary>
-        /// 取回被储存的体力
+        /// Retrieve stored strength
         /// </summary>
         void StoreTake();
         /// <summary>
-        /// 吃食物
+        /// Eat food
         /// </summary>
-        /// <param name="food">食物类</param>
+        /// <param name="food">Food class</param>
         void EatFood(IFood food);
         /// <summary>
-        /// 宠物当前状态
+        /// Pet's current state
         /// </summary>
         ModeType Mode { get; set; }
         /// <summary>
-        /// 宠物状态模式
+        /// Pet state mode
         /// </summary>
         public enum ModeType
         {
             /// <summary>
-            /// 高兴
+            /// Happy
             /// </summary>
             Happy,
             /// <summary>
-            /// 普通
+            /// Normal
             /// </summary>
             Nomal,
             /// <summary>
-            /// 状态不佳
+            /// Poor condition
             /// </summary>
             PoorCondition,
             /// <summary>
-            /// 生病(躺床)
+            /// Ill (bedridden)
             /// </summary>
             Ill
         }
 
         /// <summary>
-        /// 计算宠物当前状态
+        /// Calculate the pet's current state
         /// </summary>
         ModeType CalMode();
 
         /// <summary>
-        /// 存档
+        /// Save
         /// </summary>
-        /// <returns>存档行</returns>
+        /// <returns>Save line</returns>
         Line ToLine();
     }
 }

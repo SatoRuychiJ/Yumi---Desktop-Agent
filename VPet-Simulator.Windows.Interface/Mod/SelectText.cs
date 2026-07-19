@@ -6,19 +6,19 @@ using VPet_Simulator.Core;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 供玩家选择说话的文本
+    /// Text options for the player to choose to say
     /// </summary>
     public class SelectText : ICheckText, IFood
     {
         /// <summary>
-        /// 玩家选项名称
+        /// Player option name
         /// </summary>
         [Line(IgnoreCase = true)]
         public string Choose { get; set; } = null;
 
         private string transChoose = null;
         /// <summary>
-        /// 玩家选项名称 (翻译)
+        /// Player option name (translated)
         /// </summary>
         public string TranslateChoose
         {
@@ -36,14 +36,14 @@ namespace VPet_Simulator.Windows.Interface
             }
         }
         /// <summary>
-        /// 标签
+        /// Tag
         /// </summary>
         [Line(IgnoreCase = true)]
         public List<string> Tags { get; set; } = new List<string>();
         /// <summary>
-        /// 查看标签是否命中
+        /// Check whether the tag matches
         /// </summary>
-        /// <param name="totag">跳转到标签</param>
+        /// <param name="totag">Tag to jump to</param>
         public bool ContainsTag(IEnumerable<string> totag)
         {
             foreach (var tag in totag)
@@ -56,7 +56,7 @@ namespace VPet_Simulator.Windows.Interface
             return false;
         }
         /// <summary>
-        /// 跳转到标签
+        /// Jump to the tag
         /// </summary>
         [Line(IgnoreCase = true)] public List<string> ToTags { get; set; } = new List<string>();
 

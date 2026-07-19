@@ -18,7 +18,7 @@ using static VPet_Simulator.Core.GraphHelper.Work;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 日程表功能
+/// Schedule feature
 /// </summary>
 public class ScheduleTask
 {
@@ -27,7 +27,7 @@ public class ScheduleTask
     public int NowIndex { get; set; } = 0;
     public bool IsOn { get; set; } = false;
     /// <summary>
-    /// 根据设置获取日程表
+    /// Get the schedule based on the settings
     /// </summary>
     public ScheduleTask(IMainWindow imw)
     {
@@ -164,7 +164,7 @@ public class ScheduleTask
         }
     }
     /// <summary>
-    /// 开始工作
+    /// Start working
     /// </summary>
     public void StartWork()
     {
@@ -178,12 +178,12 @@ public class ScheduleTask
                 NowIndex = 0;
             }
 
-            //自动续费工作
+            //auto-renew work
             AutoRenew();
 
             if (ScheduleItems[NowIndex] is WorkScheduleItem wsi)
             {
-                //判断能否工作
+                //check whether work is possible
                 if (wsi.Work.Type == WorkType.Work)
                 {
                     if (PackageWork?.IsActive() != true)
@@ -229,7 +229,7 @@ public class ScheduleTask
         }
     }
     /// <summary>
-    /// 开始日程表
+    /// Start the schedule
     /// </summary>
     public void Start()
     {
@@ -238,7 +238,7 @@ public class ScheduleTask
         StartWork();
     }
     /// <summary>
-    /// 停止日程表
+    /// Stop the schedule
     /// </summary>
     public void Stop()
     {
@@ -266,42 +266,42 @@ public class ScheduleTask
     public Package PackageWork { get; set; }
     public Package PackageStudy { get; set; }
     /// <summary>
-    /// 添加工作到日程表
+    /// Add work to the schedule
     /// </summary>
-    /// <param name="work">工作</param>
-    /// <param name="dbl">倍率</param>
+    /// <param name="work">Work</param>
+    /// <param name="dbl">Multiplier</param>
     public void AddWork(Work work, int dbl)
     {
         ScheduleItems.Add(new WorkScheduleItem(this, work, dbl));
     }
     /// <summary>
-    /// 添加学习到日程表
+    /// Add study to the schedule
     /// </summary>
-    /// <param name="work">工作</param>
-    /// <param name="dbl">倍率</param>
+    /// <param name="work">Work</param>
+    /// <param name="dbl">Multiplier</param>
     public void AddStudy(Work work, int dbl)
     {
         ScheduleItems.Add(new StudyScheduleItem(this, work, dbl));
     }
     /// <summary>
-    /// 添加游玩到日程表
+    /// Add play to the schedule
     /// </summary>
-    /// <param name="work">工作</param>
-    /// <param name="dbl">倍率</param>
+    /// <param name="work">Work</param>
+    /// <param name="dbl">Multiplier</param>
     public void AddPlay(Work work, int dbl)
     {
         ScheduleItems.Add(new PlayScheduleItem(this, work, dbl));
     }
     /// <summary>
-    /// 添加休息到日程表
+    /// Add rest to the schedule
     /// </summary>
-    /// <param name="restTime">休息时间</param>
+    /// <param name="restTime">Rest time</param>
     public void AddRest(int restTime)
     {
         ScheduleItems.Add(new RestScheduleItem(this, restTime));
     }
     /// <summary>
-    /// 日程表日程
+    /// Schedule entry
     /// </summary>
     public class ScheduleItemBase : NotifyPropertyChangedBase
     {
@@ -311,15 +311,15 @@ public class ScheduleTask
         }
         public ScheduleTask Task;
         /// <summary>
-        /// 休息时间
+        /// Rest time
         /// </summary>
         public virtual int RestTime { get; set; } = 0;
         /// <summary>
-        /// 工作时间
+        /// Work time
         /// </summary>
         public virtual int WorkTime { get; set; } = 0;
         /// <summary>
-        /// 是否是当前正在进行的日程
+        /// Whether this is the currently active schedule entry
         /// </summary>
         public bool IsNow
         {
@@ -339,17 +339,17 @@ public class ScheduleTask
         }
     }
     /// <summary>
-    /// 工作日程表日程
+    /// Work schedule entry
     /// </summary>
     public class WorkScheduleItem
         : ScheduleItemBase
     {
         /// <summary>
-        /// 翻倍倍率
+        /// Multiplier
         /// </summary>
         public int DBL { get; set; }
         /// <summary>
-        /// 当前绑定工作
+        /// Currently bound work
         /// </summary>
         public Work Work { get; set; }
         public WorkScheduleItem(ScheduleTask task, Work work, int dbl) : base(task)
@@ -360,7 +360,7 @@ public class ScheduleTask
 
             if (source == null)
             {
-                //尝试显示默认图像
+                //try to show the default image
                 Image = task.mw.ImageSources.FindImage("work_" + task.mw.Set.PetGraph + "_t_" + work.Type.ToString(), "work_" + work.Type.ToString());
             }
             else
@@ -400,7 +400,7 @@ public class ScheduleTask
         private bool _isPreviousIsRest;
     }
     /// <summary>
-    /// 学习日程表日程
+    /// Study schedule entry
     /// </summary>
     public class StudyScheduleItem : WorkScheduleItem
     {
@@ -411,7 +411,7 @@ public class ScheduleTask
 
     }
     /// <summary>
-    /// 工作日程表日程
+    /// Work schedule entry
     /// </summary>
     public class PlayScheduleItem : WorkScheduleItem
     {
@@ -432,7 +432,7 @@ public class ScheduleTask
         public new Visibility IsOKVisibility => Visibility.Collapsed;
     }
     /// <summary>
-    /// 休息日程表日程
+    /// Rest schedule entry
     /// </summary>
     public class RestScheduleItem
         : ScheduleItemBase
@@ -442,13 +442,13 @@ public class ScheduleTask
             RestTime = restTime;
         }
         /// <summary>
-        /// 休息时间
+        /// Rest time
         /// </summary>
         public override int RestTime { get => _restTime; set => Set(ref _restTime, value); }
         private int _restTime;
     }
     /// <summary>
-    /// 套餐信息
+    /// Package info
     /// </summary>
     public class Package
     {
@@ -456,11 +456,11 @@ public class ScheduleTask
         {
         }
         /// <summary>
-        /// 套餐名称
+        /// Package name
         /// </summary>
         [Line] public string Name { get; set; }
         /// <summary>
-        /// 协议名称 (已翻译)
+        /// Agreement name (translated)
         /// </summary>
         public string NameTrans
         {
@@ -476,11 +476,11 @@ public class ScheduleTask
         }
         private string nametrans;
         /// <summary>
-        /// 描述
+        /// Description
         /// </summary>
         [Line] public string Describe { get; set; }
         /// <summary>
-        /// 描述 已翻译
+        /// Description (translated)
         /// </summary>
         public string DescribeTrans
         {
@@ -496,29 +496,29 @@ public class ScheduleTask
         }
         private string describetrans;
         /// <summary>
-        /// 抽成
+        /// Commission
         /// </summary>
         [Line] public double Commissions { get; set; }
         /// <summary>
-        /// 办理费用
+        /// Sign-up fee
         /// </summary>
         [Line] public double Price { get; set; }
         /// <summary>
-        /// 截止时间
+        /// Expiration time
         /// </summary>
         [Line] public DateTime EndTime { get; set; } = DateTime.MinValue;
         /// <summary>
-        /// 是否自动续费
+        /// Whether to auto-renew
         /// </summary>
         [Line] public bool AutoRenew { get; set; } = false;
         /// <summary>
-        /// 可用等级
+        /// Available level
         /// </summary>
         [Line] public int Level { get; set; }
         /// <summary>
-        /// 是否生效
+        /// Whether it is active
         /// </summary>
-        /// <returns>判断套餐是否生效</returns>
+        /// <returns>Whether the package is active</returns>
         public bool IsActive() => DateTime.Now < EndTime;
 
         public Package(PackageFull packageFull, int level)
@@ -532,7 +532,7 @@ public class ScheduleTask
         }
     }
     /// <summary>
-    /// 套餐详细
+    /// Package details
     /// </summary>
     public class PackageFull : Package
     {
@@ -540,16 +540,16 @@ public class ScheduleTask
         {
         }
         /// <summary>
-        /// 持续时间 (天)
+        /// Duration (days)
         /// </summary>
         [Line] public int Duration { get; set; }
         /// <summary>
-        /// 等级需求
+        /// Level requirement
         /// </summary>
         [Line] public double LevelInNeed { get; set; }
 
         /// <summary>
-        /// 工作类型
+        /// Work type
         /// </summary>
         [Line] public WorkType WorkType { get; set; }
 

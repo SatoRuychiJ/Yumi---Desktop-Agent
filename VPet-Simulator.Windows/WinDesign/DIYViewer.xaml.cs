@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// DIYViewer.xaml 的交互逻辑
+    /// Interaction logic for DIYViewer.xaml
     /// </summary>
     public partial class DIYViewer : UserControl
     {

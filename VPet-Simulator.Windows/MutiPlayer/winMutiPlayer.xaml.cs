@@ -20,14 +20,14 @@ using static VPet_Simulator.Windows.Win32;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// winMutiPlayer.xaml 的交互逻辑
+/// Interaction logic for winMutiPlayer.xaml
 /// </summary>
 public partial class winMutiPlayer : WindowX, IMPWindows
 {
     public Lobby lb;
     MainWindow mw;
     /// <summary>
-    /// 好友宠物模块
+    /// Friend pet module
     /// </summary>
     public List<MPFriends> MPFriends = new List<MPFriends>();
     public List<MPUserControl> MPUserControls = new List<MPUserControl>();
@@ -180,7 +180,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
                 SteamNetworking.AcceptP2PSessionWithUser(steamid);
             };
 
-            //给自己动画添加绑定
+            // Add bindings to your own animation
             mw.Main.GraphDisplayHandler += Main_GraphDisplayHandler;
             mw.Main.TimeHandle += Main_TimeHandle;
             if (IsHost)
@@ -191,7 +191,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
                     Title = "{0}的访客表".Translate(mw.GameSavesData.GameSave.Name);
                 });
             }
-            //获取成员列表
+            // Get the member list
             foreach (var v in lb.Members)
             {
                 if (v.Id == SteamClient.SteamId) continue;
@@ -208,7 +208,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
                 if (v.Id == lb.Owner.Id)
                     _ = Task.Run(() =>
                     {
-                        //加载lobby传过来的数据       
+                        // Load the data passed in from the lobby
                         while (!mpf.Loaded)
                         {
                             Thread.Sleep(500);
@@ -230,7 +230,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
     private void Main_TimeHandle(Main obj)
     {
         //if (mw.GameSavesData.GameSave.Mode == IGameSave.ModeType.Ill)
-        //{//生病自动退出访客表
+        //{// Automatically leave the visitor list when ill
         //    ClosingMutiPlayer?.Invoke();
         //    isOPEN = false;
         //    lb.Leave();
@@ -248,7 +248,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         {
             if (lb.GetData("kick") == SteamClient.SteamId.Value.ToString())
             {
-                Task.Run(() => MessageBox.Show("访客表已被房主{0}关闭".Translate(lb.Owner.Name)));//温柔的谎言
+                Task.Run(() => MessageBox.Show("访客表已被房主{0}关闭".Translate(lb.Owner.Name)));// A white lie
                 lb.Leave();
                 lb = default(Lobby);
                 Close();
@@ -299,7 +299,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         {
             return;
         }
-        //如果是同一个动画就不发送
+        // Don't send if it's the same animation
         if (lastgraph.Type == info.Type && lastgraph.Animat == info.Animat && info.Name == lastgraph.Name)
             return;
         lastgraph = info;
@@ -310,7 +310,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         SendMessageALL(msg);
     }
     /// <summary>
-    /// 给指定好友发送消息
+    /// Send a message to a specific friend
     /// </summary>
     public bool SendMessage(ulong friendid, MPMessage msg)
     {
@@ -318,7 +318,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         return SteamNetworking.SendP2PPacket(friendid, data);
     }
     /// <summary>
-    /// 给所有人发送消息
+    /// Send a message to everyone
     /// </summary>
     public void SendMessageALL(MPMessage msg)
     {
@@ -331,22 +331,22 @@ public partial class winMutiPlayer : WindowX, IMPWindows
     }
 
     /// <summary>
-    /// 发送日志消息
+    /// Send a log message
     /// </summary>
-    /// <param name="message">日志</param>
+    /// <param name="message">Log</param>
     public void Log(string message)
     {
         Dispatcher.Invoke(() => tbLog.AppendText($"[{DateTime.Now.ToShortTimeString()}]{message}\n"));
     }
 
     /// <summary>
-    /// 事件:成员加入
+    /// Event: member joined
     /// </summary>
     public event Action<ulong> OnMemberJoined;
     private void SteamMatchmaking_OnLobbyMemberJoined(Lobby lobby, Friend friend)
     {
         if (lobby.Id == lb.Id && MPFriends.Find(x => x.friend.Id == friend.Id) == null)
-        { //如果有未处理的退出,不管
+        { // Ignore if there's an unhandled leave
             Log("好友{0}已加入访客表".Translate(friend.Name));
             var mpf = new MPFriends(this, mw, lb, friend);
             MPFriends.Add(mpf);
@@ -424,10 +424,10 @@ public partial class winMutiPlayer : WindowX, IMPWindows
                                     {
                                         mw.Main.LabelDisplayShow("{0}花费${3}给{1}买了{2}".Translate(byname, mw.GameSavesData.GameSave.Name, feed.Item.TranslateName, feed.Item.Price), 6000);
                                         Log("{0}花费${3}给{1}买了{2}".Translate(byname, mw.GameSavesData.GameSave.Name, feed.Item.TranslateName, feed.Item.Price));
-                                        //对于要修改数据的物品一定要再次检查,避免联机开挂毁存档
+                                        // For items that modify data, always re-check to prevent multiplayer cheating from corrupting the save
                                         if (item.Price >= 10 && item.Price <= (100 * (mw.GameSavesData.GameSave.LevelMax + 1) + mw.GameSavesData.GameSave.Level) * 10 && item.Health >= 0 && item.Exp >= 0 && item.Likability >= 0 && giveprice < 0
                                            && item.Strength >= 0 && item.StrengthDrink >= 0 && item.StrengthFood >= 0 && item.Feeling >= 0)
-                                        {//单次联机收礼物上限 (100 * (精英化次数+1) + 等级)*10
+                                        {// Per-transaction multiplayer gift cap (100 * (eliteCount+1) + level)*10
                                             giveprice += item.Price;
                                             mw.TakeItemHandle(item, 1, "friend");
                                             mw.TakeItem(feed.Item);
@@ -474,7 +474,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
     }
     bool isOPEN = true;
     /// <summary>
-    /// 事件: 结束访客表, 窗口关闭
+    /// Event: end the visitor list, close the window
     /// </summary>
     public event Action ClosingMutiPlayer;
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -502,7 +502,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
     }
 
     /// <summary>
-    /// 显示本体摸头情况
+    /// Show the head-pat state for the main pet
     /// </summary>
     public void DisplayNOCALTouchHead()
     {
@@ -528,7 +528,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
            mw.Main.DisplayCEndtoNomal(graphname))));
     }
     /// <summary>
-    /// 显示摸身体情况
+    /// Show the body-touch state
     /// </summary>
     public void DisplayNOCALTouchBody()
     {
@@ -554,7 +554,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
          mw.Main.DisplayCEndtoNomal(graphname))));
     }
     /// <summary>
-    /// 显示本体捏脸情况
+    /// Show the face-pinch state for the main pet
     /// </summary>
     public void DisplayNOCALTouchPinch()
     {
@@ -599,7 +599,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         return new SelfFriends(mw, lb);
     }
     /// <summary>
-    /// 把自己伪装好友,方便处理数据
+    /// Disguise yourself as a friend to simplify data handling
     /// </summary>
     public class SelfFriends : IMPFriend
     {
@@ -661,7 +661,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
 
 
         /// <summary>
-        /// 智能化显示后续过度动画
+        /// Intelligently display the following transition animation
         /// </summary>
         public void DisplayAuto(GraphInfo gi)
         {
@@ -697,7 +697,7 @@ public partial class winMutiPlayer : WindowX, IMPWindows
             }
         }
         /// <summary>
-        /// 根据好友数据显示动画
+        /// Display animation based on friend data
         /// </summary>
         public bool DisplayGraph(GraphInfo gi)
         {
@@ -737,10 +737,10 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         }
 
         /// <summary>
-        /// 显示吃东西(夹层)动画
+        /// Show the eating (sandwiched) animation
         /// </summary>
-        /// <param name="graphName">夹层动画名</param>
-        /// <param name="imageSource">被夹在中间的图片</param>
+        /// <param name="graphName">Sandwich animation name</param>
+        /// <param name="imageSource">Image sandwiched in the middle</param>
         public void DisplayFoodAnimation(string graphName, ImageSource imageSource)
         {
             mw.DisplayFoodAnimation(graphName, imageSource);

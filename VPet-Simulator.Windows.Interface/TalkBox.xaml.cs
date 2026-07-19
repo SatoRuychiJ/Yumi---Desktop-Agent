@@ -17,12 +17,12 @@ namespace VPet_Simulator.Windows.Interface
 {
 
     /// <summary>
-    /// 聊天API接口/显示类
+    /// Chat API interface / display class
     /// </summary>
     public abstract partial class TalkBox : UserControl, ITalkAPI
     {
         /// <summary>
-        /// 插件主体
+        /// Plugin body
         /// </summary>
         protected MainPlugin MainPlugin;
         public TalkBox(MainPlugin mainPlugin)
@@ -42,12 +42,12 @@ namespace VPet_Simulator.Windows.Interface
             MainPlugin = mainPlugin;
         }
         /// <summary>
-        /// 根据内容进行回应 (异步)
+        /// Respond based on the content (async)
         /// </summary>
-        /// <param name="text">内容</param>
+        /// <param name="text">Content</param>
         public abstract void Responded(string text);
         /// <summary>
-        /// 该聊天接口名字
+        /// Name of this chat interface
         /// </summary>
         public abstract string APIName { get; }
 
@@ -64,7 +64,7 @@ namespace VPet_Simulator.Windows.Interface
             Task.Run(() => Responded(cont));
         }
         /// <summary>
-        /// 显示思考动画
+        /// Show the thinking animation
         /// </summary>
         public void DisplayThink()
         {
@@ -79,7 +79,7 @@ namespace VPet_Simulator.Windows.Interface
             }
         }
         /// <summary>
-        /// 显示思考结束并说话
+        /// End the thinking animation and speak
         /// </summary>
         public void DisplayThinkToSayRnd(string text, string desc = null)
         {
@@ -96,9 +96,9 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 显示思考结束并说话 流式说话版本
+        /// End the thinking animation and speak (streaming version)
         /// </summary>
-        /// <param name="sayInfostream">说话信息</param>
+        /// <param name="sayInfostream">Speech info</param>
         public void DisplayThinkToSayRnd(SayInfoWithStream sayInfostream)
         {
             var think = MainPlugin.MW.Core.Graph.FindGraphs("think", AnimatType.C_End, MainPlugin.MW.Core.Save.Mode);
@@ -123,7 +123,7 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 聊天设置
+        /// Chat settings
         /// </summary>
         public abstract void Setting();
 
@@ -150,16 +150,16 @@ namespace VPet_Simulator.Windows.Interface
     public interface ITalkAPI
     {
         /// <summary>
-        /// 显示的窗口
+        /// The window shown
         /// </summary>
         UIElement This { get; }
 
         /// <summary>
-        /// 该聊天接口名字
+        /// Name of this chat interface
         /// </summary>
         string APIName { get; }
         /// <summary>
-        /// 聊天设置
+        /// Chat settings
         /// </summary>
         void Setting();
     }

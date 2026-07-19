@@ -15,44 +15,44 @@ using VPet_Simulator.Core;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 模组信息接口
+/// Mod info interface
 /// </summary>
 public interface IModInfo
 {
     /// <summary>
-    /// 模组名称
+    /// Mod name
     /// </summary>
     public string Name { get; }
     /// <summary>
-    /// 模组作者
+    /// Mod author
     /// </summary>
     public string Author { get; }
     /// <summary>
-    /// 如果是上传至Steam,则为SteamUserID
+    /// If uploaded to Steam, this is the SteamUserID
     /// </summary>
     public long AuthorID { get; }
     /// <summary>
-    /// 上传至Steam的ItemID
+    /// The ItemID uploaded to Steam
     /// </summary>
     public ulong ItemID { get; }
     /// <summary>
-    /// 介绍
+    /// Description
     /// </summary>
     public string Intro { get; }
     /// <summary>
-    /// 模组路径
+    /// Mod path
     /// </summary>
     public DirectoryInfo Path { get; }
     /// <summary>
-    /// 游戏版本
+    /// Game version
     /// </summary>
     public int GameVer { get; }
     /// <summary>
-    /// 模组版本
+    /// Mod version
     /// </summary>
     public int Ver { get; }
     /// <summary>
-    /// 模组标签
+    /// Mod tags
     /// </summary>
     public HashSet<string> Tag { get; }
 }

@@ -13,40 +13,40 @@ using static VPet_Simulator.Core.GraphInfo;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// Main.xaml 的交互逻辑
+    /// Interaction logic for Main.xaml
     /// </summary>
     public partial class Main : ContentControlX, IDisposable
     {
         /// <summary>
-        /// 游戏核心
+        /// Game core
         /// </summary>
         public GameCore Core;
         /// <summary>
-        /// 菜单栏
+        /// Menu bar
         /// </summary>
         public ToolBar ToolBar;
         /// <summary>
-        /// 消息栏
+        /// Message bar
         /// </summary>
         public IMassageBar MsgBar;
         /// <summary>
-        /// 工作显示栏
+        /// Work display bar
         /// </summary>
         public WorkTimer WorkTimer;
         /// <summary>
-        /// 刷新时间时会调用该方法
+        /// Invoked when the time is refreshed
         /// </summary>
         public event Action<Main> TimeHandle;
         /// <summary>
-        /// 刷新时间时会调用该方法,在所有任务处理完之后
+        /// Invoked when the time is refreshed, after all tasks are processed
         /// </summary>
         public event Action<Main> TimeUIHandle;
         /// <summary>
-        /// 如果不开启功能模式,默认状态设置
+        /// Default mode used when function mode is disabled
         /// </summary>
         public IGameSave.ModeType NoFunctionMOD = IGameSave.ModeType.Happy;
         /// <summary>
-        /// 是否开始运行
+        /// Whether it has started running
         /// </summary>
         public bool IsWorking { get; private set; } = false;
         public SoundPlayer soundPlayer = new SoundPlayer();
@@ -75,11 +75,11 @@ namespace VPet_Simulator.Core
         }
         public List<string> ErrorMessage = new List<string>();
         /// <summary>
-        /// 支持在加载等待的时候显示等待计数器
+        /// Supports showing a wait counter while loading
         /// </summary>
         public async Task Load_2_WaitGraph()
         {
-            //新功能:等待所有图像加载完成再跑
+            //new feature: wait for all images to finish loading before running
             foreach (var igs in Core.Graph.GraphsList.Values)
             {
                 foreach (var ig2 in igs.Values)
@@ -103,9 +103,9 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 支持在加载等待的时候显示等待计数器
+        /// Supports showing a wait counter while loading
         /// </summary>
-        /// <param name="WaitCountAction">当前已等待图像个数</param>
+        /// <param name="WaitCountAction">number of images loaded so far</param>
         public async Task Load_2_WaitGraph(Action<int> WaitCountAction)
         {
             if (WaitCountAction == null)
@@ -115,7 +115,7 @@ namespace VPet_Simulator.Core
             }
             int count = 0;
             DateTime start = DateTime.Now.AddSeconds(2);
-            // 新功能: 等待所有图像加载完成再跑
+            // new feature: wait for all images to finish loading before running
             var tasks = new List<Task>();
 
             foreach (var igs in Core.Graph.GraphsList.Values)
@@ -131,7 +131,7 @@ namespace VPet_Simulator.Core
                             {
                                 if (ig3.IsFail)
                                 {
-                                    lock (ErrorMessage) // 确保线程安全
+                                    lock (ErrorMessage) // ensure thread safety
                                     {
                                         ErrorMessage.Add(ig3.FailMessage);
                                         ig2.Remove(ig3);
@@ -155,14 +155,14 @@ namespace VPet_Simulator.Core
                 }
             }
 
-            // 等待所有任务完成
+            // wait for all tasks to complete
             await Task.WhenAll(tasks);
 
         }
         /// <summary>
-        /// 开始运行
+        /// Start running
         /// </summary>
-        /// <param name="startUPGraph">开始运行初始动画</param>
+        /// <param name="startUPGraph">initial animation to play on start</param>
         public void Load_4_Start(IGraph startUPGraph = null)
         {
             IGraph ig = startUPGraph ?? Core.Graph.FindGraph(Core.Graph.FindName(GraphType.StartUP), AnimatType.Single, Core.Save.Mode);
@@ -180,7 +180,7 @@ namespace VPet_Simulator.Core
 
 
         /// <summary>
-        /// 等待图像加载和开始
+        /// Wait for images to load and start
         /// </summary>
         public void Load_24_WaitAndStart()
         {
@@ -188,10 +188,10 @@ namespace VPet_Simulator.Core
             Load_4_Start();
         }
         /// <summary>
-        /// 等待图像加载和开始
+        /// Wait for images to load and start
         /// </summary>
-        /// <param name="WaitCountAction">当前已等待图像个数</param>
-        /// <param name="startUPGraph">开始运行初始动画</param>
+        /// <param name="WaitCountAction">number of images loaded so far</param>
+        /// <param name="startUPGraph">initial animation to play on start</param>
         public void Load_24_WaitAndStart(Action<int> WaitCountAction, IGraph startUPGraph = null)
         {
             Load_2_WaitGraph(WaitCountAction).Wait();
@@ -222,10 +222,10 @@ namespace VPet_Simulator.Core
 
 
         /// <summary>
-        /// 加载所有步骤并开始
+        /// Load all steps and start
         /// </summary>
-        /// <param name="WaitCountAction">当前已等待图像个数</param>
-        /// <param name="startUPGraph">开始运行初始动画</param>
+        /// <param name="WaitCountAction">number of images loaded so far</param>
+        /// <param name="startUPGraph">initial animation to play on start</param>
         public void LoadALL(Action<int> WaitCountAction = null, IGraph startUPGraph = null)
         {
             Load_0_BaseConsole();
@@ -257,11 +257,11 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 自动加载触摸事件
+        /// Automatically load touch events
         /// </summary>
         public void Load_2_TouchEvent()
         {
-            //让侧挂回正
+            //restore side-docked position to normal
             Core.TouchEvent.Add(new TouchArea(new Point(0, 0), new Size(500, 500), () =>
             {
                 if (DisplayType.Type == GraphType.SideHide_Left_Main || DisplayType.Type == GraphType.SideHide_Left_Rise)
@@ -298,9 +298,9 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 播放语音 语音播放时不会停止播放说话表情
+        /// Play voice; playing voice does not stop the talking expression
         /// </summary>
-        /// <param name="VoicePath">语音位置</param>
+        /// <param name="VoicePath">voice file location</param>
         public void PlayVoice(Uri VoicePath)//, TimeSpan timediff = TimeSpan.Zero) TODO
         {
             PlayingVoice = true;
@@ -330,7 +330,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 声音音量
+        /// Voice volume
         /// </summary>
         public double PlayVoiceVolume
         {
@@ -338,7 +338,7 @@ namespace VPet_Simulator.Core
             set => Dispatcher.Invoke(() => VoicePlayer.Volume = value);
         }
         /// <summary>
-        /// 当前是否正在播放
+        /// Whether voice is currently playing
         /// </summary>
         public bool PlayingVoice = false;
         private void MediaPlayer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
@@ -387,11 +387,11 @@ namespace VPet_Simulator.Core
             MoveTimer.Start();
         }
         /// <summary>
-        /// 默认点击事件
+        /// Default click event
         /// </summary>
         public Action DefaultClickAction;
         /// <summary>
-        /// 默认长按事件
+        /// Default long-press event
         /// </summary>
         public Action DefaultPressAction;
         public bool isPress = false;
@@ -409,7 +409,7 @@ namespace VPet_Simulator.Core
                 Dispatcher.BeginInvoke(new Action(() => mp = Mouse.GetPosition(MainGrid))).Wait();
                 //mp = new Point(mp.X * Core.Controller.ZoomRatio, mp.Y * Core.Controller.ZoomRatio);
                 if (isPress && presstime == pth)
-                {//历遍长按事件
+                {//iterate long-press events
                     LastInteractionTime = DateTime.Now;
                     foreach (var x in Core.TouchEvent)
                     {
@@ -419,16 +419,16 @@ namespace VPet_Simulator.Core
                     DefaultPressAction?.Invoke();
                 }
                 else
-                {//历遍点击事件
+                {//iterate click events
                     LastInteractionTime = DateTime.Now;
                     foreach (var x in Core.TouchEvent)
                     {
                         if (x.IsPress == false && x.Touch(mp) && x.DoAction())
                             return;
                     }
-                    //普通点击验证
+                    //normal click validation
                     if (DisplayType.Type != GraphType.Default)
-                    {//不是nomal! 可能会卡timer,所有全部timer清空下
+                    {//not nomal! may block the timer, so clear all timers
                         CleanState();
                         if (!IsIdel && State != WorkingState.Sleep && DisplayStop(DisplayToNomal))
                             return;
@@ -511,7 +511,7 @@ namespace VPet_Simulator.Core
                 g2.Stop(true);
         }
         /// <summary>
-        /// 清理所有状态
+        /// Clear all states
         /// </summary>
         public void CleanState()
         {
@@ -599,7 +599,7 @@ namespace VPet_Simulator.Core
 
         private void MainGrid_MouseEnter(object sender, MouseEventArgs e)
         {
-            //如果是在侧边模式, 播放鼠标进入动画
+            //if in side mode, play the mouse-enter animation
             string gfname;
             if (DisplayType.Type == GraphType.SideHide_Left_Main && (gfname = Core.Graph.FindName(GraphType.SideHide_Left_Rise)) != null)
             {
@@ -613,7 +613,7 @@ namespace VPet_Simulator.Core
 
         private void MainGrid_MouseLeave(object sender, MouseEventArgs e)
         {
-            //如果是在侧边模式, 播放鼠标离开动画
+            //if in side mode, play the mouse-leave animation
             if (DisplayType.Type == GraphType.SideHide_Left_Rise)
             {
                 Display(GraphType.SideHide_Left_Rise, AnimatType.C_End, () => Display(GraphType.SideHide_Left_Main, AnimatType.B_Loop, DisplayBLoopingForce));

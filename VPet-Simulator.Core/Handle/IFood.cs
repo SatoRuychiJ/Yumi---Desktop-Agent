@@ -1,40 +1,40 @@
 ﻿namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 食物接口
+    /// Food interface
     /// </summary>
     public interface IFood
     {
         /// <summary>
-        /// 经验值
+        /// Experience points
         /// </summary>
         int Exp { get; }
 
         /// <summary>
-        /// 体力 0-100
+        /// Stamina 0-100
         /// </summary>
         double Strength { get; }
         /// <summary>
-        /// 饱腹度
+        /// Fullness
         /// </summary>
         double StrengthFood { get; }
         /// <summary>
-        /// 口渴度
+        /// Thirst
         /// </summary>
         double StrengthDrink { get; }
 
         /// <summary>
-        /// 心情
+        /// Mood
         /// </summary>
         double Feeling { get; }
 
         /// <summary>
-        /// 健康
+        /// Health
         /// </summary>
         double Health { get; }
 
         /// <summary>
-        /// 好感度
+        /// Likability
         /// </summary>
         double Likability { get; }
     }

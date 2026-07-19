@@ -12,10 +12,10 @@ namespace VPet_Simulator.Windows.Interface
     public static class ExtensionFunction
     {
         /// <summary>
-        /// 工作获取效率
+        /// Work gain efficiency
         /// </summary>
-        /// <param name="work">工作</param>
-        /// <returns>工作获取效率</returns>
+        /// <param name="work">Work</param>
+        /// <returns>Work gain efficiency</returns>
         public static double Get(this Work work)
         {
             if (work.Type == Work.WorkType.Work)
@@ -24,35 +24,35 @@ namespace VPet_Simulator.Windows.Interface
                 return MathPow((Math.Abs(work.MoneyBase) * (1 + work.FinishBonus / 2) + 1) / 10, 1.25);
         }
         /// <summary>
-        /// 求幂(带符号)
+        /// Power (sign-preserving)
         /// </summary>
         public static double MathPow(double value, double pow)
         {
             return Math.Pow(Math.Abs(value), pow) * Math.Sign(value);
         }
         /// <summary>
-        /// 工作花费效率
+        /// Work cost efficiency
         /// </summary>
-        /// <param name="work">工作</param>
-        /// <returns>工作花费效率</returns>
+        /// <param name="work">Work</param>
+        /// <returns>Work cost efficiency</returns>
         public static double Spend(this Work work)
         {
             return (MathPow(work.StrengthFood, 1.5) / 3 + MathPow(work.StrengthDrink, 1.5) / 4 + MathPow(work.Feeling, 1.5) / 4 +
                 work.LevelLimit / 10.0 + MathPow(work.StrengthFood + work.StrengthDrink + work.Feeling, 1.5) / 10) * 3;
         }
         /// <summary>
-        /// 判断这个工作是否超模
+        /// Determine whether this work is overpowered
         /// </summary>
-        /// <param name="work">工作</param>
-        /// <returns>是否超模</returns>
+        /// <param name="work">Work</param>
+        /// <returns>Whether it is overpowered</returns>
         public static bool IsOverLoad(this Work work)
-        {//判断这个工作是否超模
+        {//determine whether this work is overpowered
             if (work.LevelLimit < 0)
                 work.LevelLimit = 0;
             if (work.FinishBonus < 0)
                 work.FinishBonus = 0;
             if (work.Type == Work.WorkType.Play && work.Feeling > 0)
-                work.Feeling *= -1;//旧版本代码兼容
+                work.Feeling *= -1;//legacy code compatibility
             if (work.Time < 10)
                 work.Time = 10;
             if (work.FinishBonus > 2)
@@ -66,12 +66,12 @@ namespace VPet_Simulator.Windows.Interface
             var lvlimit = 1.1 * work.LevelLimit + 10;
             if (work.Type != Work.WorkType.Work)
                 lvlimit *= 10;
-            if (Math.Abs(work.MoneyBase) > lvlimit) //等级获取速率限制
+            if (Math.Abs(work.MoneyBase) > lvlimit) //level-based gain rate limit
                 return true;
-            return rel > 1.4; // 推荐rel为1左右 超过1.3就是超模
+            return rel > 1.4; // recommended rel is around 1; above 1.3 is overpowered
         }
         /// <summary>
-        /// 为所有工作进行1.2倍效率修正
+        /// Apply a 1.2x efficiency correction to all work
         /// </summary>
         /// <param name="work"></param>
         public static void FixOverLoad(this Work work)
@@ -81,7 +81,7 @@ namespace VPet_Simulator.Windows.Interface
             if (work.FinishBonus < 0)
                 work.FinishBonus = 0;
             if (work.Type == Work.WorkType.Play && work.Feeling > 0)
-                work.Feeling *= -1;//旧版本代码兼容
+                work.Feeling *= -1;//legacy code compatibility
             if (work.Time < 10)
                 work.Time = 10;
             if (work.FinishBonus > 2)
@@ -107,7 +107,7 @@ namespace VPet_Simulator.Windows.Interface
                 work.MoneyBase = Math.Min(work.MoneyBase, lvlimit);
             }
 
-            // 如果仍然不合理，设定一个默认值
+            // if it is still unreasonable, set a default value
             if (work.IsOverLoad())
             {
                 switch (work.Type)
@@ -140,7 +140,7 @@ namespace VPet_Simulator.Windows.Interface
             }
         }
         /// <summary>
-        /// 将工作的属性值翻倍
+        /// Double the work's attribute values
         /// </summary>
         public static Work Double(this Work work, int value)
         {
@@ -171,10 +171,10 @@ namespace VPet_Simulator.Windows.Interface
             return string.Join("\n", dic2);
         }
         /// <summary>
-        /// 把值变成++
+        /// Convert the value into a plus/minus indicator
         /// </summary>
-        /// <param name="value">值</param>
-        /// <param name="magnification">倍率</param>
+        /// <param name="value">Value</param>
+        /// <param name="magnification">Multiplier</param>
         /// <returns></returns>
         public static string ValueToPlusPlus(double value, double magnification, int max = 10)
         {
@@ -189,7 +189,7 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 启动URL
+        /// Launch a URL
         /// </summary>
         public static void StartURL(string url)
         {
@@ -213,11 +213,11 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 吃食物 附带倍率
+        /// Eat food with a multiplier
         /// </summary>
-        /// <param name="save">存档</param>
-        /// <param name="food">食物</param>
-        /// <param name="buff">默认1倍</param>
+        /// <param name="save">Save</param>
+        /// <param name="food">Food</param>
+        /// <param name="buff">Default 1x</param>
         public static void EatFood(this IGameSave save, IFood food, double buff)
         {
             save.Exp += food.Exp * buff;
@@ -236,20 +236,20 @@ namespace VPet_Simulator.Windows.Interface
         }
     }
     /// <summary>
-    /// 扩展值
+    /// Extended values
     /// </summary>
     public static partial class ExtensionValue
     {
         /// <summary>
-        /// 当前运行目录
+        /// Current working directory
         /// </summary>
         public static string BaseDirectory = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName;
         /// <summary>
-        /// 获取MOD存储目录 (会自动创建/Steam云同步)
-        /// 但是还是建议以LPS形式存在Setting/Save里 不保证完整可靠性(可能会因为切换电脑等导致数据丢失)
+        /// Get the MOD storage directory (auto-created / Steam cloud synced)
+        /// However it is still recommended to store data as LPS in Setting/Save; full reliability is not guaranteed (data may be lost when switching computers, etc.)
         /// </summary>
-        /// <param name="modName">MOD名字</param>
-        /// <returns>目录地址</returns>
+        /// <param name="modName">MOD name</param>
+        /// <returns>Directory path</returns>
         public static string GetMODStorage(string modName)
         {
             var path = Path.Combine(BaseDirectory, "ModData");

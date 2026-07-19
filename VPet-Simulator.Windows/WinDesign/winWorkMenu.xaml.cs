@@ -17,7 +17,7 @@ using static VPet_Simulator.Windows.Interface.ScheduleTask;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// winWorkMenu.xaml 的交互逻辑
+/// Interaction logic for winWorkMenu.xaml
 /// </summary>
 public partial class winWorkMenu : WindowX
 {
@@ -113,7 +113,7 @@ public partial class winWorkMenu : WindowX
     {
         AllowChange = false;
         btnStart.IsEnabled = true;
-        //判断倍率
+        // Determine the multiplier
         if (nowwork.LevelLimit > mw.GameSavesData.GameSave.Level)
         {
             wDouble.IsEnabled = false;
@@ -152,11 +152,11 @@ public partial class winWorkMenu : WindowX
         }
         nowworkdisplay = work;
 
-        //显示图像
+        // Show the image
         string source = mw.ImageSources.FindSource("work_" + mw.Set.PetGraph + "_" + work.Graph) ?? mw.ImageSources.FindSource("work_" + mw.Set.PetGraph + "_" + work.Name);
         if (source == null)
         {
-            //尝试显示默认图像
+            // Try to show the default image
             ShowImageDefault(work.Type);
         }
         else
@@ -318,7 +318,7 @@ public partial class winWorkMenu : WindowX
         mw.Main.ToolBar.MenuStudy.Items.Clear();
         mw.Main.ToolBar.MenuWork.Items.Clear();
         mw.Main.ToolBar.MenuPlay.Items.Clear();
-        //更新星标
+        // Update the star markers
         foreach (var v in mw.WorkStar())
         {
             _starDetails.Add(v.NameTrans);
@@ -465,13 +465,13 @@ public partial class winWorkMenu : WindowX
         {
             imgAgency.Source = mw.ImageSources.FindImage("work_" + mw.Set.PetGraph + "_agency_job", "work_agency_job");
             tbtnAgencyTraning.IsChecked = false;
-            //加载套餐combTaskType
+            // Load packages into combTaskType
             rTaskType.Text = "抽成".Translate();
             combTaskType.Items.Clear();
             foreach (var v in mw.SchedulePackage.FindAll(x => x.WorkType == Work.WorkType.Work))
                 combTaskType.Items.Add(v);
             combTaskType.SelectedIndex = 0;
-            //加载现有套餐
+            // Load the existing package
             rpnDisplay(mw.ScheduleTask.PackageWork, nowselefull?.WorkType ?? Work.WorkType.Work);
             tbtnCurrentPlan.IsChecked = mw.ScheduleTask.PackageWork?.IsActive() == true;
         }
@@ -485,7 +485,7 @@ public partial class winWorkMenu : WindowX
             foreach (var v in mw.SchedulePackage.FindAll(x => x.WorkType == Work.WorkType.Study))
                 combTaskType.Items.Add(v);
             combTaskType.SelectedIndex = 0;
-            //加载现有套餐
+            // Load the existing package
             rpnDisplay(mw.ScheduleTask.PackageStudy, nowselefull?.WorkType ?? Work.WorkType.Study);
             tbtnCurrentPlan.IsChecked = mw.ScheduleTask.PackageStudy?.IsActive() == true;
         }
@@ -516,7 +516,7 @@ public partial class winWorkMenu : WindowX
             {
                 if (MessageBoxX.Show("工作套餐已激活,是否替换?".Translate(), "套餐已激活".Translate(), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                     return;
-                //计算价格,给剩下的退款
+                // Calculate the price and refund the remainder
                 double lefttime = (mw.ScheduleTask.PackageWork.EndTime - DateTime.Now).TotalDays / 2;
                 if (lefttime > 0.5)
                 {
@@ -538,7 +538,7 @@ public partial class winWorkMenu : WindowX
             {
                 if (MessageBoxX.Show("学习套餐已激活,是否替换?".Translate(), "套餐已激活".Translate(), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                     return;
-                //计算价格,给剩下的退款
+                // Calculate the price and refund the remainder
                 double lefttime = (mw.ScheduleTask.PackageStudy.EndTime - DateTime.Now).TotalDays / 2;
                 if (lefttime > 0.5)
                 {
@@ -646,7 +646,7 @@ public partial class winWorkMenu : WindowX
     private void btnAddAuto_Click(object sender, RoutedEventArgs e)
     {
         if (nowwork != null || nowworkdisplay != null)
-            //看看套餐
+            // Check the package
             switch (nowwork.Type)
             {
                 case Work.WorkType.Work:

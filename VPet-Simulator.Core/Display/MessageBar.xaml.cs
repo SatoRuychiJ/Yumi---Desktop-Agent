@@ -18,48 +18,48 @@ namespace VPet_Simulator.Core
     public interface IMassageBar : IDisposable
     {
         /// <summary>
-        /// 显示消息
+        /// Show message
         /// </summary>
-        /// <param name="name">名字</param>
-        /// <param name="text">内容</param>
-        /// <param name="graphName">图像名</param>
-        /// <param name="msgContent">消息框内容</param>
+        /// <param name="name">Name</param>
+        /// <param name="text">Content</param>
+        /// <param name="graphName">Graphic name</param>
+        /// <param name="msgContent">Message box content</param>
         void Show(string name, string text, string graphName = null, UIElement msgContent = null);
 
 
         /// <summary>
-        /// 显示流式消息
+        /// Show streaming message
         /// </summary>
-        /// <param name="name">名字</param>
-        /// <param name="sayInfoWithStream">内容</param>
+        /// <param name="name">Name</param>
+        /// <param name="sayInfoWithStream">Content</param>
         void Show(string name, SayInfoWithStream sayInfoWithStream);
         /// <summary>
-        /// 强制关闭
+        /// Force close
         /// </summary>
         void ForceClose();
         /// <summary>
-        /// 设置位置在桌宠内
+        /// Set position inside the pet
         /// </summary>
         void SetPlaceIN();
         /// <summary>
-        /// 设置位置在桌宠外
+        /// Set position outside the pet
         /// </summary>
         void SetPlaceOUT();
         /// <summary>
-        /// 显示状态
+        /// Visibility state
         /// </summary>
         Visibility Visibility { get; set; }
         /// <summary>
-        /// 该消息框的Control
+        /// The Control of this message box
         /// </summary>
         Control This { get; }
         /// <summary>
-        /// 被关闭时事件
+        /// Event triggered when closed
         /// </summary>
         event Action EndAction;
     }
     /// <summary>
-    /// MessageBar.xaml 的交互逻辑
+    /// Interaction logic for MessageBar.xaml
     /// </summary>
     public partial class MessageBar : UserControl, IDisposable, IMassageBar
     {
@@ -99,7 +99,7 @@ namespace VPet_Simulator.Core
         {
             if (outputtext.Count > 0)
             {
-                // 处理2-3个字符，平衡效果和性能
+                // Process 2-3 characters at a time to balance effect and performance
                 int batchSize = Math.Min(2, outputtext.Count);
                 string textToAdd = string.Empty;
 
@@ -116,7 +116,7 @@ namespace VPet_Simulator.Core
             }
             else
             {
-                // 其余代码保持不变
+                // The rest of the code stays unchanged
                 if (m.PlayingVoice)
                 {
                     if (m.windowMediaPlayerAvailable)
@@ -150,7 +150,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 被关闭时事件
+        /// Event triggered when closed
         /// </summary>
         public event Action EndAction;
         private void EndTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -168,10 +168,10 @@ namespace VPet_Simulator.Core
         int timeleft;
         string graphName;
         /// <summary>
-        /// 显示消息
+        /// Show message
         /// </summary>
-        /// <param name="name">名字</param>
-        /// <param name="text">内容</param>
+        /// <param name="name">Name</param>
+        /// <param name="text">Content</param>
         public void Show(string name, string text, string graphName = null, UIElement msgContent = null)
         {
             if (m.UIGrid.Children.IndexOf(this) != m.UIGrid.Children.Count - 1)
@@ -195,7 +195,7 @@ namespace VPet_Simulator.Core
         }
         private SayInfoWithStream oldsaystream;
         /// <summary>
-        /// 流式传输模式 显示文字
+        /// Display text in streaming mode
         /// </summary>
         public void Show(string name, SayInfoWithStream sayInfoWithStream)
         {
@@ -204,7 +204,7 @@ namespace VPet_Simulator.Core
                 Panel.SetZIndex(this, m.UIGrid.Children.Count - 1);
             }
 
-            //解除之前说话绑定,取消之前的说话
+            //Unbind the previous speech and cancel the previous talking
             if (oldsaystream != null)
             {
                 oldsaystream.Event_Update -= DealWithUpdate;
@@ -247,13 +247,13 @@ namespace VPet_Simulator.Core
                 sayInfoWithStream.Event_Finish += DealWithStreamFinish;
         }
         /// <summary>
-        /// 流式传输用的阻断文字显示用的计时器
+        /// Timer used to throttle text display during streaming
         /// </summary>
         DateTime nextshow = DateTime.Now;
         /// <summary>
-        /// 增加显示新词
+        /// Append newly displayed words
         /// </summary>
-        /// <param name="data">更新内容</param>
+        /// <param name="data">Updated content</param>
         public void DealWithUpdate((string fullText, string changedText) data)
         {
             timeleft = data.fullText.Length;
@@ -268,14 +268,14 @@ namespace VPet_Simulator.Core
                     }
                     else
                         nextshow = DateTime.Now.AddMilliseconds(150);
-                if (sleeptime > 0) //处理前等待
+                if (sleeptime > 0) //Wait before processing
                     Thread.Sleep(sleeptime);
                 Dispatcher.Invoke(() => { TText.Text = data.fullText; });
             });
 
         }
         /// <summary>
-        /// 处理流式传输结束
+        /// Handle end of streaming
         /// </summary>
         public void DealWithStreamFinish(string fullText)
         {
@@ -337,7 +337,7 @@ namespace VPet_Simulator.Core
             ForceClose();
         }
         /// <summary>
-        /// 强制关闭
+        /// Force close
         /// </summary>
         public void ForceClose()
         {

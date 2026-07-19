@@ -6,13 +6,13 @@ using System.Windows.Media;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 游戏主题
+    /// Game theme
     /// </summary>
     public class Theme
     {
         private string transname = null;
         /// <summary>
-        /// 名字 (翻译)
+        /// Name (translated)
         /// </summary>
         public string TranslateName
         {
@@ -44,17 +44,17 @@ namespace VPet_Simulator.Windows.Interface
         }
     }
     /// <summary>
-    /// 字体
+    /// Font
     /// </summary>
     public class IFont
     {
         /// <summary>
-        /// 字体名字
+        /// Font name
         /// </summary>
         public string Name;
         private string transname = null;
         /// <summary>
-        /// 名字 (翻译)
+        /// Name (translated)
         /// </summary>
         public string TranslateName
         {
@@ -76,7 +76,7 @@ namespace VPet_Simulator.Windows.Interface
         public FontFamily Font
         {
             get
-            {//file:///D:\Documents\Visual Studio 2022\Projects\VPet\VPet-Simulator.Windows\Res\#凤凰点阵体 12px
+            {//file:///D:\Documents\Visual Studio 2022\Projects\VPet\VPet-Simulator.Windows\Res\#Phoenix dot-matrix font 12px
                 return new FontFamily(@"file:///" + Path);
             }
         }

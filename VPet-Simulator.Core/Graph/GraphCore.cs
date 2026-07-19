@@ -16,16 +16,16 @@ using static VPet_Simulator.Core.GraphInfo;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 图像显示核心
+    /// Image display core
     /// </summary>
     public class GraphCore : IDisposable
     {
         /// <summary>
-        /// 桌宠图形渲染的分辨率,越高图形越清晰
+        /// Rendering resolution of the pet graphics; higher means sharper
         /// </summary>
         public int Resolution { get; set; } = 1000;
         /// <summary>
-        /// 动画缓存空闲超时时间,超过该时间未使用的动画将被释放,单位 Ticks
+        /// Animation cache idle timeout; animations unused past this time are released, in Ticks
         /// </summary>
         public long IdleCacheTimeout = TimeSpan.FromMinutes(2).Ticks;
 
@@ -53,29 +53,29 @@ namespace VPet_Simulator.Core
         public static string CachePath = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + @"\cache";
 
         /// <summary>
-        /// 图像名字字典: 动画类型->动画名字
+        /// Image name dictionary: animation type -> animation name
         /// </summary>
         public Dictionary<GraphType, HashSet<string>> GraphsName = new Dictionary<GraphType, HashSet<string>>();
         /// <summary>
-        /// 图像字典 动画名字->状态+动作->动画
+        /// Image dictionary: animation name -> mode+action -> animation
         /// </summary>
         public Dictionary<string, Dictionary<AnimatType, List<IGraph>>> GraphsList = new Dictionary<string, Dictionary<AnimatType, List<IGraph>>>();
         /// <summary>
-        /// 所有图像列表, 用于释放资源
+        /// List of all images, used for releasing resources
         /// </summary>
         public List<IGraph> GraphsALL = new List<IGraph>();
         /// <summary>
-        /// 通用UI资源
+        /// Common UI resources
         /// </summary>
         public Dictionary<string, UIElement> CommUIElements = new Dictionary<string, UIElement>();
         /// <summary>
-        /// 通用设置属性/方法
+        /// Common config properties/methods
         /// </summary>
         public Dictionary<string, object> CommConfig = new Dictionary<string, object>();
         /// <summary>
-        /// 添加动画
+        /// Add an animation
         /// </summary>
-        /// <param name="graph">动画</param>
+        /// <param name="graph">animation</param>
         public void AddGraph(IGraph graph)
         {
             if (graph.GraphInfo.Type != GraphType.Common)
@@ -102,10 +102,10 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 获得随机动画名字
+        /// Get a random animation name
         /// </summary>
-        /// <param name="type">动画类型</param>
-        /// <returns>动画名字,找不到则返回null</returns>
+        /// <param name="type">animation type</param>
+        /// <returns>animation name, or null if not found</returns>
         public string FindName(GraphType type)
         {
             if (GraphsName.TryGetValue(type, out var gl))
@@ -115,11 +115,11 @@ namespace VPet_Simulator.Core
             return null;
         }
         /// <summary>
-        /// 查找动画
+        /// Find an animation
         /// </summary>
-        /// <param name="GraphName">动画名字</param>
-        /// <param name="mode">状态类型,找不到就找相同动画类型</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="GraphName">animation name</param>
+        /// <param name="mode">mode type; if not found, falls back to the same animation type</param>
+        /// <param name="animat">animation action: Start Loop End</param>
         public IGraph FindGraph(string GraphName, AnimatType animat, IGameSave.ModeType mode)
         {
             if (GraphName == null)
@@ -140,7 +140,7 @@ namespace VPet_Simulator.Core
                 int i = (int)mode + 1;
                 if (i < 3)
                 {
-                    //向下兼容的动画
+                    //downward-compatible animation
                     list = gl.FindAll(x => x.GraphInfo.ModeType == (IGameSave.ModeType)i);
                     if (list.Count > 0)
                         return list[Function.Rnd.Next(list.Count)];
@@ -148,12 +148,12 @@ namespace VPet_Simulator.Core
                 i = (int)mode - 1;
                 if (i >= 1)
                 {
-                    //向上兼容的动画
+                    //upward-compatible animation
                     list = gl.FindAll(x => x.GraphInfo.ModeType == (IGameSave.ModeType)i);
                     if (list.Count > 0)
                         return list[Function.Rnd.Next(list.Count)];
                 }
-                //如果实在找不到,就走随机数(无生病)
+                //if still not found, fall back to a random one (excluding ill)
                 list = gl.FindAll(x => x.GraphInfo.ModeType != IGameSave.ModeType.Ill);
                 if (list.Count > 0)
                     return list[Function.Rnd.Next(list.Count)];
@@ -161,10 +161,10 @@ namespace VPet_Simulator.Core
             return null;// FindGraph(GraphType.Default, mode);
         }
         /// <summary>
-        /// 查找动画列表
+        /// Find an animation list
         /// </summary>
-        /// <param name="mode">状态类型,找不到就找相同动画类型</param>
-        /// <param name="animat">动画的动作 Start Loop End</param>
+        /// <param name="mode">mode type; if not found, falls back to the same animation type</param>
+        /// <param name="animat">animation action: Start Loop End</param>
         public List<IGraph> FindGraphs(string GraphName, AnimatType animat, IGameSave.ModeType mode)
         {
             if (GraphName == null)
@@ -179,7 +179,7 @@ namespace VPet_Simulator.Core
                 int i = (int)mode + 1;
                 if (i < 3)
                 {
-                    //向下兼容的动画
+                    //downward-compatible animation
                     list = gl.FindAll(x => x.GraphInfo.ModeType == (IGameSave.ModeType)i);
                     if (list.Count > 0)
                         return list;
@@ -187,12 +187,12 @@ namespace VPet_Simulator.Core
                 i = (int)mode - 1;
                 if (i >= 0)
                 {
-                    //向上兼容的动画
+                    //upward-compatible animation
                     list = gl.FindAll(x => x.GraphInfo.ModeType == (IGameSave.ModeType)i);
                     if (list.Count > 0)
                         return list;
                 }
-                //如果实在找不到,就走随机数
+                //if still not found, fall back to a random one
                 //if (mode != GameSave.ModeType.Ill)
                 //{
                 list = gl;
@@ -226,73 +226,73 @@ namespace VPet_Simulator.Core
 
         public Config GraphConfig;
         /// <summary>
-        /// 动画设置
+        /// Animation settings
         /// </summary>
         public class Config
         {
             /// <summary>
-            /// 摸头触发位置
+            /// Head-pat trigger position
             /// </summary>
             public Point TouchHeadLocate;
             /// <summary>
-            /// 提起触发位置
+            /// Pick-up trigger position
             /// </summary>
             public Point[] TouchRaisedLocate;
             /// <summary>
-            /// 摸头触发大小
+            /// Head-pat trigger size
             /// </summary>
             public Size TouchHeadSize;
             /// <summary>
-            /// 摸身体触发位置
+            /// Body-pat trigger position
             /// </summary>
             public Point TouchBodyLocate;
             /// <summary>
-            /// 摸身体触发大小
+            /// Body-pat trigger size
             /// </summary>
             public Size TouchBodySize;
             /// <summary>
-            /// 提起触发大小
+            /// Pick-up trigger size
             /// </summary>
             public Size[] TouchRaisedSize;
 
             /// <summary>
-            /// 提起定位点
+            /// Pick-up anchor point
             /// </summary>
             public Point[] RaisePoint;
 
             /// <summary>
-            /// 所有移动
+            /// All movements
             /// </summary>
             public List<Move> Moves = new List<Move>();
 
             /// <summary>
-            /// 所有工作/学习
+            /// All work/study
             /// </summary>
             public List<Work> Works = new List<Work>();
 
             public Line_D Str;
             /// <summary>
-            /// 持续时间
+            /// Duration
             /// </summary>
             public Line_D Duration;
             /// <summary>
-            /// 获取持续时间
+            /// Get duration
             /// </summary>
-            /// <param name="name">动画名称</param>
-            /// <returns>持续时间</returns>
+            /// <param name="name">animation name</param>
+            /// <returns>duration</returns>
             public int GetDuration(string name) => Duration.GetInt(name ?? "", 10);
             /// <summary>
-            /// 获得 Str 里面储存的文本 (已翻译)
+            /// Get the text stored in Str (translated)
             /// </summary>
-            /// <param name="name">定位名称</param>
-            /// <returns>储存的文本 (已翻译)</returns>
+            /// <param name="name">key name</param>
+            /// <returns>stored text (translated)</returns>
             public string StrGetString(string name) => LocalizeCore.Translate(Str.GetString(name));
             /// <summary>
-            /// 剩余设置数据
+            /// Remaining settings data
             /// </summary>
             public LPS_D Data;
             /// <summary>
-            /// 初始化设置
+            /// Initialize settings
             /// </summary>
             /// <param name="lps"></param>
             public Config(LpsDocument lps)
@@ -333,7 +333,7 @@ namespace VPet_Simulator.Core
                 Data = new LPS_D(lps);
             }
             /// <summary>
-            /// 加载更多设置,新的替换后来的,允许空内容
+            /// Load additional settings; new values replace later ones, empty content allowed
             /// </summary>
             public void Set(LpsDocument lps)
             {

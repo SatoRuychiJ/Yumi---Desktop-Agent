@@ -15,16 +15,16 @@ using VPet_Simulator.Core;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 物品 (这里的物品指的是能够在背包中查看和使用的物品)
+/// Item (an item that can be viewed and used in the inventory)
 /// </summary>
-/// 注: 物品的使用方法均需要代码插件手写, 在 imw.TakeItem 中实现
+/// Note: item usage must be hand-written by code plugins, implemented in imw.TakeItem
 public class Item : NotifyPropertyChangedBase
 {
     /// <summary>
-    /// 创建物品方法
+    /// Item creation method
     /// </summary>
-    /// <param name="data">物品数据</param>
-    /// <returns>物品</returns>
+    /// <param name="data">Item data</param>
+    /// <returns>Item</returns>
     public static Item CreateItem(IMainWindow imw, ILine data)
     {
         if (Creators.ContainsKey(data[(gstr)"itemtype"]))
@@ -37,23 +37,23 @@ public class Item : NotifyPropertyChangedBase
         }
     }
     /// <summary>
-    /// 创建物品方法集合, 在这里添加自定义物品类型的创建方法 在LoadPlugin之后,GameLoaded之前. 请不要添加阻塞内容
+    /// Collection of item creation methods; add custom item type creators here, after LoadPlugin and before GameLoaded. Do not add blocking operations
     /// </summary>
     public static Dictionary<string, Func<IMainWindow, ILine, Item>> Creators = new()
     {
         { "Food", (_,line) => { return LPSConvert.DeserializeObject<Food>(line); } },
     };
     /// <summary>
-    /// 对应类型物品的使用方法 (物品/是否使用完成)
+    /// Usage method for the corresponding item type (item / whether use completed)
     /// </summary>
     public static Dictionary<string, List<Func<IMainWindow, Item, bool>>> UseAction = new();
     /// <summary>
-    /// 物品图片 (图片默认在 {itemtypes}/{Image or itemname}.png )
+    /// Item image (defaults to {itemtypes}/{Image or itemname}.png )
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual string Image { get; set; } = null;
     /// <summary>
-    /// 使用该物品
+    /// Use this item
     /// </summary>
     public virtual void Use(IMainWindow imw)
     {
@@ -69,28 +69,28 @@ public class Item : NotifyPropertyChangedBase
         MessageBoxX.Show("物品 {0} 使用失败".Translate(TranslateName), "该物品无法使用".Translate());
     }
     /// <summary>
-    /// 消耗该物品, 如果物品数量小于等于0时则销毁物品(从背包中移除) (不会主动调用)
+    /// Consume this item; if the count drops to 0 or below, destroy it (remove from inventory) (not called automatically)
     /// </summary>
-    /// <param name="count">消耗数量</param>
+    /// <param name="count">Amount to consume</param>
     public virtual void Consume(IMainWindow imw, int count = 1)
     {
         Count -= count;
         if (Count <= 0)
         {
-            //销毁物品
+            //destroy the item
             imw.Items.Remove(this);
         }
     }
 
     /// <summary>
-    /// 物品名字 (ID)
+    /// Item name (ID)
     /// </summary>
     [Line(name: "name")]
     public string Name { get; set; }
     private string transname = null;
     private string transdesc = null;
     /// <summary>
-    /// 物品名字 (翻译)
+    /// Item name (translated)
     /// </summary>
     public string TranslateName
     {
@@ -105,12 +105,12 @@ public class Item : NotifyPropertyChangedBase
     }
 
     /// <summary>
-    /// 物品类型
+    /// Item type
     /// </summary>
     [Line(name: "itemtype")]
     public virtual string ItemType { get; set; } = "Item";
     /// <summary>
-    /// 描述 (翻译后)
+    /// Description (translated)
     /// </summary>
 
     public virtual string Description
@@ -126,72 +126,72 @@ public class Item : NotifyPropertyChangedBase
     }
 
     /// <summary>
-    /// 支持自定义的物品类型列表 (记得进行翻译 eg: Item_Item => 物品)
+    /// List of supported custom item types (remember to translate, e.g. Item_Item => Item)
     /// </summary>
 
     public static List<string> ItemTypes = new List<string>()
     {
-        //物品 - 默认分类
+        //Item - default category
         "Item",
-        //食物 - 可以吃的食物 (也可以指代物品)
+        //Food - edible food (can also refer to items)
         "Food",
-        //道具 - 具有特殊功能的物品
+        //Prop - an item with special functionality
         "Tool",
-        //玩具 - 可以播放动画的物品
+        //Toy - an item that can play animations
         "Toy",
-        //邮件 - 打开后可以获得物品的信件
+        //Mail - a letter that grants items when opened
         "Mail",
     };
 
     /// <summary>
-    /// 物品价格
+    /// Item price
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual double Price { get; set; }
     /// <summary>
-    /// 描述
+    /// Description
     /// </summary>
     [Line(ignoreCase: true)]
     public string Desc { get; set; }
 
     /// <summary>
-    /// 显示的图片 (图片默认在 {itemtypes}/{itemname}.png )
+    /// Displayed image (defaults to {itemtypes}/{itemname}.png )
     /// </summary>
     public virtual BitmapImage ImageSource { get; set; }
 
     /// <summary>
-    /// 物品个数
+    /// Item count
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual int Count { get; set; } = 1;
     /// <summary>
-    /// 其他数据, 用于给程序储存个性化数据用
+    /// Other data, used by the program to store custom data
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual string Data { get; set; } = "";
     /// <summary>
-    /// 能否使用
+    /// Whether it can be used
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual bool CanUse { get; set; } = true;
     /// <summary>
-    /// 是否收藏了物品
+    /// Whether the item is favorited
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual bool Star { get; set; } = false;
     /// <summary>
-    /// 是否为单个物品 (不可堆叠) (同时使用不会被消耗) (注: 无论这里标注消不消耗, 最终的消耗逻辑都需要在 Use 方法中自行实现)
+    /// Whether it is a single item (non-stackable) (not consumed when used together) (note: regardless of this flag, the final consumption logic must be implemented yourself in the Use method)
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual bool IsSingle { get; set; } = false;
 
     /// <summary>
-    /// 能否在背包中显示
+    /// Whether it can be shown in the inventory
     /// </summary>
     [Line(ignoreCase: true)]
     public virtual bool Visibility { get; set; } = true;
     /// <summary>
-    /// 加载物品图片
+    /// Load the item image
     /// </summary>
     public virtual void LoadSource(IMainWindow imw)
     {

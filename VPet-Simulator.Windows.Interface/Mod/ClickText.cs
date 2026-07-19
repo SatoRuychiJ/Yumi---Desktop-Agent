@@ -6,7 +6,7 @@ using static VPet_Simulator.Core.Main;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 点击桌宠时触发的乱说话
+    /// Random chatter triggered when the pet is clicked
     /// </summary>
     public class ClickText : ICheckText, IFood
     {
@@ -20,13 +20,13 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 指定干活时说, 空为任意, sleep 为睡觉时
+        /// Specifies which work state to speak in; empty means any, sleep means while sleeping
         /// </summary>
         [Line(ignoreCase: true)]
         public string Working { get; set; } = null;
 
         /// <summary>
-        /// 日期区间
+        /// Date range
         /// </summary>
         [Flags]
         public enum DayTime
@@ -37,12 +37,12 @@ namespace VPet_Simulator.Windows.Interface
             Midnight = 8,
         }
         /// <summary>
-        /// 当前时间
+        /// Current time
         /// </summary>
         [Line(ignoreCase: true)]
         private int dayTime { get; set; } = 15;
         /// <summary>
-        /// 日期区间
+        /// Date range
         /// </summary>      
         public DayTime DaiTime
         {
@@ -51,15 +51,15 @@ namespace VPet_Simulator.Windows.Interface
         }
 
         /// <summary>
-        /// 工作状态
+        /// Work state
         /// </summary>
         [Line(IgnoreCase = true)]
         public WorkingState State { get; set; } = WorkingState.Nomal;
 
 
         /// <summary>
-        /// 检查部分状态是否满足需求
-        /// </summary>之所以不是全部的,是因为挨个取效率太差了      
+        /// Check whether some of the states meet the requirements
+        /// </summary> not all of them, because fetching each one individually is too inefficient
         public override bool CheckState(Main m)
         {
             if (!base.CheckState(m))

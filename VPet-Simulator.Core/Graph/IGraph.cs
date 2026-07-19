@@ -5,49 +5,49 @@ using System.Windows.Media;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 动画显示接口
+    /// Animation display interface
     /// </summary>
     public interface IGraph : IEquatable<object>, IDisposable
     {
         /// <summary>
-        /// 从0开始运行该动画
+        /// Run this animation from the start
         /// </summary>
-        /// <param name="EndAction">停止动作</param>
-        /// <param name="parant">显示位置</param>
+        /// <param name="EndAction">Stop action</param>
+        /// <param name="parant">Display location</param>
         void Run(Decorator parant, Action EndAction = null);
 
         /// <summary>
-        /// 是否循环播放
+        /// Whether to loop playback
         /// </summary>
         bool IsLoop { get; set; }
 
         /// <summary>
-        /// 是否准备完成
+        /// Whether preparation is complete
         /// </summary>
         bool IsReady { get; }
 
         /// <summary>
-        /// 是否读取失败
+        /// Whether loading failed
         /// </summary>
         bool IsFail { get; }
         /// <summary>
-        /// 失败报错信息
+        /// Failure error message
         /// </summary>
         string FailMessage { get; }
         /// <summary>
-        /// 该动画信息
+        /// Information about this animation
         /// </summary>
         GraphInfo GraphInfo { get; }
 
         /// <summary>
-        /// 当前动画播放状态和控制
+        /// Current animation playback state and control
         /// </summary>
         TaskControl Control { get; }
 
         /// <summary>
-        /// 停止动画
+        /// Stop the animation
         /// </summary>
-        /// <param name="StopEndAction">停止动画时是否不运行结束动画</param>
+        /// <param name="StopEndAction">Whether to skip running the end animation when stopping</param>
         void Stop(bool StopEndAction)
         {
             if (Control == null)
@@ -57,7 +57,7 @@ namespace VPet_Simulator.Core
             Control.Type = TaskControl.ControlType.Stop;
         }
         /// <summary>
-        /// 设置为继续播放
+        /// Set to continue playback
         /// </summary>
         void SetContinue()
         {
@@ -65,87 +65,87 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 动画文件路径, 可能是文件夹或文件
+        /// Animation file path, may be a folder or a file
         /// </summary>
         string Path { get; }
         /// <summary>
-        /// 上次使用时间戳, 用于判断是否需要释放资源
+        /// Last-used timestamp, used to decide whether resources need to be released
         /// </summary>
         long LastUseTimeTicks => 0;
 
         /// <summary>
-        /// 修改最后使用时间为当前时间，以便在清理空闲缓存时判断是否需要清理
+        /// Update the last-used time to the current time, so idle cache cleanup can decide whether to clean up
         /// </summary>
         void Touch() { }
         /// <summary>
-        /// 清理空闲缓存, 如果该动画长时间未使用, 则释放资源
+        /// Clean up idle cache; if this animation has been unused for a long time, release its resources
         /// </summary>
-        /// <param name="nowTicks">当前时间</param>
+        /// <param name="nowTicks">Current time</param>
         void CleanupIdleCache(long nowTicks) { }
 
         /// <summary>
-        /// 指示该ImageRun支持
+        /// Indicates ImageRun support
         /// </summary>
         public interface IRunImage : IGraph
         {
             /// <summary>
-            /// 从0开始运行该动画
+            /// Run this animation from the start
             /// </summary>
-            /// <param name="parant">显示位置</param>
-            /// <param name="EndAction">结束方法</param>
-            /// <param name="image">额外图片</param>
+            /// <param name="parant">Display location</param>
+            /// <param name="EndAction">End method</param>
+            /// <param name="image">Additional image</param>
             void Run(Decorator parant, ImageSource image, Action EndAction = null);
         }
 
         /// <summary>
-        /// 动画控制类
+        /// Animation control class
         /// </summary>
         public class TaskControl
         {
             /// <summary>
-            /// 当前动画播放状态
+            /// Current animation playback state
             /// </summary>
             public bool PlayState => Type != ControlType.Status_Stoped && Type != ControlType.Stop;
             /// <summary>
-            /// 设置为继续播放
+            /// Set to continue playback
             /// </summary>
             public void SetContinue() { Type = ControlType.Continue; }
             /// <summary>
-            /// 停止播放
+            /// Stop playback
             /// </summary>
             public void Stop(Action endAction = null) { EndAction = endAction; Type = ControlType.Stop; }
             /// <summary>
-            /// 控制类型
+            /// Control type
             /// </summary>
             public enum ControlType
             {
                 /// <summary>
-                /// 维持现状, 不进行任何超控
+                /// Maintain the status quo, no override applied
                 /// </summary>
                 Status_Quo,
                 /// <summary>
-                /// 停止当前动画
+                /// Stop the current animation
                 /// </summary>
                 Stop,
                 /// <summary>
-                /// 播放完成后继续播放,仅生效一次, 之后将恢复为Status_Quo
+                /// Continue playback after completion, effective only once, then reverts to Status_Quo
                 /// </summary>
                 Continue,
                 /// <summary>
-                /// 动画已停止
+                /// Animation has stopped
                 /// </summary>
                 Status_Stoped,
             }
             /// <summary>
-            /// 结束动作
+            /// End action
             /// </summary>
             public Action EndAction;
             /// <summary>
-            /// 控制类型
+            /// Control type
             /// </summary>
             public ControlType Type = ControlType.Status_Quo;
             /// <summary>
-            /// 为动画控制类提供操作和结束动作
+            /// Provides operations and end action for the animation control class
             /// </summary>
             /// <param name="endAction"></param>
             public TaskControl(Action endAction = null)

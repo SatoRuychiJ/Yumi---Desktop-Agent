@@ -7,31 +7,31 @@ using static VPet_Simulator.Core.GraphHelper;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 动画信息
+    /// Animation info
     /// </summary>
-    /// 新版本动画类型是根据整体类型+名字定义而成
-    /// 动画类型->动画名字
-    /// 动画名字->状态+动作->动画
-    /// 类型: 主要动作分类
-    /// 动画名字: 用户自定义, 同名字动画支持相同随机,不再使用StoreRand
-    /// 动作: 动画的动作 Start Loop End
-    /// 状态: 动画的状态 Save.GameSave.ModeType
+    /// New-version animation type is defined by overall type + name
+    /// Animation type -> animation name
+    /// Animation name -> state + action -> animation
+    /// Type: main action category
+    /// Name: user-defined; same-name animations share randomness, no longer uses StoreRand
+    /// Action: animation action Start Loop End
+    /// State: animation state Save.GameSave.ModeType
     public class GraphInfo
     {
         /// <summary>
-        /// 用于Convert的空动画信息
+        /// Empty animation info used for Convert
         /// </summary>
         public GraphInfo()
         {
 
         }
         /// <summary>
-        /// 创建动画信息
+        /// Create animation info
         /// </summary>
-        /// <param name="name">动画名字: 用户自定义 同名字动画支持相同随机,不再使用StoreRand</param>
-        /// <param name="animat">动作: 动画的动作 Start Loop End</param>
-        /// <param name="type">类型: 主要动作分类</param>
-        /// <param name="modeType">状态: 4种状态</param>
+        /// <param name="name">Name: user-defined; same-name animations share randomness, no longer uses StoreRand</param>
+        /// <param name="animat">Action: animation action Start Loop End</param>
+        /// <param name="type">Type: main action category</param>
+        /// <param name="modeType">State: 4 states</param>
         public GraphInfo(string name, GraphType type = GraphType.Common, AnimatType animat = AnimatType.Single, IGameSave.ModeType modeType = IGameSave.ModeType.Nomal)
         {
             Name = name;
@@ -40,10 +40,10 @@ namespace VPet_Simulator.Core
             ModeType = modeType;
         }
         /// <summary>
-        /// 通过文件位置和信息获取动画信息
+        /// Get animation info from file location and info
         /// </summary>
-        /// <param name="path">文件夹位置</param>
-        /// <param name="info">信息</param>
+        /// <param name="path">Folder location</param>
+        /// <param name="info">Info</param>
         public GraphInfo(FileSystemInfo path, ILine info)
         {
             string pn;
@@ -82,7 +82,7 @@ namespace VPet_Simulator.Core
             {
                 graphtype = GraphInfo.GraphType.Common;
                 for (int i = 0; i < GraphTypeValue.Length; i++)
-                {//挨个找第一个匹配的
+                {//find the first match one by one
                     if (path_name.Contains(GraphTypeValue[i][0]))
                     {
                         int index = path_name.IndexOf(GraphTypeValue[i][0]);
@@ -147,145 +147,145 @@ namespace VPet_Simulator.Core
             ModeType = modetype;
         }
         /// <summary>
-        /// 类型: 主要动作分类
+        /// Type: main action category
         /// </summary>
-        /// * 为必须有的动画
+        /// * marks required animations
         public enum GraphType
         {
             /// <summary>
-            /// 通用动画,用于被被其他动画调用或者mod等用途
+            /// Common animation, used by other animations or mods etc.
             /// </summary>
-            /// 不被默认启用/使用的 不包含在GrapType
+            /// Not enabled/used by default, not included in GrapType
             Common,
             /// <summary>
-            /// 被提起动态 *
+            /// Raised dynamic *
             /// </summary>
             Raised_Dynamic,
             /// <summary>
-            /// 被提起静态 (开始&循环&结束) *
+            /// Raised static (Start & Loop & End) *
             /// </summary>
             Raised_Static,
             /// <summary>
-            /// 现在所有会动的东西都是MOVE
+            /// Everything that moves is now MOVE
             /// </summary>
             Move,
             /// <summary>
-            /// 呼吸 *
+            /// Breathing *
             /// </summary>
             Default,
             /// <summary>
-            /// 摸头 (开始&循环&结束)
+            /// Touch head (Start & Loop & End)
             /// </summary>
             Touch_Head,
             /// <summary>
-            /// 摸身体 (开始&循环&结束)
+            /// Touch body (Start & Loop & End)
             /// </summary>
             Touch_Body,
             /// <summary>
-            /// 空闲 (包括下蹲/无聊等通用空闲随机动画) (开始&循环&结束)
+            /// Idle (includes crouch/bored and other common idle random animations) (Start & Loop & End)
             /// </summary>
             Idel,
             /// <summary>
-            /// 睡觉 (开始&循环&结束) *
+            /// Sleep (Start & Loop & End) *
             /// </summary>
             Sleep,
             /// <summary>
-            /// 说话 (开始&循环&结束) *
+            /// Talk (Start & Loop & End) *
             /// </summary>
             Say,
             /// <summary>
-            /// 待机 模式1 (开始&循环&结束)
+            /// Standby mode 1 (Start & Loop & End)
             /// </summary>
             StateONE,
             /// <summary>
-            /// 待机 模式2 (开始&循环&结束)
+            /// Standby mode 2 (Start & Loop & End)
             /// </summary>
             StateTWO,
             /// <summary>
-            /// 开机 *
+            /// Startup *
             /// </summary>
             StartUP,
             /// <summary>
-            /// 关机
+            /// Shutdown
             /// </summary>
             Shutdown,
             /// <summary>
-            /// 工作 (开始&循环&结束) *
+            /// Work (Start & Loop & End) *
             /// </summary>
             Work,
             /// <summary>
-            /// 向上切换状态
+            /// Switch state up
             /// </summary>
             Switch_Up,
             /// <summary>
-            /// 向下切换状态
+            /// Switch state down
             /// </summary>
             Switch_Down,
             /// <summary>
-            /// 口渴
+            /// Thirsty
             /// </summary>
             Switch_Thirsty,
             /// <summary>
-            /// 饥饿
+            /// Hungry
             /// </summary>
             Switch_Hunger,
             /// <summary>
-            /// 躲藏(侧面)
+            /// Hide (side)
             /// </summary>
             SideHide_Left_Main,
             /// <summary>
-            /// 躲藏(侧面)显示
+            /// Hide (side) show
             /// </summary>
             SideHide_Left_Rise,
             /// <summary>
-            /// 躲藏(侧面)
+            /// Hide (side)
             /// </summary>
             SideHide_Right_Main,
             /// <summary>
-            /// 躲藏(侧面)显示
+            /// Hide (side) show
             /// </summary>
             SideHide_Right_Rise,
         }
         /// <summary>
-        /// 动作: 动画的动作 Start Loop End
+        /// Action: animation action Start Loop End
         /// </summary>
         public enum AnimatType
         {
             /// <summary>
-            /// 动画只有一个动作
+            /// Animation has only one action
             /// </summary>
             Single,
             /// <summary>
-            /// 开始动作
+            /// Start action
             /// </summary>
             A_Start,
             /// <summary>
-            /// 循环动作
+            /// Loop action
             /// </summary>
             B_Loop,
             /// <summary>
-            /// 结束动作
+            /// End action
             /// </summary>
             C_End,
         }
         /// <summary>
-        /// 动画名字: 用户自定义 同名字动画支持相同随机,不再使用StoreRand
+        /// Name: user-defined; same-name animations share randomness, no longer uses StoreRand
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 动作: 动画的动作 Start Loop End
+        /// Action: animation action Start Loop End
         /// </summary>
         public AnimatType Animat { get; set; }
         /// <summary>
-        /// 类型: 主要动作分类
+        /// Type: main action category
         /// </summary>
         public GraphType Type { get; set; }
         /// <summary>
-        /// 状态: 4种状态
+        /// State: 4 states
         /// </summary>
         public IGameSave.ModeType ModeType { get; set; }
         ///// <summary>
-        ///// 其他附带的储存信息
+        ///// Other attached stored info
         ///// </summary>
         //public ILine Info { get; set; }
         public override string ToString()

@@ -15,7 +15,7 @@ using Timer = System.Timers.Timer;
 namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// ToolBar.xaml 的交互逻辑
+    /// Interaction logic for ToolBar.xaml
     /// </summary>
     public partial class ToolBar : UserControl, IDisposable
     {
@@ -60,7 +60,7 @@ namespace VPet_Simulator.Core
                 Visibility = Visibility.Collapsed;
         }
         /// <summary>
-        /// 加载默认工作
+        /// Load default work
         /// </summary>
         public void LoadWork()
         {
@@ -91,7 +91,7 @@ namespace VPet_Simulator.Core
                     MenuWork.Items.Add(mi);
                 }
             }
-            // AIDeskPet: 学习功能已移除, 菜单永久隐藏
+            // AIDeskPet: Study feature removed, menu permanently hidden
             MenuStudy.Visibility = Visibility.Collapsed;
             if (ps.Count == 0)
             {
@@ -117,11 +117,11 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 自动显示和隐藏DIY菜单
+        /// Automatically show and hide the DIY menu
         /// </summary>
         public void LoadDIY()
         {
-            // AIDeskPet: 投喂+互动已移除, 可见项=用量/系统(+DIY) (DIY显示=3, 隐藏=2)
+            // AIDeskPet: Feed+Interact removed, visible items = usage/system(+DIY) (DIY shown=3, hidden=2)
             if (MenuDIY.Items.Count > 0)
             {
                 if (MenuDIY.Visibility == Visibility.Visible)
@@ -155,11 +155,11 @@ namespace VPet_Simulator.Core
             StartWork(wplay);
         }
         /// <summary>
-        /// 刷新显示UI
+        /// Refresh the display UI
         /// </summary>
         public void M_TimeUIHandle(Main m)
         {
-            // AIDeskPet: 面板仅剩 AI 用量统计 (spAIStats), 由 AI 插件自行刷新
+            // AIDeskPet: Panel only has AI usage stats (spAIStats), refreshed by the AI plugin itself
         }
 
         private void ClosePanelTimer_Tick(object sender, EventArgs e)
@@ -187,7 +187,7 @@ namespace VPet_Simulator.Core
                 Dispatcher.Invoke(() => this.Visibility = Visibility.Collapsed);
         }
         /// <summary>
-        /// ToolBar显示事件
+        /// ToolBar show event
         /// </summary>
         public event Action EventShow;
         public void Show()
@@ -219,33 +219,33 @@ namespace VPet_Simulator.Core
             m.Core.Controller.ShowPanel();
         }
         /// <summary>
-        /// 窗口类型
+        /// Window type
         /// </summary>
         public enum MenuType
         {
             /// <summary>
-            /// 投喂
+            /// Feed
             /// </summary>
             Feed,
             /// <summary>
-            /// 互动
+            /// Interact
             /// </summary>
             Interact,
             /// <summary>
-            /// 自定
+            /// Custom
             /// </summary>
             DIY,
             /// <summary>
-            /// 设置
+            /// Settings
             /// </summary>
             Setting,
         }
         /// <summary>
-        /// 添加按钮
+        /// Add button
         /// </summary>
-        /// <param name="parentMenu">按钮位置</param>
-        /// <param name="displayName">显示名称</param>
-        /// <param name="clickCallback">功能</param>
+        /// <param name="parentMenu">Button location</param>
+        /// <param name="displayName">Display name</param>
+        /// <param name="clickCallback">Action</param>
         public void AddMenuButton(MenuType parentMenu,
             string displayName,
             Action clickCallback)
@@ -255,7 +255,7 @@ namespace VPet_Simulator.Core
                 Header = displayName,
                 HorizontalContentAlignment = HorizontalAlignment.Center
             };
-            // AIDeskPet: 深色主题下动态子菜单项显式设亮紫前景, 避免黑字黑底看不清
+            // AIDeskPet: In dark theme, explicitly set dynamic submenu items to bright purple foreground to avoid black text on black background
             menuItem.SetResourceReference(MenuItem.ForegroundProperty, "DARKPrimary");
             menuItem.Click += delegate
             {
@@ -279,7 +279,7 @@ namespace VPet_Simulator.Core
             }
         }
 
-        // AIDeskPet: 状态条已移除, 相关百分比文本生成器一并移除
+        // AIDeskPet: Status bar removed, related percentage text generator removed as well
 
         private Brush GetForeground(double value)
         {
@@ -297,7 +297,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// MenuPanel显示事件
+        /// MenuPanel show event
         /// </summary>
         public event Action EventMenuPanelShow;
 

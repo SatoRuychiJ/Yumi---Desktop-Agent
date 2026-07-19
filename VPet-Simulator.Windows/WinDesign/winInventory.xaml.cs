@@ -17,7 +17,7 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winInventory.xaml 的交互逻辑
+    /// Interaction logic for winInventory.xaml
     /// </summary>
     public partial class winInventory : WindowX
     {
@@ -28,9 +28,9 @@ namespace VPet_Simulator.Windows
         private int _detailCount = 1;
 
         /// <summary>
-        /// 构造函数，初始化物品栏窗口
+        /// Constructor, initializes the inventory window
         /// </summary>
-        /// <param name="mw">主窗口实例</param>
+        /// <param name="mw">Main window instance</param>
         public winInventory(MainWindow mw)
         {
             InitializeComponent();
@@ -44,12 +44,12 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 显示物品栏窗口
+        /// Show the inventory window
         /// </summary>
         public new void Show()
         {
             base.Show();
-            // 首次打开时控件可能还未加载完，延迟刷新避免"打开不加载、切换后才加载"
+            // On first open the controls may not be fully loaded yet; delay the refresh to avoid "not loading on open, only loading after switching"
             Dispatcher.BeginInvoke(new Action(UpdateList), DispatcherPriority.Loaded);
 
         }
@@ -60,57 +60,57 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 更新物品列表
+        /// Update the item list
         /// </summary>
         /// <remarks>
-        /// 根据搜索条件、分类、排序规则更新显示的物品列表，并计算总价值
+        /// Update the displayed item list based on search, category and sort rules, and calculate the total value
         /// </remarks>
         private void UpdateList()
         {
             if (mw == null) return;
 
-            // 全部物品（用于顶部"总价值"统计）
+            // All items (used for the "total value" stat at the top)
             IEnumerable<Item> items = mw.Items.Where(x => x.Visibility);
 
-            // 搜索
+            // Search
             if (_searchTextBox != null && !string.IsNullOrWhiteSpace(_searchTextBox.Text))
             {
                 items = items.Where(x => x.TranslateName.Contains(_searchTextBox.Text));
             }
 
-            //收藏
+            // Favorites
             if (_puswitch?.IsChecked == true)
             {
                 items = items.Where(x => x.Star == true);
             }
 
-            // 分类
-            // 0: 全部（显示所有物品）
+            // Category
+            // 0: All (show all items)
             if (LsbCategory.SelectedIndex != 0)
             {
                 items = items.Where(x => x.ItemType == Item.ItemTypes[LsbCategory.SelectedIndex]);
             }
 
-            // 排序
+            // Sort
             bool asc = LsbSortAsc.SelectedIndex == 0;
             switch (LsbSortRule.SelectedIndex)
             {
                 default:
                     break;
-                case 1: // 按名称
+                case 1: // By name
                     items = asc ? items.OrderBy(x => x.Name) : items.OrderByDescending(x => x.Name);
                     break;
-                case 2: // 按数量
+                case 2: // By count
                     items = asc ? items.OrderBy(x => x.Count) : items.OrderByDescending(x => x.Count);
                     break;
-                case 3: // 按价格
+                case 3: // By price
                     items = asc ? items.OrderBy(x => x.Price) : items.OrderByDescending(x => x.Price);
                     break;
             }
 
             IcCommodity.ItemsSource = items;
 
-            // 计算总价值（始终统计全部物品，不受分类影响）
+            // Calculate the total value (always counts all items, unaffected by category)
             double totalValue = mw.Items.Sum(x => x.Price * x.Count);
             if (rTotalValue != null)
                 rTotalValue.Text = totalValue.ToString("f2");
@@ -122,19 +122,19 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 使用物品
+        /// Use an item
         /// </summary>
         private void UseItem(Item item, int count = 1)
         {
             if (item == null) return;
             while (count-- > 0)
                 item.Use(mw);
-            // 没有通知，直接刷新
+            // No notification, refresh directly
             UpdateList();
         }
 
         /// <summary>
-        /// 搜索按钮点击事件处理
+        /// Search button click handler
         /// </summary>
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -142,7 +142,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 标题搜索框加载完成事件处理
+        /// Title search box loaded handler
         /// </summary>
         private void TbTitleSearch_Loaded(object sender, RoutedEventArgs e)
         {
@@ -150,7 +150,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 总价值文本加载完成事件处理
+        /// Total value text loaded handler
         /// </summary>
         private void rTotalValue_Loaded(object sender, RoutedEventArgs e)
         {
@@ -161,7 +161,7 @@ namespace VPet_Simulator.Windows
 
 
         /// <summary>
-        /// 排序规则选择改变事件处理
+        /// Sort rule selection changed handler
         /// </summary>
         private void LsbSortRule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -170,7 +170,7 @@ namespace VPet_Simulator.Windows
         }
 
         ///// <summary>
-        ///// 窗口关闭事件处理
+        ///// Window closing handler
         ///// </summary>
         //private void WindowX_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         //{
@@ -200,7 +200,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 物品格子单击事件处理
+        /// Item cell click handler
         /// </summary>
         private void CellRoot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -212,9 +212,9 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 显示物品详情界面
+        /// Show the item detail panel
         /// </summary>
-        /// <param name="item">要显示的物品</param>
+        /// <param name="item">The item to display</param>
         private void DisplayDetail(Item item)
         {
             _detailItem = item;
@@ -245,7 +245,7 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 隐藏物品详情界面
+        /// Hide the item detail panel
         /// </summary>
         private void HideDetail()
         {
@@ -254,12 +254,12 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 详情界面外部区域点击事件处理
+        /// Detail panel outside-area click handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         /// <remarks>
-        /// 点击详情界面外部区域时关闭详情界面
+        /// Close the detail panel when clicking outside it
         /// </remarks>
         private void BorderOutDetail_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -267,20 +267,20 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 关闭详情按钮点击事件处理
+        /// Close detail button click handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void ButtonCloseDetail_Click(object sender, RoutedEventArgs e)
         {
             HideDetail();
         }
 
         /// <summary>
-        /// 详情界面减少数量按钮点击事件处理
+        /// Detail panel decrease-quantity button click handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void RbtnDetailDecrease_Click(object sender, RoutedEventArgs e)
         {
             if (_detailItem == null)
@@ -290,10 +290,10 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 详情界面增加数量按钮点击事件处理
+        /// Detail panel increase-quantity button click handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void RbtnDetailIncrease_Click(object sender, RoutedEventArgs e)
         {
             if (_detailItem == null)
@@ -303,12 +303,12 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 详情界面数量文本框按键事件处理
+        /// Detail panel quantity textbox key handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         /// <remarks>
-        /// 当按下回车键时应用输入的数量
+        /// Apply the entered quantity when Enter is pressed
         /// </remarks>
         private void TbDetailCount_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -320,20 +320,20 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 详情界面数量文本框失去焦点事件处理
+        /// Detail panel quantity textbox lost-focus handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void TbDetailCount_LostFocus(object sender, RoutedEventArgs e)
         {
             ApplyDetailCountFromText();
         }
 
         /// <summary>
-        /// 从文本框应用数量设置
+        /// Apply the quantity setting from the textbox
         /// </summary>
         /// <remarks>
-        /// 验证并限制输入的数量值在有效范围内（1到物品拥有数量）
+        /// Validate and clamp the entered quantity to the valid range (1 to the owned count)
         /// </remarks>
         private void ApplyDetailCountFromText()
         {
@@ -348,10 +348,10 @@ namespace VPet_Simulator.Windows
         }
 
         /// <summary>
-        /// 详情界面使用按钮点击事件处理
+        /// Detail panel use button click handler
         /// </summary>
-        /// <param name="sender">事件发送者</param>
-        /// <param name="e">事件参数</param>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void BtnDetailUse_Click(object sender, RoutedEventArgs e)
         {
             if (_detailItem == null)

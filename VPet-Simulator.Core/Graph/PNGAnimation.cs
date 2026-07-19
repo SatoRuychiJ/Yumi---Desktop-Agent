@@ -16,26 +16,26 @@ namespace VPet_Simulator.Core
 {
 
     /// <summary>
-    /// PNGAnimation.xaml 的交互逻辑
+    /// Interaction logic for PNGAnimation.xaml
     /// </summary>
     public partial class PNGAnimation : IImageRun
     {
         /// <summary>
-        /// 所有动画帧
+        /// All animation frames
         /// </summary>
         public List<Animation> Animations;
         /// <summary>
-        /// 是否循环播放
+        /// Whether to loop playback
         /// </summary>
         public bool IsLoop { get; set; }
 
         /// <summary>
-        /// 动画信息
+        /// Animation info
         /// </summary>
         public GraphInfo GraphInfo { get; private set; }
 
         /// <summary>
-        /// 是否准备完成
+        /// Whether preparation is complete
         /// </summary>
         public bool IsReady { get; private set; } = false;
 
@@ -43,7 +43,7 @@ namespace VPet_Simulator.Core
 
         int nowid;
         /// <summary>
-        /// 图片资源
+        /// Image resource
         /// </summary>
         public string Path { get; set; }
         private GraphCore GraphCore;
@@ -63,11 +63,11 @@ namespace VPet_Simulator.Core
         public string FailMessage { get; set; } = "";
 
         /// <summary>
-        /// 新建 PNG 动画
+        /// Create a new PNG animation
         /// </summary>
-        /// <param name="path">文件夹位置</param>
-        /// <param name="paths">文件内容列表</param>
-        /// <param name="isLoop">是否循环</param>
+        /// <param name="path">Folder location</param>
+        /// <param name="paths">List of file contents</param>
+        /// <param name="isLoop">Whether to loop</param>
         public PNGAnimation(GraphCore graphCore, string path, FileInfo[] paths, GraphInfo graphinfo, bool isLoop = false)
         {
             Animations = new List<Animation>();
@@ -81,7 +81,7 @@ namespace VPet_Simulator.Core
                 {
                     GraphCore.CommUIElements["Image1.PNGAnimation"] = new System.Windows.Controls.Image() { Height = 500 };
                     GraphCore.CommUIElements["Image2.PNGAnimation"] = new System.Windows.Controls.Image() { Height = 500 };
-                    GraphCore.CommUIElements["Image3.PNGAnimation"] = new System.Windows.Controls.Image() { Height = 500 }; // 多整个, 防止动画闪烁
+                    GraphCore.CommUIElements["Image3.PNGAnimation"] = new System.Windows.Controls.Image() { Height = 500 }; // One extra, to prevent animation flicker
                 });
             }
             Task.Run(() => startup(path, paths));
@@ -111,7 +111,7 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 最大同时加载数
+        /// Maximum number loaded simultaneously
         /// </summary>
         public static int MaxLoadMemory = 2000;
 
@@ -123,8 +123,8 @@ namespace VPet_Simulator.Core
             }
             try
             {
-                //新方法:加载大图片
-                //生成大文件加载非常慢,先看看有没有缓存能用
+                //New approach: load a large image
+                //Generating the large file is very slow, first check whether a usable cache exists
                 Path = System.IO.Path.Combine(GraphCore.CachePath, $"{GraphCore.Resolution}_{Math.Abs(Sub.GetHashCode(path))}_{paths.Length}.png");
                 if (!File.Exists(Path) && !((List<string>)GraphCore.CommConfig["Cache"]).Contains(path))
                 {
@@ -145,7 +145,7 @@ namespace VPet_Simulator.Core
                         }
 
                         if (paths.Length * w >= 60000)
-                        {//修复大长动画导致过长分辨率导致可能的报错
+                        {//Fix possible errors caused by an overly long resolution from large, long animations
                             w = 60000 / paths.Length;
                             h = (int)(firstImage.Height * (w / (double)firstImage.Width));
                         }
@@ -230,22 +230,22 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 单帧动画
+        /// Single-frame animation
         /// </summary>
         public class Animation
         {
             private PNGAnimation parent;
             public int FrameIndex;
             ///// <summary>
-            ///// 显示
+            ///// Show
             ///// </summary>
             //public Action Visible;
             ///// <summary>
-            ///// 隐藏
+            ///// Hide
             ///// </summary>
             //public Action Hidden;
             /// <summary>
-            /// 帧时间
+            /// Frame time
             /// </summary>
             public int Time;
             public Animation(PNGAnimation parent, int time, int frameIndex)//, Action hidden)
@@ -257,14 +257,14 @@ namespace VPet_Simulator.Core
                 FrameIndex = frameIndex;
             }
             /// <summary>
-            /// 运行该图层
+            /// Run this layer
             /// </summary>
-            /// <param name="Control">动画控制</param>
-            /// <param name="This">显示的图层</param>
+            /// <param name="Control">Animation control</param>
+            /// <param name="This">The layer to display</param>
             public void Run(FrameworkElement This, TaskControl Control)
             {
                 var frameSource = parent.GetFrameSource(FrameIndex);
-                //先显示该图层
+                //First show this layer
                 This.Dispatcher.Invoke(() =>
                 {
                     if (This is System.Windows.Controls.Image image)
@@ -273,9 +273,9 @@ namespace VPet_Simulator.Core
                     }
                     This.Margin = new Thickness(0, 0, 0, 0);
                 });
-                //然后等待帧时间毫秒
+                //Then wait for the frame time in milliseconds
                 Thread.Sleep(Time);
-                //判断是否要下一步
+                //Decide whether to proceed to the next step
                 switch (Control.Type)
                 {
                     case TaskControl.ControlType.Stop:
@@ -289,7 +289,7 @@ namespace VPet_Simulator.Core
                             if (parent.IsLoop)
                             {
                                 parent.nowid = 0;
-                                //让循环动画重新开始立线程,不stackoverflow
+                                //Restart the loop animation on a new thread to avoid stackoverflow
                                 Task.Run(() => parent.Animations[0].Run(This, Control));
                                 return;
                             }
@@ -301,17 +301,17 @@ namespace VPet_Simulator.Core
                             else
                             {
                                 Control.Type = TaskControl.ControlType.Status_Stoped;
-                                Control.EndAction?.Invoke(); //运行结束动画时事件                                
+                                Control.EndAction?.Invoke(); //Event fired when the end animation runs
                                 return;
                             }
-                        //要下一步
+                        //Proceed to the next step
                         parent.Animations[parent.nowid].Run(This, Control);
                         return;
                 }
             }
         }
         /// <summary>
-        /// 从0开始运行该动画
+        /// Run this animation from the start
         /// </summary>
         public void Run(Decorator parant, Action EndAction = null)
         {
@@ -322,7 +322,7 @@ namespace VPet_Simulator.Core
                 return;
             }
             if (Control?.PlayState == true)
-            {//如果当前正在运行,重置状态
+            {//If currently running, reset the state
                 Control.Stop(() => Run(parant, EndAction));
                 return;
             }
@@ -371,11 +371,11 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 指定图像图像控件准备运行该动画
+        /// Prepare the specified image control to run this animation
         /// </summary>
-        /// <param name="img">用于显示的Image</param>
-        /// <param name="EndAction">结束动画</param>
-        /// <returns>准备好的线程</returns>
+        /// <param name="img">The Image used for display</param>
+        /// <param name="EndAction">End animation</param>
+        /// <returns>The prepared thread</returns>
         public Task Run(System.Windows.Controls.Image img, Action EndAction = null)
         {
             Touch();
@@ -385,7 +385,7 @@ namespace VPet_Simulator.Core
                 return Task.CompletedTask;
             }
             if (Control?.PlayState == true)
-            {//如果当前正在运行,重置状态
+            {//If currently running, reset the state
                 Control.EndAction = null;
                 Control.Type = TaskControl.ControlType.Stop;
             }
@@ -476,7 +476,7 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 修改最后使用时间为当前时间，以便在清理空闲缓存时判断是否需要清理
+        /// Update the last-used time to the current time, so idle cache cleanup can decide whether to clean up
         /// </summary>
         public void Touch() => Interlocked.Exchange(ref LastUseTimeTicks, DateTime.UtcNow.Ticks);
 

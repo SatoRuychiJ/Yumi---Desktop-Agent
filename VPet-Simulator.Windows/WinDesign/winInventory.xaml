@@ -60,10 +60,10 @@
         </DataTemplate>
     </pu:WindowXCaption.HeaderTemplate>
 
-    <!-- 物品详情遮罩层：套用更好买最终确认版（无遮罩悬浮、但打开详情有遮罩） -->
+    <!-- Item detail mask layer: reuses the BetterBuy final-confirm version (no mask on hover, but a mask when the detail is open) -->
     <pu:WindowX.Overlayer>
         <Grid>
-            <!-- 详情打开时：需要遮罩/拦截背景点击，并支持点空白关闭 -->
+            <!-- When the detail is open: mask/intercept background clicks and allow closing by clicking empty space -->
             <Border Background="Transparent" MouseLeftButtonDown="BorderOutDetail_MouseLeftButtonDown" />
             <Grid x:Name="ItemDetailGrid" Margin="120, 90">
                 <Border Background="White" CornerRadius="15">
@@ -96,7 +96,7 @@
                             pu:ToggleButtonHelper.CornerRadius="5" pu:ToggleButtonHelper.CheckedContent="&#xF186;"
                             pu:IconHelper.Margin="0" FontFamily="/VPet-Simulator.Windows;component/Res/#remixicon"
                             Content="&#xF18B;" Checked="TbtnStar_Checked" Unchecked="TbtnStar_Checked" />
-                    <!-- 左侧：图片 -->
+                    <!-- Left: image -->
                     <Border Grid.Row="1" CornerRadius="10" Background="{DynamicResource SecondaryTrans4}">
                         <Grid>                           
                             <Image x:Name="ImageItemDetail" Stretch="Uniform" />
@@ -108,7 +108,7 @@
                         </Grid>                      
                     </Border>
 
-                    <!-- 右侧：文本信息 -->
+                    <!-- Right: text info -->
                     <Grid Grid.Row="1" Grid.Column="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -124,7 +124,7 @@
 
                         <ScrollViewer Grid.Row="2" Margin="0,10,0,0" HorizontalScrollBarVisibility="Disabled"
                                 VerticalScrollBarVisibility="Auto">
-                            <!-- ScrollViewer 会导致子元素按“无限宽”测量，从而 Wrap 失效；这里强制按可视宽度约束 -->
+                            <!-- ScrollViewer causes children to be measured at "infinite width", breaking Wrap; force a constraint to the visible width here -->
                             <TextBlock x:Name="TextItemDesc" TextWrapping="Wrap"
                                     Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}" />
                         </ScrollViewer>
@@ -135,7 +135,7 @@
                                     Foreground="{DynamicResource Primary}" FontWeight="SemiBold" FontSize="16" />
                         </StackPanel>
 
-                        <!-- 数量：减/输入/加 -->
+                        <!-- Quantity: decrease/input/increase -->
                         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Center"
                                 x:Name="spUseEnter">
                             <TextBlock Text="{ll:Str 数量}" VerticalAlignment="Center"/>
@@ -171,7 +171,7 @@
     </pu:WindowX.Overlayer>
 
     <Window.Resources>
-        <!-- 网格格子：图标 + 标题 + 数量 + 悬浮“使用”(不加遮罩层) -->
+        <!-- Grid cell: icon + title + count + hover "use" (no mask layer added) -->
         <DataTemplate x:Key="InventoryGridCellTemplate">
             <Grid Width="100" Height="100">
                 <Border x:Name="CellRoot" Cursor="Hand" CornerRadius="6" Background="{DynamicResource SecondaryTrans4}"
@@ -201,7 +201,7 @@
                                     Text="{Binding Count, StringFormat=x{0}}" />
                         </Border>
                         
-                        <!-- Hover：仅显示按钮，不叠加整块遮罩 -->
+                        <!-- Hover: show only the buttons, no full mask overlay -->
                         <Grid x:Name="grdCellbtn" Visibility="Collapsed">
                             <Button x:Name="BtnCellUse" Cursor="Hand" Padding="3,1" Content="{ll:Str 使用}"
                                     Visibility="{Binding CanUse, Converter={x:Static pu:Converters.FalseToCollapseConverter}}"
@@ -230,7 +230,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!-- 分类 Tab -->
+        <!-- Category Tab -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -254,7 +254,7 @@
             </ScrollViewer>
         </Grid>
 
-        <!-- 排序 Tab -->
+        <!-- Sort Tab -->
         <Border Grid.Row="1" Margin="0,6,0,10" CornerRadius="6" Background="{DynamicResource SecondaryTrans4}">
             <Grid Margin="8,6">
                 <Grid.ColumnDefinitions>
@@ -307,7 +307,7 @@
             </Grid>
         </Border>
 
-        <!-- 网格背包 -->
+        <!-- Grid backpack -->
         <Grid Grid.Row="2">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                     pu:ScrollBarHelper.ThumbBackground="#33FFFFFF" pu:ScrollBarHelper.HoverThumbBackground="#55FFFFFF">

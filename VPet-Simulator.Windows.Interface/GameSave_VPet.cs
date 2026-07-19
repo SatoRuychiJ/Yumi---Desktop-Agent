@@ -10,22 +10,22 @@ using static VPet_Simulator.Core.IGameSave;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 游戏存档 桌宠桌面端订制版本
+/// Game save, desktop pet customized version
 /// </summary>
 public class GameSave_VPet : IGameSave
 {
     /// <summary>
-    /// 宠物名字
+    /// Pet name
     /// </summary>
     [Line(name: "name")]
     public string Name { get; set; }
     /// <summary>
-    /// 主人称呼
+    /// Owner's name
     /// </summary>
     [Line(name: "hostname")]
     public string HostName { get; set; } = "";
     /// <summary>
-    /// 金钱
+    /// Money
     /// </summary>
     [Line(Type = LPSConvert.ConvertType.ToFloat, Name = "money")]
     public double Money { get; set; }
@@ -33,17 +33,17 @@ public class GameSave_VPet : IGameSave
 
     double exp { get; set; }
     /// <summary>
-    /// 等级
+    /// Level
     /// </summary>
     [Line]
     public int Level { get; set; } = 1;
     /// <summary>
-    /// 等级上限
+    /// Level cap
     /// </summary>
     [Line]
     public int LevelMax { get; set; } = 0;
     /// <summary>
-    /// 经验值
+    /// Experience
     /// </summary>
     [Line(type: LPSConvert.ConvertType.ToFloat, name: "exp")]
     public double Exp
@@ -84,47 +84,47 @@ public class GameSave_VPet : IGameSave
     public class LevelUpEventArgs : EventArgs
     {
         /// <summary>
-        /// 是否升级
+        /// Whether leveled up
         /// </summary>
         public bool IsLevelUp => true;
         /// <summary>
-        /// 是否升级指上限
+        /// Whether the level cap increased
         /// </summary>
         public bool IsLevelMaxUp { get; set; }
         /// <summary>
-        /// 之前的等级
+        /// Previous level
         /// </summary>
         public int BeforeLevel { get; set; }
         /// <summary>
-        /// 之前的等级上限
+        /// Previous level cap
         /// </summary>
         public int BeforeLevelMax { get; set; }
     }
     public event Action<LevelUpEventArgs> Event_LevelUp;
     /// <summary>
-    /// 玩家总共获得的经验值数量
+    /// Total experience the player has gained
     /// </summary>
     public double TotalExpGained()
     {
         double totalExp = 0;
-        // 首先，添加LevelMax的经验值
+        // first, add the experience for LevelMax
         for (int i = 1; i <= LevelMax; i++)
         {
             for (int j = 100 * i + 1; j <= 1000 + 100 * i; j++)
                 totalExp += 200 * j - 100;
         }
-        // 然后，添加当前等级的经验值
+        // then, add the experience for the current level
         totalExp += (Level - 100 * LevelMax) * (200 * (Level - 1) - 100);
-        // 最后，添加剩余的经验值
+        // finally, add the remaining experience
         totalExp += Exp;
         return totalExp;
     }
     /// <summary>
-    /// 升级所需经验值
+    /// Experience required to level up
     /// </summary>
     public int LevelUpNeed() => 200 * Level - 100;
     /// <summary>
-    /// 体力 0-100
+    /// Stamina 0-100
     /// </summary>
     public double Strength { get => strength; set => strength = Math.Min(StrengthMax, Math.Max(0, value)); }
 
@@ -133,12 +133,12 @@ public class GameSave_VPet : IGameSave
     [Line(Type = LPSConvert.ConvertType.ToFloat, IgnoreCase = true)]
     protected double strength { get; set; }
     /// <summary>
-    /// 待补充的体力,随着时间缓慢加给桌宠
-    /// </summary>//让游戏更有游戏性
+    /// Stamina to be replenished, slowly added to the pet over time
+    /// </summary>//makes the game more engaging
     [Line(Type = LPSConvert.ConvertType.ToFloat, IgnoreCase = true)]
     public double StoreStrength { get; set; }
     /// <summary>
-    /// 变化 体力
+    /// Stamina change
     /// </summary>
     public double ChangeStrength { get; set; } = 0;
     public void StrengthChange(double value)
@@ -147,7 +147,7 @@ public class GameSave_VPet : IGameSave
         Strength += value;
     }
     /// <summary>
-    /// 饱腹度
+    /// Fullness
     /// </summary>
     public double StrengthFood
     {
@@ -166,8 +166,8 @@ public class GameSave_VPet : IGameSave
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     protected double strengthFood { get; set; }
     /// <summary>
-    /// 待补充的饱腹度,随着时间缓慢加给桌宠
-    /// </summary>//让游戏更有游戏性
+    /// Fullness to be replenished, slowly added to the pet over time
+    /// </summary>//makes the game more engaging
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     public double StoreStrengthFood { get; set; }
     public void StrengthChangeFood(double value)
@@ -176,11 +176,11 @@ public class GameSave_VPet : IGameSave
         StrengthFood += value;
     }
     /// <summary>
-    /// 变化 食物
+    /// Food change
     /// </summary>
     public double ChangeStrengthFood { get; set; } = 0;
     /// <summary>
-    /// 口渴度
+    /// Thirst
     /// </summary>
     public double StrengthDrink
     {
@@ -200,12 +200,12 @@ public class GameSave_VPet : IGameSave
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     protected double strengthDrink { get; set; }
     /// <summary>
-    /// 待补充的口渴度,随着时间缓慢加给桌宠
-    /// </summary>//让游戏更有游戏性
+    /// Thirst to be replenished, slowly added to the pet over time
+    /// </summary>//makes the game more engaging
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     public double StoreStrengthDrink { get; set; }
     /// <summary>
-    /// 变化 口渴度
+    /// Thirst change
     /// </summary>
     public double ChangeStrengthDrink { get; set; } = 0;
     public void StrengthChangeDrink(double value)
@@ -214,7 +214,7 @@ public class GameSave_VPet : IGameSave
         StrengthDrink += value;
     }
     /// <summary>
-    /// 心情
+    /// Mood
     /// </summary>
     public double Feeling
     {
@@ -236,7 +236,7 @@ public class GameSave_VPet : IGameSave
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     protected double feeling { get; set; }
     /// <summary>
-    /// 变化 心情
+    /// Mood change
     /// </summary>
     public double ChangeFeeling { get; set; } = 0;
     public void FeelingChange(double value)
@@ -245,14 +245,14 @@ public class GameSave_VPet : IGameSave
         Feeling += value;
     }
     /// <summary>
-    /// 健康(生病)(隐藏)
+    /// Health (sickness) (hidden)
     /// </summary>
     public double Health { get => health; set => health = Math.Min(100, Math.Max(0, value)); }
 
     [Line(Type = LPSConvert.ConvertType.ToFloat)]
     protected double health { get; set; }
     /// <summary>
-    /// 好感度(隐藏)(累加值)
+    /// Likability (hidden) (accumulated value)
     /// </summary>
     public double Likability
     {
@@ -274,7 +274,7 @@ public class GameSave_VPet : IGameSave
     protected double likability { get; set; }
 
     /// <summary>
-    /// 清除变化
+    /// Clear changes
     /// </summary>
     public void CleanChange()
     {
@@ -284,7 +284,7 @@ public class GameSave_VPet : IGameSave
         ChangeStrengthFood /= 2;
     }
     /// <summary>
-    /// 取回被储存的体力
+    /// Retrieve the stored stamina
     /// </summary>
     public void StoreTake()
     {
@@ -312,9 +312,9 @@ public class GameSave_VPet : IGameSave
             StrengthChangeFood(s);
     }
     /// <summary>
-    /// 吃食物
+    /// Eat food
     /// </summary>
-    /// <param name="food">食物类</param>
+    /// <param name="food">Food class</param>
     public void EatFood(IFood food)
     {
         Exp += food.Exp;
@@ -332,7 +332,7 @@ public class GameSave_VPet : IGameSave
         Likability += food.Likability;
     }
     /// <summary>
-    /// 宠物当前状态
+    /// Pet's current state
     /// </summary>
     [Line(name: "mode")]
     public ModeType Mode { get; set; } = ModeType.Nomal;
@@ -341,22 +341,22 @@ public class GameSave_VPet : IGameSave
 
     public double FeelingMax => 100 + (int)(Math.Pow(Level * (1 + LevelMax), 0.75) * 2);
     /// <summary>
-    /// 经验值加成 TODO
+    /// Experience bonus TODO
     /// </summary>
     public double ExpBonus { get; set; } = 1;
 
     /// <summary>
-    /// 计算宠物当前状态
+    /// Calculate the pet's current state
     /// </summary>
     public ModeType CalMode()
     {
         int realhel = 60 - (Feeling / FeelingMax >= 80 ? 12 : 0) - (Likability >= 80 ? 12 : (Likability >= 40 ? 6 : 0));
-        //先从最次的开始
+        //start from the worst
         if (Health <= realhel)
         {
-            //可以确认从状态不佳和生病二选一
+            //we can narrow it down to either poor condition or sickness
             if (Health <= realhel / 2)
-            {//生病
+            {//sick
                 return ModeType.Ill;
             }
             else
@@ -364,7 +364,7 @@ public class GameSave_VPet : IGameSave
                 return ModeType.PoorCondition;
             }
         }
-        //然后判断是高兴还是普通
+        //then decide whether happy or normal
         double realfel = .90 - (Likability >= 80 ? .20 : (Likability >= 40 ? .10 : 0));
         double felps = Feeling / FeelingMax;
         if (felps >= realfel)
@@ -378,7 +378,7 @@ public class GameSave_VPet : IGameSave
         return ModeType.Nomal;
     }
     /// <summary>
-    /// 新游戏
+    /// New game
     /// </summary>
     public GameSave_VPet(string name)
     {
@@ -394,19 +394,19 @@ public class GameSave_VPet : IGameSave
         Mode = CalMode();
     }
     /// <summary>
-    /// 读档
+    /// Load save
     /// </summary>
     public GameSave_VPet()
     {
     }
     /// <summary>
-    /// 读档
+    /// Load save
     /// </summary>
     public static GameSave_VPet Load(ILine data) => LPSConvert.DeserializeObject<GameSave_VPet>(data);
     /// <summary>
-    /// 存档
+    /// Save
     /// </summary>
-    /// <returns>存档行</returns>
+    /// <returns>Save line</returns>
     public Line ToLine()
     {
         //Line save = new Line("vpet", Name);

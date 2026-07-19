@@ -1,89 +1,89 @@
 ﻿namespace VPet_Simulator.Core
 {
     /// <summary>
-    /// 桌宠控制器 需自行实现
+    /// Pet controller, must be implemented by the host
     /// </summary>
     public interface IController
     {
         /// <summary>
-        /// 移动桌宠位置 (自带缩放倍率)
+        /// Move the pet position (zoom ratio applied automatically)
         /// </summary>
-        /// <param name="X">X轴</param>
-        /// <param name="Y">Y轴</param>
+        /// <param name="X">X axis</param>
+        /// <param name="Y">Y axis</param>
         void MoveWindows(double X, double Y);
 
         /// <summary>
-        /// 获取桌宠距离左侧的位置
+        /// Get the pet distance from the left edge
         /// </summary>
         double GetWindowsDistanceLeft();
         /// <summary>
-        /// 获取桌宠距离右侧的位置
+        /// Get the pet distance from the right edge
         /// </summary>
         double GetWindowsDistanceRight();
         /// <summary>
-        /// 获取桌宠距离上方的位置
+        /// Get the pet distance from the top edge
         /// </summary>
         double GetWindowsDistanceUp();
         /// <summary>
-        /// 获取桌宠距离下方的位置
+        /// Get the pet distance from the bottom edge
         /// </summary>
         double GetWindowsDistanceDown();
         /// <summary>
-        /// 获取桌宠所在屏幕是否为活动屏幕
+        /// Get whether the screen the pet is on is the active screen
         /// </summary>
         /// <returns></returns>
         bool IfInActivateScreen() => true;
         /// <summary>
-        /// 将当前屏幕设置为活动屏幕（如果桌宠在多个屏幕上则以主要屏幕为准）
+        /// Set the current screen as the active screen (if the pet spans multiple screens, the primary screen takes precedence)
         /// </summary>
         void SetNowScreenActivate() { }
         ///// <summary>
-        ///// 窗体宽度
+        ///// Window width
         ///// </summary>
         //double WindowsWidth { get; set; }
         ///// <summary>
-        ///// 窗体高度
+        ///// Window height
         ///// </summary>
         //double WindowsHight { get; set; }
         /// <summary>
-        /// 缩放比例 
+        /// Zoom ratio
         /// </summary>
         double ZoomRatio { get; }
         /// <summary>
-        /// 按多久视为长按 单位毫秒
+        /// Press duration to count as a long press, in milliseconds
         /// </summary>
         int PressLength { get; }
 
         /// <summary>
-        /// 显示面板窗体
+        /// Show the panel window
         /// </summary>
         void ShowPanel();
 
         /// <summary>
-        /// 在边缘时重新靠边，防止被阻挡
+        /// Re-align to the edge when at the border, to avoid being blocked
         /// </summary>
         void ResetPosition();
         /// <summary>
-        /// 判断桌宠是否靠边
+        /// Check whether the pet is at the edge
         /// </summary>
         bool CheckPosition();
 
         /// <summary>
-        /// 启用计算等数据功能
+        /// Enable data features such as calculation
         /// </summary>
         bool EnableFunction { get; }
         /// <summary>
-        /// 互动周期
+        /// Interaction cycle
         /// </summary>
         int InteractionCycle { get; }
 
         /// <summary>
-        /// 是否启用边缘重新定位
+        /// Whether edge repositioning is enabled
         /// </summary>
         bool RePositionActive { get; set; }
 
         /// <summary>
-        /// 是否自动切换活动屏幕
+        /// Whether to automatically switch the active screen
         /// </summary>
         bool AutoChangeWindow => false;
     }

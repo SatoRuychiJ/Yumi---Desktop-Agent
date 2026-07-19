@@ -7,16 +7,16 @@ using static VPet_Simulator.Windows.Interface.MPMessage;
 
 namespace VPet_Simulator.Windows.Interface;
 /// <summary>
-/// 好友的宠物(图形)模块接口
+/// Interface for a friend's pet (graphics) module
 /// </summary>
 public interface IMPFriend
 {
     /// <summary>
-    /// 访客表id
+    /// Guest list id
     /// </summary>
     ulong LobbyID { get; }
     /// <summary>
-    /// 好友id
+    /// Friend id
     /// </summary>
     ulong FriendID { get; }
 
@@ -59,58 +59,58 @@ public interface IMPFriend
     /// </summary>
     bool IsSnoozing { get; }
     /// <summary>
-    /// Stream: 好友名称
+    /// Stream: friend name
     /// </summary>
     string Name { get; }
     /// <summary>
-    /// Stream: 好友等级
+    /// Stream: friend level
     /// </summary>
     int SteamLevel { get; }
     /// <summary>
-    /// Stream: 好友头像 (UI线程注意)
+    /// Stream: friend avatar (mind the UI thread)
     /// </summary>
     ImageSource Avatar { get; }
 
     /// <summary>
-    /// 桌宠数据核心
+    /// Pet data core
     /// </summary>
     GameCore Core { get; }
     /// <summary>
-    /// 图像资源集
+    /// Image resource set
     /// </summary>
     ImageResources ImageSources { get; }
     /// <summary>
-    /// 当前宠物图形名称
+    /// Current pet graphic name
     /// </summary>
     string SetPetGraph { get; }
     /// <summary>
-    /// 桌宠主要部件
+    /// Pet main component
     /// </summary>
     Main Main { get; }
 
     /// <summary>
-    /// 智能化显示后续过度动画
+    /// Intelligently show the subsequent transition animation
     /// </summary>
     void DisplayAuto(GraphInfo gi);
 
     /// <summary>
-    /// 根据好友数据显示动画
+    /// Show the animation based on friend data
     /// </summary>
     bool DisplayGraph(GraphInfo gi);
     /// <summary>
-    /// 显示好友之间聊天消息
+    /// Show chat messages between friends
     /// </summary>
-    /// <param name="msg">聊天内容</param>
+    /// <param name="msg">Chat content</param>
     void DisplayMessage(Chat msg);
 
     /// <summary>
-    /// 判断是否在忙碌 (被提起等, 不可进行互动)
+    /// Determine whether busy (being picked up, etc.; cannot interact)
     /// </summary>
     /// <returns></returns>
     public bool InConvenience();
 
     /// <summary>
-    /// 判断是否在忙碌 (被提起等, 不可进行互动)
+    /// Determine whether busy (being picked up, etc.; cannot interact)
     /// </summary>
     public static bool InConvenience(Main Main)
     {
@@ -121,13 +121,13 @@ public interface IMPFriend
         return false;
     }
     /// <summary>
-    /// 显示吃东西(夹层)动画
+    /// Show the eating (sandwich) animation
     /// </summary>
-    /// <param name="graphName">夹层动画名</param>
-    /// <param name="imageSource">被夹在中间的图片</param>
+    /// <param name="graphName">Sandwich animation name</param>
+    /// <param name="imageSource">The image sandwiched in the middle</param>
     void DisplayFoodAnimation(string graphName, ImageSource imageSource);
     /// <summary>
-    /// 是否不允许交互
+    /// Whether interaction is disallowed
     /// </summary>
     bool NOTouch { get; }
 }

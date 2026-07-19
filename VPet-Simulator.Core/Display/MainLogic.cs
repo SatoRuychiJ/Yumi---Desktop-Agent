@@ -21,16 +21,16 @@ namespace VPet_Simulator.Core
         public const int TreeRND = 5;
 
         /// <summary>
-        /// 处理说话内容
+        /// Handles the spoken content
         /// </summary>
         [Obsolete("Use SayProcess instead")]
         public event Action<string> OnSay;
         /// <summary>
-        /// 上次交互时间
+        /// Last interaction time
         /// </summary>
         public DateTime LastInteractionTime { get; set; } = DateTime.Now;
         /// <summary>
-        /// 事件Timer
+        /// Event timer
         /// </summary>
         public Timer EventTimer = new Timer(15000)
         {
@@ -38,7 +38,7 @@ namespace VPet_Simulator.Core
             Enabled = true
         };
         /// <summary>
-        /// 说话,使用随机表情
+        /// Speak, using a random expression
         /// </summary>
         public void SayRnd(string text, bool force = false, string desc = null)
         {
@@ -46,9 +46,9 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 处理sayInfo,使用随机表情
+        /// Process sayInfo, using a random expression
         /// </summary>
-        /// <param name="sayInfo">SayInfoWithStream Class 用于提供stream基本信息 以及基本方法</param>
+        /// <param name="sayInfo">SayInfoWithStream Class, provides basic stream info and basic methods</param>
         public void SayRnd(SayInfoWithStream sayInfo)
         {
             Task.Run(() =>
@@ -65,19 +65,19 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 随机表情的方法, 修改这个方法可以使用指定类型的说话表情
+        /// Random expression method; modify this to use a specific type of speaking expression
         /// </summary>
         public Func<string, string> SayRndFunction;
         /// <summary>
-        /// 说话处理 (请不要阻塞该处理)
+        /// Speech processing (please do not block this handler)
         /// </summary>
         public List<Action<SayInfo>> SayProcess = new List<Action<SayInfo>>();
 
 
         /// <summary>
-        /// 流式传输的说话
+        /// Streaming speech
         /// </summary>
-        /// <param name="sayInfoWithStream">说话信息</param>
+        /// <param name="sayInfoWithStream">Speech info</param>
         public void Say(SayInfoWithStream sayInfoWithStream)
         {
             Task.Run(() =>
@@ -91,7 +91,7 @@ namespace VPet_Simulator.Core
 
                 SayProcess.ForEach(a => a.Invoke(sayInfoWithStream));
 
-                if (sayInfoWithStream.Force || !string.IsNullOrWhiteSpace(sayInfoWithStream.GraphName) && DisplayType.Type == GraphType.Default)//这里不使用idle是因为idle包括学习等
+                if (sayInfoWithStream.Force || !string.IsNullOrWhiteSpace(sayInfoWithStream.GraphName) && DisplayType.Type == GraphType.Default)// idle is not used here because idle includes studying, etc.
                     Display(sayInfoWithStream.GraphName, AnimatType.A_Start, () =>
                     {
                         Dispatcher.Invoke(() =>
@@ -110,9 +110,9 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 普通说话
+        /// Normal speech
         /// </summary>
-        /// <param name="sayinfo">说话信息</param>
+        /// <param name="sayinfo">Speech info</param>
         public void Say(SayInfoWithOutStream sayinfo)
         {
             Task.Run(() =>
@@ -121,7 +121,7 @@ namespace VPet_Simulator.Core
 
                 SayProcess.ForEach(a => a.Invoke(sayinfo));
 
-                if (sayinfo.Force || !string.IsNullOrWhiteSpace(sayinfo.GraphName) && DisplayType.Type == GraphType.Default)//这里不使用idle是因为idle包括学习等
+                if (sayinfo.Force || !string.IsNullOrWhiteSpace(sayinfo.GraphName) && DisplayType.Type == GraphType.Default)// idle is not used here because idle includes studying, etc.
                     Display(sayinfo.GraphName, AnimatType.A_Start, () =>
                     {
                         Dispatcher.Invoke(() =>
@@ -142,12 +142,12 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 说话
+        /// Speak
         /// </summary>
-        /// <param name="text">说话内容</param>
-        /// <param name="graphname">图像名</param>
-        /// <param name="desc">描述</param>
-        /// <param name="force">强制显示图像</param>
+        /// <param name="text">Speech content</param>
+        /// <param name="graphname">Graphic name</param>
+        /// <param name="desc">Description</param>
+        /// <param name="force">Force display of the graphic</param>
         public void Say(string text, string graphname = null, bool force = false, string desc = null) => Say(new SayInfoWithOutStream()
         {
             Text = text,
@@ -157,12 +157,12 @@ namespace VPet_Simulator.Core
             MsgContent = null
         });
         /// <summary>
-        /// 说话
+        /// Speak
         /// </summary>
-        /// <param name="text">说话内容</param>
-        /// <param name="graphname">图像名</param>
-        /// <param name="msgcontent">消息内容</param>
-        /// <param name="force">强制显示图像</param>
+        /// <param name="text">Speech content</param>
+        /// <param name="graphname">Graphic name</param>
+        /// <param name="msgcontent">Message content</param>
+        /// <param name="force">Force display of the graphic</param>
         public void Say(string text, UIElement msgcontent, string graphname = null, bool force = false) => Say(new SayInfoWithOutStream()
         {
             Text = text,
@@ -181,10 +181,10 @@ namespace VPet_Simulator.Core
         double labeldisplaychangenum1 = 0;
         double labeldisplaychangenum2 = 0;
         /// <summary>
-        /// 显示消息弹窗Label
+        /// Show the message popup Label
         /// </summary>
-        /// <param name="text">文本</param>
-        /// <param name="time">持续时间</param>
+        /// <param name="text">Text</param>
+        /// <param name="time">Duration</param>
         public void LabelDisplayShow(string text, int time = 2000)
         {
             labeldisplayhash = text.GetHashCode();
@@ -198,12 +198,12 @@ namespace VPet_Simulator.Core
             });
         }
         /// <summary>
-        /// 显示消息弹窗Lable,自动统计数值变化
+        /// Show the message popup Label, automatically accumulating value changes
         /// </summary>
-        /// <param name="text">文本, 使用{0:f2}</param>
-        /// <param name="changenum1">变化值1</param>
-        /// <param name="changenum2">变化值2</param>
-        /// <param name="time">持续时间</param>
+        /// <param name="text">Text, using {0:f2}</param>
+        /// <param name="changenum1">Change value 1</param>
+        /// <param name="changenum2">Change value 2</param>
+        /// <param name="time">Duration</param>
         public void LabelDisplayShowChangeNumber(string text, double changenum1, double changenum2 = 0, int time = 2000)
         {
             if (labeldisplayhash == text.GetHashCode())
@@ -228,9 +228,9 @@ namespace VPet_Simulator.Core
         }
         public Work NowWork;
         /// <summary>
-        /// 根据消耗计算相关数据
+        /// Calculate related data based on consumption
         /// </summary>
-        /// <param name="TimePass">过去时间倍率</param>
+        /// <param name="TimePass">Elapsed time multiplier</param>
         public void FunctionSpend(double TimePass)
         {
             Core.Save.CleanChange();
@@ -250,11 +250,11 @@ namespace VPet_Simulator.Core
                 case WorkingState.Empty:
                     break;
                 case WorkingState.Sleep:
-                    //睡觉 缓慢恢复所有(除了心情,但是心情不会下降)
+                    // Sleep: slowly recover everything (except mood, but mood won't drop)
                     Core.Save.StrengthChange(TimePass * 2);
                     Core.Save.StrengthChangeFood(TimePass);
                     if (Core.Save.StrengthFood <= sm25)
-                    {//低状态2倍恢复速度
+                    {// Low state: 2x recovery speed
                         Core.Save.StrengthChangeFood(TimePass);
                     }
                     else if (Core.Save.StrengthFood >= sm75)
@@ -281,7 +281,7 @@ namespace VPet_Simulator.Core
                     var nsfood = needfood * .3;
                     var nsdrink = needdrink * .3;
                     if (Core.Save.Strength > sm25 + nsfood + nsdrink)
-                    {//可以用体力减少一些消耗,并且增加效率
+                    {// Can use strength to reduce some consumption and increase efficiency
                         Core.Save.StrengthChange(-nsfood - nsdrink);
                         efficiency += 0.1;
                         needfood -= nsfood;
@@ -289,7 +289,7 @@ namespace VPet_Simulator.Core
                     }
 
                     if (Core.Save.StrengthFood <= sm25)
-                    {//低状态低效率
+                    {// Low state: low efficiency
                         Core.Save.StrengthChangeFood(-needfood / 2);
                         efficiency += 0.2;
                         if (Core.Save.Strength >= needfood)
@@ -310,7 +310,7 @@ namespace VPet_Simulator.Core
                         }
                     }
                     if (Core.Save.StrengthDrink <= sm25)
-                    {//低状态低效率
+                    {// Low state: low efficiency
                         Core.Save.StrengthChangeDrink(-needdrink / 2);
                         efficiency += 0.2;
                         if (Core.Save.Strength >= needdrink)
@@ -346,8 +346,8 @@ namespace VPet_Simulator.Core
                     else
                         Core.Save.FeelingChange(-freedrop * (0.5 + NowWork.Feeling / 2));
                     break;
-                default://默认
-                    //饮食等乱七八糟的消耗
+                default:// Default
+                    // Miscellaneous consumption such as eating and drinking
                     addhealth = -2;
                     if (Core.Save.StrengthFood >= sm50)
                     {
@@ -386,7 +386,7 @@ namespace VPet_Simulator.Core
             //    Core.GameSave.Health -= Function.Rnd.Next(0, 1);
             //}
             Core.Save.Exp += TimePass;
-            //感受提升好感度
+            // Feeling boosts likability
             if (Core.Save.Feeling >= Core.Save.FeelingMax * 0.75)
             {
                 if (Core.Save.Feeling >= Core.Save.FeelingMax * 0.90)
@@ -396,7 +396,7 @@ namespace VPet_Simulator.Core
                 Core.Save.Exp += TimePass * 2;
                 Core.Save.Health += TimePass;
             }
-            else if (Core.Save.Feeling <= 25) //这个就不乘倍率了, 给上限高一些好处
+            else if (Core.Save.Feeling <= 25) // No multiplier here; give a bit more benefit to the upper bound
             {
                 Core.Save.Likability -= TimePass;
                 Core.Save.Exp -= TimePass;
@@ -413,22 +413,22 @@ namespace VPet_Simulator.Core
             var newmod = Core.Save.CalMode();
             if (Core.Save.Mode != newmod)
             {
-                //切换显示动画
+                // Switch the displayed animation
                 PlaySwitchAnimat(Core.Save.Mode, newmod);
 
                 Core.Save.Mode = newmod;
             }
-            //看情况播放停止工作动画
+            // Play the stop-working animation depending on the situation
             if (Core.Save.Mode == IGameSave.ModeType.Ill && State == WorkingState.Work)
             {
                 Dispatcher.Invoke(() => WorkTimer.Stop(reason: FinishWorkInfo.StopReason.StateFail));
             }
         }
         /// <summary>
-        /// 播放切换动画
+        /// Play the switch animation
         /// </summary>
-        /// <param name="before">切换前状态</param>
-        /// <param name="after">切换后状态</param>
+        /// <param name="before">State before switching</param>
+        /// <param name="after">State after switching</param>
         public void PlaySwitchAnimat(IGameSave.ModeType before, IGameSave.ModeType after)
         {
             if (!(DisplayType.Type == GraphType.Default || DisplayType.Type == GraphType.Switch_Down || DisplayType.Type == GraphType.Switch_Up))
@@ -452,24 +452,24 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 状态计算Handle
+        /// State calculation handler
         /// </summary>
         public event Action FunctionSpendHandle;
         /// <summary>
-        /// 想要随机显示的接口 (return:是否成功)
+        /// Interface for random display requests (return: whether successful)
         /// </summary>
         public List<Func<bool>> RandomInteractionAction = new List<Func<bool>>();
         /// <summary>
-        /// 判断是否是闲置状态
+        /// Determine whether it is in the idle state
         /// </summary>
         public bool IsIdel => (DisplayType.Type == GraphType.Default || DisplayType.Type == GraphType.Work) && !isPress;
 
         /// <summary>
-        /// 每隔指定时间自动触发计算 可以关闭EventTimer后手动计算
+        /// Automatically triggers calculation at the specified interval; can be calculated manually after disabling EventTimer
         /// </summary>
         public void EventTimer_Elapsed()
         {
-            //所有Handle
+            // All handlers
             TimeHandle?.Invoke(this);
             if (Core.Controller.EnableFunction)
             {
@@ -495,13 +495,13 @@ namespace VPet_Simulator.Core
                     case 0:
                     case 1:
                     case 2:
-                        //显示移动
+                        // Show movement
                         DisplayMove();
                         break;
                     case 3:
                     case 4:
                     case 5:
-                        //显示待机
+                        // Show idle
                         DisplayIdel();
                         break;
                     case 6:
@@ -513,7 +513,7 @@ namespace VPet_Simulator.Core
                     case 8:
                     case 9:
                     case 10:
-                        //给其他显示留个机会
+                        // Give other displays a chance
                         var list = RandomInteractionAction.ToList();
                         for (int i = Function.Rnd.Next(list.Count); 0 != list.Count; i = Function.Rnd.Next(list.Count))
                         {
@@ -532,19 +532,19 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 边缘检查和回正检测, 如果有靠边就进入侧边隐藏模式, 没有就回正
+        /// Edge check and re-centering detection; if near an edge, enter side-hide mode, otherwise re-center
         /// </summary>
-        /// <returns>是否成功进入侧边隐藏模式</returns>
+        /// <returns>Whether it successfully entered side-hide mode</returns>
         private bool MoveSideHideCheck()
         {
             if (Core.Controller.IfInActivateScreen() == false && Core.Controller.AutoChangeWindow == true)
             {
                 Core.Controller.SetNowScreenActivate();
             }
-            //判断是否靠边,如果靠边就进入侧边隐藏模式
+            // Check whether near an edge; if so, enter side-hide mode
             if (Core.Controller.GetWindowsDistanceLeft() < -50 * Core.Controller.ZoomRatio)
             {
-                //检查下是否有SideLoad
+                // Check whether there is a SideLoad
                 if (Core.Graph.FindName(GraphType.SideHide_Left_Main) != null)
                 {
                     Core.Controller.MoveWindows(-Core.Controller.GetWindowsDistanceLeft() / Core.Controller.ZoomRatio - Core.Graph.GraphConfig.Data["side"][(gdbe)"left"], 0);
@@ -554,7 +554,7 @@ namespace VPet_Simulator.Core
                     return true;
                 }
                 else if (Core.Controller.RePositionActive)
-                {//没有就回正
+                {// If not, re-center
                     Core.Controller.MoveWindows(-Core.Controller.GetWindowsDistanceLeft() / Core.Controller.ZoomRatio, 0);
                 }
             }   
@@ -577,17 +577,17 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 定点移动位置向量
+        /// Fixed-point movement position vector
         /// </summary>
         public Point MoveTimerPoint = new Point(0, 0);
         /// <summary>
-        /// 定点移动定时器
+        /// Fixed-point movement timer
         /// </summary>
         public Timer MoveTimer = new Timer();
         /// <summary>
-        /// 设置计算间隔
+        /// Set the calculation interval
         /// </summary>
-        /// <param name="Interval">计算间隔</param>
+        /// <param name="Interval">Calculation interval</param>
         public void SetLogicInterval(int Interval)
         {
             EventTimer.Interval = Interval;
@@ -597,15 +597,15 @@ namespace VPet_Simulator.Core
             AutoReset = true,
         };
         /// <summary>
-        /// 是否启用智能移动
+        /// Whether smart movement is enabled
         /// </summary>
         private bool SmartMove;
         /// <summary>
-        /// 设置移动模式
+        /// Set the movement mode
         /// </summary>
-        /// <param name="AllowMove">允许移动</param>
-        /// <param name="smartMove">启用智能移动</param>
-        /// <param name="SmartMoveInterval">智能移动周期</param>
+        /// <param name="AllowMove">Allow movement</param>
+        /// <param name="smartMove">Enable smart movement</param>
+        /// <param name="SmartMoveInterval">Smart movement cycle</param>
         public void SetMoveMode(bool AllowMove, bool smartMove, int SmartMoveInterval)
         {
             MoveTimer.Enabled = false;
@@ -630,42 +630,42 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 当前状态
+        /// Current state
         /// </summary>
         public WorkingState State = WorkingState.Nomal;
 
         /// <summary>
-        /// 当前正在的状态
+        /// The current state
         /// </summary>
         public enum WorkingState
         {
             /// <summary>
-            /// 默认:啥都没干
+            /// Default: doing nothing
             /// </summary>
             Nomal,
             /// <summary>
-            /// 正在干活/学习中
+            /// Working / studying
             /// </summary>
             Work,
             /// <summary>
-            /// 睡觉
+            /// Sleeping
             /// </summary>
             Sleep,
             /// <summary>
-            /// 旅游中
+            /// Traveling
             /// </summary>
             Travel,
             /// <summary>
-            /// 其他状态,给开发者留个空位计算
+            /// Other state; leaves a slot for developers to compute
             /// </summary>
             Empty,
         }
         /// <summary>
-        /// 获得工作列表分类
+        /// Get the work list categories
         /// </summary>
-        /// <param name="ws">所有工作</param>
-        /// <param name="ss">所有学习</param>
-        /// <param name="ps">所有娱乐</param>
+        /// <param name="ws">All work</param>
+        /// <param name="ss">All study</param>
+        /// <param name="ps">All entertainment</param>
         public void WorkList(out List<Work> ws, out List<Work> ss, out List<Work> ps)
         {
             ws = new List<Work>();
@@ -688,13 +688,13 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 工作检测
+        /// Work check
         /// </summary>
         public Func<Work, bool> WorkCheck;
         /// <summary>
-        /// 开始工作
+        /// Start work
         /// </summary>
-        /// <param name="work">工作内容</param>
+        /// <param name="work">Work content</param>
         public bool StartWork(Work work)
         {
             if (!Core.Controller.EnableFunction || Core.Save.Mode != IGameSave.ModeType.Ill)
@@ -717,7 +717,7 @@ namespace VPet_Simulator.Core
             return false;
         }
         /// <summary>
-        /// 任务开始时调用该参数
+        /// Called when the task starts
         /// </summary>
         public event Action<Work> Event_WorkStart;
         internal void Event_WorkStartInvoke(Work work)
@@ -725,7 +725,7 @@ namespace VPet_Simulator.Core
             Event_WorkStart?.Invoke(work);
         }
         /// <summary>
-        /// 任务完成时调用该参数 (重定向至WorkTimer.E_FinishWork)
+        /// Called when the task completes (redirected to WorkTimer.E_FinishWork)
         /// </summary>
         public event Action<FinishWorkInfo> Event_WorkEnd
         {
@@ -739,11 +739,11 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 移动开始前(未播放动画)调用该参数
+        /// Called before movement starts (before the animation plays)
         /// </summary>
         public event Action<Move> Event_MoveStart;
         /// <summary>
-        /// 移动结束后(播放完动画)调用该参数
+        /// Called after movement ends (after the animation finishes)
         /// </summary>
         public event Action<Move> Event_MoveEnd;
         internal void Event_MoveStartInvoke(Move move)

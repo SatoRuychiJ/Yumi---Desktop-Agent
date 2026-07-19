@@ -4,7 +4,7 @@ using VPet_Simulator.Core;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// 窗体控制器实现
+    /// Window controller implementation
     /// </summary>
     public class MPController : IController
     {

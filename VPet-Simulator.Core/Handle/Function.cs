@@ -11,20 +11,20 @@ namespace VPet_Simulator.Core
     public static partial class Function
     {
         /// <summary>
-        /// HEX值转颜色
+        /// Convert HEX value to color
         /// </summary>
-        /// <param name="HEX">HEX值</param>
-        /// <returns>颜色</returns>
+        /// <param name="HEX">HEX value</param>
+        /// <returns>Color</returns>
         public static Color HEXToColor(string HEX) => (Color)ColorConverter.ConvertFromString(HEX);
         /// <summary>
-        /// 颜色转HEX值
+        /// Convert color to HEX value
         /// </summary>
-        /// <param name="color">颜色</param>
-        /// <returns>HEX值</returns>
+        /// <param name="color">Color</param>
+        /// <returns>HEX value</returns>
         public static string ColorToHEX(Color color) => "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         public static Random Rnd = new Random();
         /// <summary>
-        /// 获取资源笔刷
+        /// Get resource brush
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -68,11 +68,11 @@ namespace VPet_Simulator.Core
             DARKPrimaryText,
         }
         ///// <summary>
-        ///// 翻译文本
+        ///// Translate text
         ///// </summary>
-        ///// <param name="TranFile">翻译文件</param>
-        ///// <param name="Name">翻译内容</param>
-        ///// <returns>翻译后的文本</returns>
+        ///// <param name="TranFile">Translation file</param>
+        ///// <param name="Name">Content to translate</param>
+        ///// <returns>Translated text</returns>
         //public static string Translate(this LPS_D TranFile, string Name) => TranFile.GetString(Name, Name);
 
         public class LPSConvertToLower : LPSConvert.ConvertFunction
@@ -83,7 +83,7 @@ namespace VPet_Simulator.Core
         }
 
         /// <summary>
-        /// 获取内存使用情况(MB)
+        /// Get memory usage (MB)
         /// </summary>
         public static double MemoryUsage()
         {
@@ -96,7 +96,7 @@ namespace VPet_Simulator.Core
                 var d = DateTime.Now;
                 var info = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024.0 / 1024.0 / 3 * 2;
                 return info;
-                //这个方法居然要7秒才能拿到内存数据
+                //Surprisingly, this method takes 7 seconds to obtain memory data
 
                 //using (PerformanceCounter pc = new PerformanceCounter("Memory", "Available Bytes"))
                 //{
@@ -111,13 +111,13 @@ namespace VPet_Simulator.Core
             }
         }
         /// <summary>
-        /// 用于区分句子数量的标点符号
+        /// Punctuation marks used to distinguish the number of sentences
         /// </summary>
         public static List<char> com { get; } = new List<char> { '，', '。', '！', '？', '；', '：', '\n', '.', ',', '!', '?', ';', ':' };
         /// <summary>
-        /// 计算说话内容的句子数量
+        /// Count the number of sentences in the spoken content
         /// </summary>
-        /// <param name="text">句子</param>
+        /// <param name="text">Sentence</param>
         public static int ComCheck(string text)
         {
             return text.Replace("\r","").Replace("\n\n", "\n").Count(com.Contains);

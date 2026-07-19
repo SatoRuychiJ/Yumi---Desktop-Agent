@@ -12,7 +12,7 @@ using System.Windows.Threading;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// PetHelper.xaml 的交互逻辑
+    /// Interaction logic for PetHelper.xaml
     /// </summary>
     public partial class PetHelper : WindowX
     {
@@ -113,7 +113,7 @@ namespace VPet_Simulator.Windows
         private void WindowX_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             mw.Topmost = !mw.Topmost;
-            //同步托盘图标菜单中「置于顶层」选项的选中状态
+            //Sync the checked state of the "Topmost" option in the tray icon menu
             (mw.notifyIcon.ContextMenuStrip.Items.Find("NotifyIcon_TopMost", false).First() as
                 System.Windows.Forms.ToolStripMenuItem).Checked = mw.Topmost;
 

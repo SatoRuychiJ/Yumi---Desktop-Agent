@@ -11,21 +11,21 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// TalkSelect.xaml 的交互逻辑
+    /// Interaction logic for TalkSelect.xaml
     /// </summary>
     public partial class TalkSelect : UserControl
-    {// 使用新的选项方式的聊天框
+    {// Chat box using the new option-based approach
 
         /// <summary>
-        /// 当前存在在列表的选项
+        /// Options currently in the list
         /// </summary>
         List<SelectText> textList = new List<SelectText>();
         /// <summary>
-        /// 已经说过的话
+        /// Things already said
         /// </summary>
         HashSet<string> textSaid = new HashSet<string>();
         /// <summary>
-        /// 下次刷新时间
+        /// Next refresh time
         /// </summary>
         public DateTime RelsTime;
         private DateTime lastAddTime;
@@ -41,18 +41,18 @@ namespace VPet_Simulator.Windows
 
 
         /// <summary>
-        /// 刷新当前所有选项
+        /// Refresh all current options
         /// </summary>
         public void RelsSelect()
         {
             if (RelsTime < DateTime.Now)
             {
-                //刷新选项
-                RelsTime = DateTime.Now.AddMinutes(10);//10分钟刷新一次, 每次聊天增加5分钟
+                // Refresh options
+                RelsTime = DateTime.Now.AddMinutes(10);// Refresh every 10 minutes; each chat adds 5 minutes
                 lastAddTime = DateTime.Now;
                 textList.Clear();
                 textSaid.Clear();
-                //随机选取选项
+                // Randomly pick options
                 var list = mw.SelectTexts.ToList();
                 while (list.Count > 0 && textList.Count < 5)
                 {
@@ -65,7 +65,7 @@ namespace VPet_Simulator.Windows
                     }
                 }
             }
-            //刷新显示
+            // Refresh display
             if (textList.Count > 0)
             {
                 tbTalk.Items.Clear();
@@ -102,10 +102,10 @@ namespace VPet_Simulator.Windows
             var say = textList[tbTalk.SelectedIndex];
             textList.RemoveAt(tbTalk.SelectedIndex);
 
-            //添加日志
+            // Add log
             mw.ActivityLogs.Add(new ActivityLog("hostsay",say.TranslateChoose));
 
-            //聊天效果
+            // Chat effect
             if (say.Exp != 0)
             {
                 if (say.Exp > 0)

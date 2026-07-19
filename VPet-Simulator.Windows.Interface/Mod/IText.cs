@@ -9,13 +9,13 @@ namespace VPet_Simulator.Windows.Interface;
 public class IText
 {
     /// <summary>
-    /// 说话的内容
+    /// Spoken content
     /// </summary>
     [Line(IgnoreCase = true)] public string Text { get; set; }
 
     private string transText = null;
     /// <summary>
-    /// 说话的内容 (翻译)
+    /// Spoken content (translated)
     /// </summary>
     public string TranslateText
     {
@@ -33,7 +33,7 @@ public class IText
         }
     }
     /// <summary>
-    /// 文本内容标签
+    /// Text content tag
     /// </summary>
     [Line(IgnoreCase = true)]
     public string Tag
@@ -44,17 +44,17 @@ public class IText
 
     private string[] tags = new string[] { "all" };
     /// <summary>
-    /// 查找是否符合内容标签
+    /// Check whether it matches the content tag
     /// </summary>
     public bool FindTag(string[] tags) => tags.Any(tag => this.tags.Contains(tag));
 
 
     /// <summary>
-    /// 将文本转换成实际值
+    /// Convert the text into its actual value
     /// </summary>
     public string TranslateTextConvert(Main m) => ConverText(TranslateText, m);
     /// <summary>
-    /// 将文本转换成实际值 (注意: 会和 Trainslate({0}) 冲突), 先 Trainslate, 再 Convert 最后再 Format
+    /// Convert the text into its actual value (note: conflicts with Trainslate({0})); first Trainslate, then Convert, and finally Format
     /// </summary>
     public static string ConverText(string text, Main m)
     {

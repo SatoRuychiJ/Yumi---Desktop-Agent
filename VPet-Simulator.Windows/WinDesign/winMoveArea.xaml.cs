@@ -6,7 +6,7 @@ using System.Windows.Input;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winMoveArea.xaml 的交互逻辑
+    /// Interaction logic for winMoveArea.xaml
     /// </summary>
     public partial class winMoveArea : WindowX
     {
@@ -28,7 +28,7 @@ namespace VPet_Simulator.Windows
             System.Drawing.Rectangle bounds;
             if (WindowState == WindowState.Maximized)
             {
-                // 反射捞一下左上角
+                // Grab the top-left corner via reflection
                 if (winGameSetting.leftGetter == null) winGameSetting.leftGetter = typeof(Window).GetField("_actualLeft", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (winGameSetting.topGetter == null) winGameSetting.topGetter = typeof(Window).GetField("_actualTop", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 var actualLeft = Convert.ToInt32(winGameSetting.leftGetter.GetValue(this));

@@ -18,7 +18,7 @@ using VPet_Simulator.Windows.Interface;
 namespace VPet_Simulator.Windows
 {
     /// <summary>
-    /// winSaveManager.xaml 的交互逻辑
+    /// Interaction logic for winSaveManager.xaml
     /// </summary>
     public partial class winSaveManager : WindowX
     {

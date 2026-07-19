@@ -14,7 +14,7 @@
             <MenuItem Header="{ll:Str 关闭}" Click="MenuItemClose_Click" />
         </ContextMenu>
     </UserControl.ContextMenu>
-    <!-- AIDeskPet: 终端风格气泡 (紫黑 + 等宽字体) -->
+    <!-- AIDeskPet: Terminal-style bubble (purple-black + monospace font) -->
     <Border x:Name="BorderMain" Background="{DynamicResource Primary}" BorderBrush="{DynamicResource DARKPrimaryDark}"
             BorderThickness="2" VerticalAlignment="Bottom" Padding="14,10" Margin="5,5,5,62" CornerRadius="8"
             TextElement.FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI"

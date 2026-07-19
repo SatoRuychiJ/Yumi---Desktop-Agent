@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// winInputBox.xaml 的交互逻辑
+/// Interaction logic for winInputBox.xaml
 /// </summary>
 public partial class winInputBox : WindowX
 {

@@ -5,77 +5,77 @@ using System.Windows.Controls;
 namespace VPet_Simulator.Windows.Interface;
 
 /// <summary>
-/// 多人联机窗口接口 (访客表)
+/// Multiplayer window interface (guest list)
 /// </summary>
 public interface IMPWindows
 {
     /// <summary>
-    /// 访客表id
+    /// Guest list id
     /// </summary>
     ulong LobbyID { get; }
     /// <summary>
-    /// 所有好友(不包括自己)
+    /// All friends (excluding yourself)
     /// </summary>
     IEnumerable<IMPFriend> Friends { get; }
     /// <summary>
-    /// 将自己转换成好友对象,方便批量处理
+    /// Convert yourself into a friend object for easier batch processing
     /// </summary>
     IMPFriend SelftoIMPFriend();
     /// <summary>
-    /// 主持人SteamID
+    /// Host SteamID
     /// </summary>
     ulong HostID { get; }
     /// <summary>
-    /// 当前玩家是否是主持人
+    /// Whether the current player is the host
     /// </summary>
     bool IsHost { get; }
 
     /// <summary>
-    /// 事件:成员退出
+    /// Event: member left
     /// </summary>
     event Action<ulong> OnMemberLeave;
     /// <summary>
-    /// 事件:成员加入
+    /// Event: member joined
     /// </summary>
     event Action<ulong> OnMemberJoined;
     /// <summary>
-    /// 给指定好友发送消息(数据包)
+    /// Send a message (data packet) to a specific friend
     /// </summary>
-    /// <param name="friendid">好友id</param>
-    /// <param name="msg">消息内容(数据包)</param>
+    /// <param name="friendid">Friend id</param>
+    /// <param name="msg">Message content (data packet)</param>
     bool SendMessage(ulong friendid, MPMessage msg);
 
     /// <summary>
-    /// 给所有人发送消息
+    /// Send a message to everyone
     /// </summary>
     void SendMessageALL(MPMessage msg);
 
     /// <summary>
-    /// 发送日志消息
+    /// Send a log message
     /// </summary>
-    /// <param name="message">日志</param>
+    /// <param name="message">Log</param>
     void Log(string message);
 
     /// <summary>
-    /// 收到消息日志 发送人id, 消息内容
+    /// Received message log: sender id, message content
     /// </summary>
     event Action<ulong, MPMessage> ReceivedMessage;
     /// <summary>
-    /// 事件: 结束访客表, 窗口关闭
+    /// Event: guest list ended, window closed
     /// </summary>
     event Action ClosingMutiPlayer;
 
     /// <summary>
-    /// 当前是否有游戏(其他mod的)正在进行 避免多个游戏同时进行而导致冲突
-    /// 如果你的游戏开始了, 请请设置为true, 并在游戏结束后设置为false
+    /// Whether a game (from another mod) is currently running, to avoid conflicts from multiple games at once
+    /// When your game starts, set this to true, and set it back to false when the game ends
     /// </summary>
     bool IsGameRunning { get; set; }
     /// <summary>
-    /// 获取访客表菜单栏,可以插入自己的菜单
+    /// Get the guest list menu bar; you can insert your own menu
     /// </summary>
     TabControl TabControl { get; }
     /// <summary>
-    /// 是否可加入
+    /// Whether joinable
     /// </summary>
     bool Joinable { get; }
 }

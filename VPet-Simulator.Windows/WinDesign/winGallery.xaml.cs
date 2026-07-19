@@ -21,7 +21,7 @@ using WpfAnimatedGif;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// winGallery.xaml 的交互逻辑
+/// Interaction logic for winGallery.xaml
 /// </summary>
 public partial class winGallery : WindowX
 {
@@ -34,17 +34,17 @@ public partial class winGallery : WindowX
         InitializeComponent();
         this.mw = mw;
 
-        //每次打开的时候都检查下是否解锁, 并自动解锁
-        //这个解锁条件可以塞到 保存前的检查里面
+        // Check whether anything is unlocked on each open, and auto-unlock
+        // This unlock condition could be moved into the pre-save check
         mw.CheckGalleryUnlock();
 
-        //逻辑啥的可以空出来我写
+        // Logic and such can be left blank for me to write
 
-        //tag分类
-        var tags = mw.Photos.SelectMany(p => p.TagsTrans).GroupBy(item => item) // 按照每个元素进行分组
-            .Select(group => new { Item = group.Key, Count = group.Count() }) // 选择元素及其出现次数
-            .OrderByDescending(x => x.Count) // 按出现次数降序排序
-            .Select(x => x.Item); // 选择去重后的元素
+        // Tag categorization
+        var tags = mw.Photos.SelectMany(p => p.TagsTrans).GroupBy(item => item) // Group by each element
+            .Select(group => new { Item = group.Key, Count = group.Count() }) // Select each element and its occurrence count
+            .OrderByDescending(x => x.Count) // Sort by occurrence count descending
+            .Select(x => x.Item); // Select the deduplicated elements
         ToggleButtonGroupTags.ItemsSource = tags;
     }
 
@@ -96,7 +96,7 @@ public partial class winGallery : WindowX
 
         var searchText = _searchTextBox.Text;
 
-        //如果某个分类一个都没选中，那就等于全部选中
+        // If none in a category are selected, treat it as all selected
 
         var isIllustrationChecked = ToggleButtonIllustration.IsChecked == true ? true : ToggleButtonThumbnail.IsChecked == false;
         var isThumbnailChecked = ToggleButtonThumbnail.IsChecked == true ? true : ToggleButtonIllustration.IsChecked == false;
@@ -110,7 +110,7 @@ public partial class winGallery : WindowX
 
         var photos = new List<Photo>();
 
-        //获取锁定的图片
+        // Get the locked photos
         if (isLockedChecked)
         {
             var lockphoto = mw.Photos.FindAll(p =>
@@ -129,7 +129,7 @@ public partial class winGallery : WindowX
             );
             photos.AddRange(lockphoto);
         }
-        //获取解锁的图片
+        // Get the unlocked photos
         if (isUnlockedChecked)
         {
             var unlockphoto = mw.Photos.FindAll(p =>

@@ -21,7 +21,7 @@
                 TextElement.FontSize="24" TextElement.FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI"
                 Visibility="Collapsed" Cursor="" d:Visibility="Visible">
             <Grid Margin="15" x:Name="gdPanel" x:FieldModifier="public">
-                <!-- AIDeskPet: 等级/金钱/状态条已全部移除, 面板 = AI 用量统计 (由 AIPet 插件填充) -->
+                <!-- AIDeskPet: Level/money/status bars all removed, panel = AI usage stats (filled by the AIPet plugin) -->
                 <StackPanel x:Name="spAIStats" x:FieldModifier="public" MinWidth="300" MinHeight="60" />
             </Grid>
         </Border>
@@ -38,7 +38,7 @@
                     <UniformGrid Columns="{Binding Tag, ElementName=ToolBarMenu}" />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <!-- AIDeskPet: 投喂系统已移除 -->
+            <!-- AIDeskPet: Feeding system removed -->
             <MenuItem x:Name="MenuFeed" Padding="0" x:FieldModifier="public" Header="🍔投喂" Visibility="Collapsed" />
             <MenuItem x:Name="MenuPanel" Padding="0" Header="📊 Usage" Foreground="{DynamicResource DARKPrimary}"
                     MouseEnter="MenuPanel_MouseEnter" MouseLeave="MenuPanel_MouseLeave" />

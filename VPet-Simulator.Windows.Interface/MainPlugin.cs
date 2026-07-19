@@ -1,63 +1,63 @@
 ﻿namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 这是插件的主体内容 请继承这个类
+    /// This is the main body of the plugin. Please inherit this class
     /// </summary>
     public abstract class MainPlugin
     {
         /// <summary>
-        /// MOD名称 通过插件名称定位插件, 需和MOD名称一致
+        /// MOD name. Used to locate the plugin by name; must match the MOD name
         /// </summary>
         public abstract string PluginName { get; }
         /// <summary>
-        /// 主窗体, 主程序提供的各种功能和设置等 大部分参数和调用均在这里
+        /// Main window. Provides the host's features and settings; most parameters and calls live here
         /// </summary>
         public IMainWindow MW;
         /// <summary>
-        /// MOD插件初始化
+        /// MOD plugin initialization
         /// </summary>
-        /// <param name="mainwin">主窗体</param>
-        /// 请不要加载游戏和玩家数据,仅用作初始化. 注意:此时没有UI线程
-        /// 加载数据(CORE)/游戏(SAVE),请使用 LoadPlugin
-        /// 获取/设置加载完毕的数据,请使用 GameLoaded
+        /// <param name="mainwin">Main window</param>
+        /// Do not load game or player data here; use only for initialization. Note: there is no UI thread at this point
+        /// To load data (CORE)/game (SAVE), use LoadPlugin
+        /// To get/set data after loading, use GameLoaded
         public MainPlugin(IMainWindow mainwin)
         {
-            //此处主窗体玩家,Core等信息均为空,请不要加载游戏和玩家数据
+            //At this point the main window, player, Core, etc. are all null; do not load game or player data
             MW = mainwin;
         }
         ///// <summary>//TODO
-        ///// 加载游戏主题
+        ///// Load game theme
         ///// </summary>
-        ///// <param name="theme">主题</param>
+        ///// <param name="theme">Theme</param>
         //public virtual void LoadTheme(Theme theme) { }
         /// <summary>
-        /// 初始化程序+读取存档
+        /// Initialize the program and read the save
         /// </summary>
-        /// 例:添加自己的Tick到 mw.Main.EventTimer
-        /// 例:创建使用UI的桌面控件
-        /// 例:添加自定义物品类型创建方法到 Item.Creators
+        /// e.g. add your own Tick to mw.Main.EventTimer
+        /// e.g. create desktop controls that use the UI
+        /// e.g. add a custom item type creation method to Item.Creators
         public virtual void LoadPlugin() { }
         /// <summary>
-        /// 游戏加载完毕的状态. 可以实现对已加载内容的修改
+        /// State after the game has finished loading. Allows modifying already-loaded content
         /// </summary>
         public virtual void GameLoaded() { }
 
         /// <summary>
-        /// 游戏结束 (可以保存或清空等,不过保存有专门的Save())
+        /// Game end (can save or clear, etc., though saving has a dedicated Save())
         /// </summary>
         public virtual void EndGame() { }
 
         /// <summary>
-        /// 储存游戏 (可以写 GameSave.Other 储存设置和数据等)
+        /// Save the game (can write GameSave.Other to store settings and data, etc.)
         /// </summary>
         public virtual void Save() { }
 
         /// <summary>
-        /// 打开代码插件设置
+        /// Open the code plugin settings
         /// </summary>
         public virtual void Setting() { }
         /// <summary>
-        /// 重载DIY按钮, 如需添加自定义按钮可在此处添加
+        /// Reload DIY buttons; add custom buttons here if needed
         /// </summary>
         public virtual void LoadDIY() { }
     }

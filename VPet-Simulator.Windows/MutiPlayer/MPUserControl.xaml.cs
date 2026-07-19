@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace VPet_Simulator.Windows;
 /// <summary>
-/// MPUserControl.xaml 的交互逻辑
+/// Interaction logic for MPUserControl.xaml
 /// </summary>
 public partial class MPUserControl : Border
 {
@@ -24,7 +24,7 @@ public partial class MPUserControl : Border
     }
     public void LoadInfo()
     {
-        //加载lobby传过来的数据       
+        // Load the data passed in from the lobby
         while (!mpf.Loaded)
         {
             Thread.Sleep(500);

@@ -3,74 +3,74 @@
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 低状态自动说的话
+    /// Lines said automatically in a low state
     /// </summary>
     public class LowText : IText
     {
         /// <summary>
-        /// 状态
+        /// State
         /// </summary>
         public enum ModeType
         {
             /// <summary>
-            /// 高状态: 开心/普通
+            /// High state: happy/normal
             /// </summary>
             H,
             /// <summary>
-            /// 低状态: 低状态/生病
+            /// Low state: poor condition/sick
             /// </summary>
             L,
         }
         /// <summary>
-        /// 状态
+        /// State
         /// </summary>
         [Line(IgnoreCase = true)] public ModeType Mode { get; set; } = ModeType.L;
         /// <summary>
-        /// 体力
+        /// Stamina
         /// </summary>
         public enum StrengthType
         {
             /// <summary>
-            /// 一般口渴/饥饿
+            /// Normal thirst/hunger
             /// </summary>
             L,
             /// <summary>
-            /// 有点口渴/饥饿
+            /// Slightly thirsty/hungry
             /// </summary>
             M,
             /// <summary>
-            /// 非常口渴/饥饿
+            /// Very thirsty/hungry
             /// </summary>
             S,
         }
         /// <summary>
-        /// 体力
+        /// Stamina
         /// </summary>
         [Line(IgnoreCase = true)] public StrengthType Strength { get; set; } = StrengthType.S;
         /// <summary>
-        /// 好感度要求
+        /// Likability requirement
         /// </summary>
         public enum LikeType
         {
             /// <summary>
-            /// 不需要好感度
+            /// No likability required
             /// </summary>
             N,
             /// <summary>
-            /// 低好感度需求
+            /// Low likability requirement
             /// </summary>
             S,
             /// <summary>
-            /// 中好感度需求
+            /// Medium likability requirement
             /// </summary>
             M,
             /// <summary>
-            /// 高好感度
+            /// High likability
             /// </summary>
             L,
         }
         /// <summary>
-        /// 好感度要求
+        /// Likability requirement
         /// </summary>
         [Line(IgnoreCase = true)] public LikeType Like { get; set; } = LikeType.N;
     }

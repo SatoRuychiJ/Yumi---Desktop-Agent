@@ -14,20 +14,20 @@ using static VPet_Simulator.Windows.Interface.ScheduleTask;
 namespace VPet_Simulator.Windows.Interface
 {
     /// <summary>
-    /// 游戏主窗体
+    /// Game main window
     /// </summary>
     public interface IMainWindow
     {
         /// <summary>
-        /// 存档前缀, 用于多开游戏, 为空时使用默认存档, 不为空时前缀的前缀一般为'-'
+        /// Save prefix, used for running multiple instances; empty uses the default save, and when set the prefix is usually preceded by '-'
         /// </summary>
         string PrefixSave { get; }
         /// <summary>
-        /// 启动参数
+        /// Startup arguments
         /// </summary>
         LPS_D Args { get; }
         /// <summary>
-        /// 是否为Steam用户
+        /// Whether this is a Steam user
         /// </summary>
         bool IsSteamUser { get; }
         /// <summary>
@@ -39,259 +39,259 @@ namespace VPet_Simulator.Windows.Interface
         /// </summary>
         public uint SteamAuthorID { get; }
         /// <summary>
-        /// 游戏设置
+        /// Game settings
         /// </summary>
         ISetting Set { get; }
         /// <summary>
-        /// 宠物加载器列表
+        /// List of pet loaders
         /// </summary>
         List<PetLoader> Pets { get; }
         /// <summary>
-        /// 所有可用聊天API
+        /// All available chat APIs
         /// </summary>
         List<ITalkAPI> TalkAPI { get; }
         /// <summary>
-        /// 当前正在使用的TalkBox
+        /// The TalkBox currently in use
         /// </summary>
         ITalkAPI TalkBoxCurr { get; }
         /// <summary>
-        /// 桌宠数据核心
+        /// Pet data core
         /// </summary>
         GameCore Core { get; }
         /// <summary>
-        /// 桌宠主要部件
+        /// Pet main component
         /// </summary>
         Main Main { get; }
         /// <summary>
-        /// 版本号
+        /// Version number
         /// </summary>
         int version { get; }
         /// <summary>
-        /// 版本号
+        /// Version number
         /// </summary>
         string Version { get; }
         /// <summary>
-        /// 上次点击时间 (Tick)
+        /// Last click time (Tick)
         /// </summary>
         long lastclicktime { get; set; }
         /// <summary>
-        /// 所有三方插件
+        /// All third-party plugins
         /// </summary>
         List<MainPlugin> Plugins { get; }
         /// <summary>
-        /// 所有食物
+        /// All food
         /// </summary>
         List<Food> Foods { get; }
         /// <summary>
-        /// 需要食物时会说的话
+        /// Lines said when food is needed
         /// </summary>
         List<LowText> LowFoodText { get; }
         /// <summary>
-        /// 需要饮料时会说的话
+        /// Lines said when a drink is needed
         /// </summary>
         List<LowText> LowDrinkText { get; }
         /// <summary>
-        /// 点击时会说的话
+        /// Lines said when clicked
         /// </summary>
         List<ClickText> ClickTexts { get; }
         /// <summary>
-        /// 选择说的话
+        /// Lines for the player to choose to say
         /// </summary>
         List<SelectText> SelectTexts { get; }
         /// <summary>
-        /// 获得自动点击的文本
+        /// Get the auto-click text
         /// </summary>
-        /// <returns>说话内容</returns>
+        /// <returns>Speech content</returns>
         ClickText GetClickText();
         /// <summary>
-        /// 所有照片
+        /// All photos
         /// </summary>
         List<Photo> Photos { get; }
         /// <summary>
-        /// 图片资源
+        /// Image resources
         /// </summary>
         ImageResources ImageSources { get; }
         /// <summary>
-        /// 文件资源, 储存的为文件路径 : 可以给代码插件MOD用
+        /// File resources, storing file paths; can be used by code plugin MODs
         /// </summary>
         Resources FileSources { get; }
         /// <summary>
-        /// 设置游戏缩放倍率
+        /// Set the game zoom multiplier
         /// </summary>
-        /// <param name="zl">缩放倍率 范围0.1-10</param>
+        /// <param name="zl">Zoom multiplier, range 0.1-10</param>
         void SetZoomLevel(double zl);
         /// <summary>
-        /// 保存设置
+        /// Save settings
         /// </summary>
         void Save();
         /// <summary>
-        /// 加载DIY内容
+        /// Load DIY content
         /// </summary>
         void LoadDIY();
         /// <summary>
-        /// 显示设置页面
+        /// Show the settings page
         /// </summary>
-        /// <param name="page">设置页</param>
+        /// <param name="page">Settings page</param>
         void ShowSetting(int page = -1);
         /// <summary>
-        /// 显示更好买页面
+        /// Show the ToBetterBuy page
         /// </summary>
-        /// <param name="type">食物类型</param>
+        /// <param name="type">Food type</param>
         void ShowBetterBuy(Food.FoodType type);
         /// <summary>
-        /// 显示照片图库
+        /// Show the photo gallery
         /// </summary>
         void ShowGallery();
         /// <summary>
-        /// 关闭桌宠
+        /// Close the pet
         /// </summary>
         void Close();
         /// <summary>
-        /// 重启桌宠
+        /// Restart the pet
         /// </summary>
         void Restart();
         /// <summary>
-        /// 鼠标穿透
+        /// Mouse click-through
         /// </summary>
         bool MouseHitThrough { get; set; }
 
         /// <summary>
-        /// 存档 Hash检查 是否通过
+        /// Whether the save Hash check passed
         /// </summary>
         bool HashCheck { get; }
 
         /// <summary>
-        /// 获得当前系统音乐播放音量
+        /// Get the current system music playback volume
         /// </summary>
         float AudioPlayingVolume();
         /// <summary>
-        /// 关闭指示器,默认为true
+        /// Close indicator, default true
         /// </summary>
         bool CloseConfirm { get; }
         /// <summary>
-        /// 关闭该玩家的HashCheck检查
-        /// 如果你的mod属于作弊mod/有作弊内容,请在作弊前调用这个方法
+        /// Disable HashCheck for this player
+        /// If your mod is a cheat mod / contains cheat content, call this method before cheating
         /// </summary>
         void HashCheckOff();
         /// <summary>
-        /// 游戏打开过的窗口, 会在退出时统一调用退出
+        /// Windows opened by the game; they are all closed together on exit
         /// </summary>
         List<Window> Windows { get; set; }
         /// <summary>
-        /// 游戏存档数据
+        /// Game save data
         /// </summary>
         GameSave_v2 GameSavesData { get; }
         /// <summary>
-        /// 主窗体 Grid
+        /// Main window Grid
         /// </summary>
         Grid MGHost { get; }
         /// <summary>
-        /// 主窗体 Pet Grid
+        /// Main window Pet Grid
         /// </summary>
         Grid PetGrid { get; }
         /// <summary>
-        /// 当创建/加入新的多人联机窗口(访客表)时触发
-        /// 如果你想写联机功能,请监听这个事件
+        /// Triggered when a new multiplayer window (guest list) is created/joined
+        /// Listen to this event if you want to write multiplayer features
         /// </summary>
         event Action<IMPWindows> MutiPlayerHandle;
         /// <summary>
-        /// 当创建/加入新的多人联机窗口(访客表)时触发
-        /// 用于给MOD定义自己的联机窗口时准备的, 一般联机功能不需要调用这个
+        /// Triggered when a new multiplayer window (guest list) is created/joined
+        /// Intended for MODs defining their own multiplayer window; normal multiplayer features do not need this
         /// </summary>
         /// <param name="mp"></param>
         void MutiPlayerStart(IMPWindows mp);
 
         /// <summary>
-        /// 显示吃东西(夹层)动画
+        /// Show the eating (sandwich) animation
         /// </summary>
-        /// <param name="graphName">夹层动画名</param>
-        /// <param name="imageSource">被夹在中间的图片</param>
+        /// <param name="graphName">Sandwich animation name</param>
+        /// <param name="imageSource">The image sandwiched in the middle</param>
         void DisplayFoodAnimation(string graphName, ImageSource imageSource);
         /// <summary>
-        /// 使用/食用物品 (更新:不扣钱) (不包括显示动画)
+        /// Use/consume an item (update: no money deducted) (does not include showing the animation)
         /// </summary>
-        /// <param name="item">物品</param>
+        /// <param name="item">Item</param>
         void TakeItem(Food item);
 
         /// <summary>
-        /// 显示输入框
+        /// Show an input box
         /// </summary>
-        /// <param name="title">标题</param>
-        /// <param name="text">文本</param>
-        /// <param name="defaulttext">默认文本</param>
-        /// <param name="ENDAction">结束事件</param>
-        /// <param name="AllowMutiLine">是否允许多行输入</param>
-        /// <param name="TextCenter">文本居中</param>
-        /// <param name="CanHide">能否隐藏</param>
+        /// <param name="title">Title</param>
+        /// <param name="text">Text</param>
+        /// <param name="defaulttext">Default text</param>
+        /// <param name="ENDAction">End event</param>
+        /// <param name="AllowMutiLine">Whether multi-line input is allowed</param>
+        /// <param name="TextCenter">Center the text</param>
+        /// <param name="CanHide">Whether it can be hidden</param>
         void ShowInputBox(string title, string text, string defaulttext, Action<string> ENDAction, bool AllowMutiLine = false, bool TextCenter = true, bool CanHide = false);
         /// <summary>
-        /// UI线程调用位置
+        /// UI thread invocation point
         /// </summary>
         Dispatcher Dispatcher { get; }
         /// <summary>
-        /// 获取当前所有MOD信息
+        /// Get info for all current MODs
         /// </summary>
         IEnumerable<IModInfo> ModInfo { get; }
         /// <summary>
-        /// 获取当前所有已启用的MOD信息
+        /// Get info for all currently enabled MODs
         /// </summary>
         IEnumerable<IModInfo> OnModInfo { get; }
 
         /// <summary>
-        /// 所有MOD文件位置
+        /// Locations of all MOD files
         /// </summary>
         List<DirectoryInfo> MODPath { get; }
         /// <summary>
-        /// 日程表
+        /// Schedule
         /// </summary>
         ScheduleTask ScheduleTask { get; }
         /// <summary>
-        /// 所有可用套餐
+        /// All available packages
         /// </summary>
         List<PackageFull> SchedulePackage { get; }
         /// <summary>
-        /// 事件:吃东西
+        /// Event: eating
         /// </summary>
         event Action<Food> Event_TakeItem;
 
         /// <summary>
-        /// 事件:新的一天
+        /// Event: new day
         /// </summary>
         event Action Event_NewDay;
 
         /// <summary>
-        /// 动态资源, 用于给插件MOD存储共享的数据
+        /// Dynamic resources, used by plugin MODs to store shared data
         /// </summary>
         Dictionary<string, object> DynamicResources { get; }
 
         /// <summary>
-        /// 生成授权码(仅用于LB相关服务验证)
+        /// Generate an authorization code (only for LB-related service verification)
         /// </summary>
         /// <returns></returns>
         Task<int> GenerateAuthKey();
 
         /// <summary>
-        /// 呼叫事件 Event_TakeItemHandle
+        /// Invoke the Event_TakeItemHandle event
         /// </summary>
-        /// <param name="item">物品</param>
-        /// <param name="count">个数</param>
-        /// <param name="from">来源</param>
+        /// <param name="item">Item</param>
+        /// <param name="count">Count</param>
+        /// <param name="from">Source</param>
         public void TakeItemHandle(Food item, int count, string from);
 
         /// <summary>
-        /// 活动日志 不会保存
+        /// Activity log, not saved
         /// </summary>
         public ObservableCollection<ActivityLog> ActivityLogs { get; }
 
         /// <summary>
-        /// 物品栏 桌宠有的物品
+        /// Inventory: items the pet owns
         /// </summary>
         public List<Item> Items { get; }
 
         /// <summary>
-        /// 添加物品到物品栏 (自动合并)
+        /// Add an item to the inventory (auto-merge)
         /// </summary>
-        /// <param name="item">物品</param>
+        /// <param name="item">Item</param>
         public void ItemsAdd(Item item);
     }
 }
