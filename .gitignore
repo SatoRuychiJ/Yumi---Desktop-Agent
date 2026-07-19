@@ -360,3 +360,8 @@ cache/
 **/Saves/
 **/Saves_BKP/
 *.lps.bak
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
