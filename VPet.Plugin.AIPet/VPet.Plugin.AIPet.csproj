@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<Nullable>disable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AssemblyName>VPet.Plugin.AIPet</AssemblyName>
+		<RootNamespace>VPet.Plugin.AIPet</RootNamespace>
+		<Version>1.0.0</Version>
+		<Authors>AIDeskPet</Authors>
+		<Description>AI 助手插件</Description>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\VPet-Simulator.Core\VPet-Simulator.Core.csproj" Private="false" ExcludeAssets="runtime" />
+		<ProjectReference Include="..\VPet-Simulator.Windows.Interface\VPet-Simulator.Windows.Interface.csproj" Private="false" ExcludeAssets="runtime" />
+	</ItemGroup>
+
+</Project>
+

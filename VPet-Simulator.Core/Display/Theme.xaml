@@ -1,0 +1,44 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:pu="https://opensource.panuon.com/wpf-ui"
+  xmlns:pucore="clr-namespace:Panuon.WPF;assembly=Panuon.WPF">
+  <!-- AIDeskPet 终端紫主题兜底色 (与 mod/0000_core/theme/terminal.lps 保持一致) -->
+  <SolidColorBrush x:Key="Primary" Color="#FF1A1523" />
+  <SolidColorBrush x:Key="PrimaryTrans" Color="#DD1A1523" />
+  <SolidColorBrush x:Key="PrimaryTrans4" Color="#441A1523" />
+  <SolidColorBrush x:Key="PrimaryTransA" Color="#AA1A1523" />
+  <SolidColorBrush x:Key="PrimaryTransE" Color="#EE1A1523" />
+
+  <SolidColorBrush x:Key="PrimaryLight" Color="#FF251D33" />
+  <SolidColorBrush x:Key="PrimaryLighter" Color="#FF221B2F" />
+  <SolidColorBrush x:Key="PrimaryDark" Color="#FF7C3AED" />
+  <SolidColorBrush x:Key="PrimaryDarker" Color="#FF5B21B6" />
+  <SolidColorBrush x:Key="PrimaryText" Color="#FFE6DBFF" />
+
+  <SolidColorBrush x:Key="Secondary" Color="#FF7C3AED" />
+  <SolidColorBrush x:Key="SecondaryTrans" Color="#DD7C3AED" />
+  <SolidColorBrush x:Key="SecondaryTrans4" Color="#447C3AED" />
+  <SolidColorBrush x:Key="SecondaryTransA" Color="#AA7C3AED" />
+  <SolidColorBrush x:Key="SecondaryTransE" Color="#EE7C3AED" />
+
+  <SolidColorBrush x:Key="SecondaryLight" Color="#FF9F67FF" />
+  <SolidColorBrush x:Key="SecondaryLighter" Color="#FF3A2C55" />
+  <SolidColorBrush x:Key="SecondaryDark" Color="#FF6D28D9" />
+  <SolidColorBrush x:Key="SecondaryDarker" Color="#FF4C1D95" />
+  <SolidColorBrush x:Key="SecondaryText" Color="#FFF4EFFF" />
+
+  <SolidColorBrush x:Key="DARKPrimary" Color="#FFB794F6" />
+  <SolidColorBrush x:Key="DARKPrimaryTrans" Color="#DDB794F6" />
+  <SolidColorBrush x:Key="DARKPrimaryTrans4" Color="#44B794F6" />
+  <SolidColorBrush x:Key="DARKPrimaryTransA" Color="#AAB794F6" />
+  <SolidColorBrush x:Key="DARKPrimaryTransE" Color="#EEB794F6" />
+
+  <SolidColorBrush x:Key="DARKPrimaryLight" Color="#FFC9ABFF" />
+  <SolidColorBrush x:Key="DARKPrimaryLighter" Color="#FFDCC8FF" />
+  <SolidColorBrush x:Key="DARKPrimaryDark" Color="#FF7C3AED" />
+  <SolidColorBrush x:Key="DARKPrimaryDarker" Color="#FF5B21B6" />
+  <SolidColorBrush x:Key="DARKPrimaryText" Color="#FFF4EFFF" />
+
+  <Color x:Key="ShadowColor">#7C3AED</Color>
+</ResourceDictionary>

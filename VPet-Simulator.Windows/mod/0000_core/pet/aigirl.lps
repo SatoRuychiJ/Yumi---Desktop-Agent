@@ -1,0 +1,6 @@
+pet#aigirl:|intor#Yumi - Desktop AI Assistant:|path#aigirl:|petname#Yumi:|
+tag#all,aigirl,girl:|
+touchhead:|px#150:|py#80:|sw#200:|sh#170:|
+touchbody:|px#155:|py#250:|sw#190:|sh#170:|
+touchraised:|happy_px#0:|happy_py#50:|happy_sw#500:|happy_sh#220:|nomal_px#0:|nomal_py#50:|nomal_sw#500:|nomal_sh#220:|poorcondition_px#0:|poorcondition_py#50:|poorcondition_sw#500:|poorcondition_sh#220:|ill_px#0:|ill_py#50:|ill_sw#500:|ill_sh#220:|
+raisepoint:|happy_x#250:|happy_y#170:|nomal_x#250:|nomal_y#170:|poorcondition_x#250:|poorcondition_y#170:|ill_x#250:|ill_y#170:|

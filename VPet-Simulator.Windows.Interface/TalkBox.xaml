@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="VPet_Simulator.Windows.Interface.TalkBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ll="clr-namespace:LinePutScript.Localization.WPF;assembly=LinePutScript.Localization.WPF" mc:Ignorable="d"
+        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" Height="500" Width="500" VerticalAlignment="Top">
+    <!-- AIDeskPet: 终端风格聊天框 -->
+    <Border Background="{DynamicResource Primary}" BorderBrush="{DynamicResource DARKPrimaryDark}" BorderThickness="2"
+            VerticalAlignment="Top" Margin="5" CornerRadius="8" Padding="8,8,8,5"
+            TextElement.FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI">
+        <Grid x:Name="MainGrid" x:FieldModifier="public">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBox x:FieldModifier="public" x:Name="tbTalk" Style="{DynamicResource StandardTextBoxStyle}"
+                    Height="Auto" pu:TextBoxHelper.Watermark="PS Yumi:\&gt; type a message_" FontSize="26" AcceptsReturn="True"
+                    Background="Transparent" Foreground="{DynamicResource PrimaryText}" CaretBrush="{DynamicResource DARKPrimary}"
+                    FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI"
+                    TextWrapping="WrapWithOverflow" PreviewKeyDown="tbTalk_KeyDown"
+                    InputMethod.IsInputMethodEnabled="True" />
+            <Button x:Name="btnSend" pu:ButtonHelper.CornerRadius="6" Content="Run" BorderThickness="2"
+                    Background="{DynamicResource Secondary}" Foreground="{DynamicResource SecondaryText}" Grid.Column="2" FontWeight="Bold"
+                    FontFamily="Cascadia Mono, Consolas, Microsoft YaHei UI"
+                    BorderBrush="{DynamicResource DARKPrimaryDarker}" FontSize="28" ToolTip="{ll:Str '按 Ctrl+Enter 发送'}"
+                    Click="Send_Click" x:FieldModifier="public" />
+            <Grid x:Name="PublicGrid" Grid.Row="2" Grid.ColumnSpan="3" x:FieldModifier="public" />
+        </Grid>
+    </Border>
+</UserControl>

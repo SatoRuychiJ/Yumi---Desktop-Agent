@@ -1,0 +1,3 @@
+SelectText:|Choose#Hey:|LikeMax#100:|Text#Hey. I'm {name}, your desktop assistant. Set up an API key in System and I'll actually be useful. What do you need?:|Tags#helloworld:|Totags#Ask,Like:|Feeling#1:|Likability#1:|tag#girl:|
+SelectText:|Choose#Who are you?:|LikeMax#100:|Text#{name}. I live on your desktop and get things done. No small talk unless you start it.:|Tags#helloworld:|Totags#Ask,Like:|Feeling#1:|Likability#1:|tag#girl:|
+SelectText:|Choose#Hi:|LikeMax#100:|Text#Hi. Need something, or just saying hello?:|Tags#helloworld:|Totags#Ask,Like:|Feeling#1:|Likability#1:|tag#girl:|
