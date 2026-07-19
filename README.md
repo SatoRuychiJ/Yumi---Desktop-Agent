@@ -16,11 +16,12 @@
 
 <p>
 <a href="https://pump.fun/">
-  <img src="https://img.shields.io/badge/pump.fun-Buy%20%24YUMI-2FD57C?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPGcgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1IDEyIDEyKSI%2BPHJlY3QgeD0iNC41IiB5PSIwLjUiIHdpZHRoPSIxNSIgaGVpZ2h0PSIyMyIgcng9IjcuNSIgZmlsbD0iIzBmOGE0ZCIvPjxyZWN0IHg9IjQuNSIgeT0iMC41IiB3aWR0aD0iMTUiIGhlaWdodD0iMTEuNSIgcng9IjcuNSIgZmlsbD0iIzJmYjY3MyIvPjwvZz48L3N2Zz4%3D" alt="pump.fun" height="38"/>
+  <img src="docs/assets/pumpfun.png" alt="pump.fun" height="30" />
+  <img src="https://img.shields.io/badge/Buy%20%24YUMI%20on-pump.fun-2FD57C?style=for-the-badge" alt="pump.fun" height="28" />
 </a>
 &nbsp;&nbsp;
 <a href="https://x.com/">
-  <img src="https://img.shields.io/badge/Follow%20on-X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" height="38"/>
+  <img src="https://img.shields.io/badge/Follow%20on-X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" height="28" />
 </a>
 </p>
 
