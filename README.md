@@ -1,22 +1,31 @@
 # Yumi — Desktop Agent
 
-An **AI-powered desktop assistant** for Windows. A small animated character (Yumi) lives on
-your desktop and is driven end-to-end by a large language model — you talk to it, it talks
-back, and it controls its own animations, reactions, and behavior.
+**A living, AI-powered companion that sits on your desktop.**
 
-## What's different from the upstream game
+Yumi is a small animated character driven end-to-end by a large language model. You chat with
+her in a terminal-style box and she talks back — but she also reacts, plays her own
+animations, remembers things about you, and speaks up on her own when things go quiet. She
+feels less like a scripted mascot and more like someone actually there.
 
-| Area | Yumi — Desktop Agent |
-|---|---|
-| Focus | An AI assistant, not a pet. Hunger / mood / stamina / thirst stats are removed — it can't "starve" or need care. |
-| Panel | The old status bars are replaced by an **AI usage panel**: current model, requests today, input/output tokens, cumulative tokens. |
-| Brain | Built-in **AIPet** plugin: Anthropic Messages API (native) **and** OpenAI-compatible endpoints, streaming replies, tool-use to drive animations, long-term memory, idle/proactive lines, and event reactions. |
-| Character | Ships with **Yumi**, a program-generated character (10 source poses expanded into animation frames). |
-| Language | **English only.** All single-player game text, Chinese language packs, and anime-flavored dialogue have been removed or rewritten. |
-| Theme | **Dark Purple** terminal-style theme (also ships Blue / Purple / Yellow). |
-| Removed | Feeding, study, sleep, the money/economy system, mod publishing/management, photo gallery, and the crash-feedback uploader. |
-| Privacy | **All telemetry and external network calls to the original author's servers (`*.exlb.net`) have been removed.** No save data or IDs are sent anywhere. |
-| Multiplayer | Cut from the UI; the code is kept as a minimal skeleton to rebuild on a self-hosted backend later. |
+Everything Yumi does is decided by the model in real time. She streams her replies as she
+"thinks," triggers her own animations through tool calls so her expressions match her words,
+keeps a long-term memory across sessions, and reacts to what's happening on screen. Point her
+at any Anthropic or OpenAI-compatible endpoint, drop in your API key, and she comes alive.
+
+Yumi runs entirely on your machine — no account, no cloud service, no telemetry. Your API key
+and conversations never leave your computer.
+
+## Features
+
+- **LLM-driven, not scripted** — every reply, reaction, and animation choice comes from the model at runtime.
+- **Bring your own model** — native Anthropic Messages API and any OpenAI-compatible endpoint; just set the base URL, key, and model name.
+- **Streaming speech** — replies appear token-by-token in a terminal-style chat bubble as she generates them.
+- **Tool-driven animation** — the model calls tools to play animations, so her expressions match what she's saying.
+- **Long-term memory** — she remembers facts about you across restarts.
+- **Proactive & reactive** — idle lines when it's quiet, reactions to events, not just call-and-response.
+- **Usage panel** — a live readout of the current model, requests today, and input / output / total tokens.
+- **Private by design** — everything runs locally; nothing is uploaded anywhere.
+- **Themeable** — ships a Dark Purple terminal theme, plus Blue / Purple / Yellow.
 
 ## Project layout
 
@@ -26,8 +35,8 @@ VPet-Simulator.Core/               Rendering / animation / interaction core
 VPet-Simulator.Windows/            Main application (settings, mod loader, save system)
 VPet-Simulator.Windows.Interface/  Plugin contracts (chat box, plugin base classes)
 VPet.Plugin.AIPet/                 The AI brain: chat, tools, memory, usage stats
-mod/0000_core/                     Core data mod: character (aigirl/Yumi), themes,
-                                   language, text, UI images
+mod/0000_core/                     Core data: character (Yumi), themes, language,
+                                   text, UI images
 tools/gen_pet.py                   Character animation-frame generator
 docs/dev-guide/                    Mod-development notes
 ```
@@ -53,8 +62,8 @@ Then assemble the run directory (output lands in
 
 ## Configuring the AI
 
-Right-click the character → **System → Settings → chat API "AIDeskPet" → open settings**,
-then set the protocol (Anthropic / OpenAI-compatible), API base URL, key, and model.
+Right-click Yumi → **System → Settings → chat API "AIDeskPet" → open settings**, then set the
+protocol (Anthropic / OpenAI-compatible), API base URL, key, and model.
 
 - AI configuration is stored in the `AIPet` line of `Setting.lps`.
 - Chat history and token usage are stored in `mod\AIPet\data\`.
@@ -62,11 +71,9 @@ then set the protocol (Anthropic / OpenAI-compatible), API base URL, key, and mo
 ## Roadmap
 
 - Voice output (EdgeTTS) and voice input (Vosk).
-- A self-hosted backend to bring multiplayer back.
-- Restyling the remaining upstream windows (detailed panel, shop) to match the theme.
+- A self-hosted backend for multiplayer.
+- Restyling the remaining secondary windows (detailed panel, shop) to match the theme.
 
-## License & attribution
+---
 
-AIDeskPet is derived from [VPet-Simulator](https://github.com/LorisYounger/VPet), licensed
-under **Apache-2.0**. That license and its attribution requirements continue to apply to the
-upstream-derived code in this repository.
+<sub>Built on the VPet-Simulator engine (Apache-2.0).</sub>
