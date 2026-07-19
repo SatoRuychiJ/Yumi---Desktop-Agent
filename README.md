@@ -4,7 +4,7 @@
 
 # Yumi — Desktop Agent
 
-A desktop companion for Windows whose behavior is driven by a language model rather than a script.
+An AI desktop companion built around interaction — she keeps you company while you play, watch, and trade, reacts in the moment, and remembers.
 
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMy40IDkuNiAyLjF2OS4zSDB6TTEwLjggMS45IDI0IDB2MTEuNEgxMC44ek0wIDEyLjZoOS42djkuM0wwIDIwLjZ6TTEwLjggMTIuNkgyNFYyNGwtMTMuMi0xLjh6Ii8%2BPC9zdmc%2B)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
@@ -29,19 +29,23 @@ A desktop companion for Windows whose behavior is driven by a language model rat
 
 ## Overview
 
-Yumi is a small animated character that sits on your desktop. The difference from an ordinary
-desktop mascot is where her behavior comes from: there is no dialogue tree and no fixed set of
-canned responses. A language model decides what she says, which animation to play, and what is
-worth remembering, on every turn.
+Most AI on the desktop is built to take an instruction, run a task, and get out of the way. Yumi
+is built for the opposite: to be present. She stays on screen through whatever you are doing — a
+gaming session, a movie, a long night in front of the charts — as someone to talk to, react with,
+and keep you company in the moment. The point is not throughput; it is company.
 
-You type in a terminal-style box and the reply streams back token by token. While the model
-writes, it can call tools — to play an animation, to go to sleep, to save something to long-term
-memory — so what she does on screen stays tied to what she is saying. She also acts without being
-addressed: she reacts to being picked up or patted, and she says things on her own during quiet
-stretches.
+What makes that work is that her behavior comes from a language model rather than a script. There
+is no dialogue tree and no fixed set of canned lines. On every turn the model decides what she
+says, which animation to play, and what is worth remembering. You type in a terminal-style box and
+the reply streams back token by token; while it writes, it calls tools to move her on screen, so
+what she does stays tied to what she is saying.
 
-Everything runs on your machine. You supply an API key for a provider of your choice, and that is
-the only place your text is sent. There is no account, no backend service, and no telemetry.
+She also acts without being addressed. She reacts when you pick her up or pat her head, and during
+quiet stretches she speaks up on her own — closer to someone sharing the desk with you than a
+window you open when you need an answer.
+
+Everything runs on your own machine. You bring an API key for a provider of your choice, and that
+is the only place your text is sent: no account, no backend, no telemetry.
 
 <div align="center">
 <table>
