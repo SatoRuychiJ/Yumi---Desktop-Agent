@@ -1,12 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/yumi-wave.png" width="260" alt="Yumi" />
+<img src="docs/assets/yumi-wave.png" width="200" alt="Yumi" />
 
 # Yumi — Desktop Agent
 
-**Your desktop isn't empty anymore. Yumi lives there.**
-
-*An AI companion that talks, reacts, moves, and remembers — driven entirely by a large language model, running entirely on your machine.*
+A desktop companion for Windows whose behavior is driven by a language model rather than a script.
 
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMy40IDkuNiAyLjF2OS4zSDB6TTEwLjggMS45IDI0IDB2MTEuNEgxMC44ek0wIDEyLjZoOS42djkuM0wwIDIwLjZ6TTEwLjggMTIuNkgyNFYyNGwtMTMuMi0xLjh6Ii8%2BPC9zdmc%2B)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
@@ -29,192 +27,150 @@
 
 ---
 
-## 🌌 What is Yumi?
+## Overview
 
-Most "desktop pets" are puppets — a fixed set of canned animations on a timer. **Yumi is not a puppet.**
+Yumi is a small animated character that sits on your desktop. The difference from an ordinary
+desktop mascot is where her behavior comes from: there is no dialogue tree and no fixed set of
+canned responses. A language model decides what she says, which animation to play, and what is
+worth remembering, on every turn.
 
-Yumi is a small animated character who lives on your desktop and is driven **end-to-end by a
-large language model**. There is no dialogue tree, no scripted personality, no hard-coded
-responses. When you talk to her, the model decides what to say, *how* to feel, which animation
-to play, and whether something is worth remembering — all in real time, all on your machine.
+You type in a terminal-style box and the reply streams back token by token. While the model
+writes, it can call tools — to play an animation, to go to sleep, to save something to long-term
+memory — so what she does on screen stays tied to what she is saying. She also acts without being
+addressed: she reacts to being picked up or patted, and she says things on her own during quiet
+stretches.
 
-She streams her replies token-by-token in a terminal-style chat bubble as she "thinks."
-She triggers her own expressions through tool calls, so her face matches her words. She keeps
-a long-term memory that survives restarts. And when the room goes quiet, she'll speak up on
-her own. Point her at any Claude or OpenAI-compatible endpoint, paste your key, and she wakes up.
-
-> **The pitch in one line:** it's not a mascot with a chatbot bolted on — it's an LLM given a
-> body, a face, a memory, and a place to live.
-
----
-
-## ✨ Meet Yumi
+Everything runs on your machine. You supply an API key for a provider of your choice, and that is
+the only place your text is sent. There is no account, no backend service, and no telemetry.
 
 <div align="center">
-
 <table>
 <tr>
-<td align="center"><img src="docs/assets/yumi-happy.png" width="150"/><br/><b>happy</b></td>
-<td align="center"><img src="docs/assets/yumi-think.png" width="150"/><br/><b>thinking</b></td>
-<td align="center"><img src="docs/assets/yumi-typing.png" width="150"/><br/><b>working</b></td>
-<td align="center"><img src="docs/assets/yumi-shy.png" width="150"/><br/><b>shy</b></td>
-<td align="center"><img src="docs/assets/yumi-stand.png" width="150"/><br/><b>idle</b></td>
+<td align="center"><img src="docs/assets/yumi-happy.png" width="140"/><br/>happy</td>
+<td align="center"><img src="docs/assets/yumi-think.png" width="140"/><br/>thinking</td>
+<td align="center"><img src="docs/assets/yumi-typing.png" width="140"/><br/>working</td>
+<td align="center"><img src="docs/assets/yumi-shy.png" width="140"/><br/>shy</td>
+<td align="center"><img src="docs/assets/yumi-stand.png" width="140"/><br/>idle</td>
 </tr>
 </table>
-
-*Every expression is chosen by the model, not a random timer.*
-
 </div>
 
----
+## How it works
 
-## ⚡ Why Yumi is different
+The application is split in two. The host is the desktop app: the window, the character, the
+animation engine, and the settings. The brain is a plugin (`AIPet`) that owns the conversation,
+the tools, the memory, and the usage counters. The host gives the model a body; the plugin decides
+what to do with it.
 
-| | Ordinary desktop pet | **Yumi** |
-|---|---|---|
-| Personality | Hard-coded lines | **Whatever the model is** — swap the persona, swap the vibe |
-| Animations | Random / on a timer | **Chosen by the model** to fit the moment, via tool calls |
-| Memory | None | **Persistent** long-term memory across sessions |
-| Conversation | Keyword bot | **Real** streaming LLM chat, any Claude/OpenAI model |
-| Initiative | Reactive only | **Proactive** — idle lines, reactions to events |
-| Your data | Often phones home | **Nothing leaves your machine.** No account, no telemetry |
-
----
-
-## 🧠 Features
-
-- **🤖 LLM-driven, not scripted** — every reply, mood, and animation choice comes from the model at runtime. Change the model and Yumi genuinely changes.
-- **🔌 Bring your own model** — native **Anthropic Messages API** *and* any **OpenAI-compatible** endpoint. Set base URL, key, and model name; that's it.
-- **💬 Streaming speech** — replies render token-by-token in a terminal-style bubble, so she "types" as she thinks.
-- **🎭 Tool-driven animation** — the model calls tools to play animations, keeping her expression in sync with what she's saying.
-- **🧩 Long-term memory** — she remembers facts about you and recalls them in later sessions.
-- **👀 Proactive & reactive** — idle lines when it's quiet, reactions to events — not just call-and-response.
-- **📊 Usage panel** — a live readout of the active model, requests today, and input / output / total tokens.
-- **🔒 Private by design** — everything runs locally. No cloud service, no account, no telemetry. Your key and chats stay on disk.
-- **🎨 Themeable** — ships a **Dark Purple** terminal theme, plus **Blue / Purple / Yellow**.
-
----
-
-## 🔧 How it works
+A turn runs like this:
 
 ```
-You type  ─►  AIPet plugin builds the prompt (persona + memory + context)
-          ─►  streams to your LLM (Anthropic / OpenAI-compatible)
-          ─►  model streams back text  ──►  shown token-by-token in the bubble
-          └─  model emits tool calls   ──►  play animation • save memory • react
-                                        └─  loop until the turn is done
+input ──▶ build request      persona + long-term memory + recent history + the new message
+      ──▶ stream to provider  Anthropic Messages API, or any OpenAI-compatible endpoint
+      ──▶ receive text        rendered token by token in the chat bubble
+      └── receive tool calls  play an animation · sleep · save a memory
+          then continue the turn until the model stops
 ```
 
-Yumi is a **host app** (the animated character, window, and rendering) plus a **brain plugin**
-(`AIPet`) that owns the conversation, the tools, the memory, and the usage stats. The brain
-talks to whatever model you point it at; the host gives it a body to express through.
+There are three ways a turn can start:
 
----
+- **You talk to her.** Text from the chat box goes straight into a turn.
+- **Something happens to her.** Picking her up or patting her head raises an event. Events are
+  rate-limited and fire on a probability, so she reacts sometimes rather than every single time.
+- **Nobody has said anything for a while.** A timer checks whether it is time to speak up. Quiet
+  hours (configurable) suppress this so she stays silent at night.
 
-## 🗂️ Architecture
+### Tools
 
-```
-VPet-Simulator.Core/               Rendering / animation / interaction core
-VPet-Simulator.Windows/            Main application (settings, mod loader, saves)
-VPet-Simulator.Windows.Interface/  Plugin contracts (chat box, base classes)
-VPet.Plugin.AIPet/                 The brain: chat, tools, memory, usage stats
-mod/0000_core/                     Core data: character, themes, language, text
-tools/gen_pet.py                   Character animation-frame generator
-```
+When tools are enabled, the model is given three of them and calls them as part of its reply:
 
-**Core data layout (`mod/0000_core`):**
+| Tool | Argument | Effect |
+|------|----------|--------|
+| `play_animation` | `name` | Plays one of the character's animations (the available names are passed to the model, drawn from the loaded animation set). |
+| `sleep` | — | Puts her into the sleeping state. The prompt tells the model to use it only when it makes sense — late at night, or when tired. |
+| `remember` | `content` | Appends a one-line note to long-term memory. |
 
-```mermaid
-flowchart LR
-    root["📦 0000_core"]
-    root --> file["📁 file"]
-    root --> image["📁 image"]
-    root --> lang["📁 lang"]
-    root --> pet["📁 pet"]
-    root --> text["📁 text"]
-    root --> theme["📁 theme"]
+### Memory
 
-    file --> fileN["2025 · 2026 · expression<br/>gif · illustration · Thumbnail<br/><i>packaged core data</i>"]
-    image --> imageN["<i>UI icons &amp; shared images</i>"]
-    lang --> en["en"]
-    en --> enN["Base* · CGPT* · Prog* · Text*<br/><i>English localization</i>"]
-    pet --> aigirl["aigirl · Yumi"]
-    aigirl --> aigirlN["Default · IDEL · Say · Think<br/>Touch_Head · Touch_Body<br/>Sleep · StartUP · Shutdown · Raise<br/><i>animation states</i>"]
-    text --> textN["ClickText · SelectText · LowText<br/><i>preset idle / click lines</i>"]
-    theme --> themeN["terminal = Dark Purple · default = Blue<br/>prupe = Purple · meme = Yellow<br/><i>UI themes</i>"]
-```
+`remember` writes a short, dated line into a list that persists to disk. The list is capped at the
+most recent 100 entries; older ones fall off. On every turn the stored memories are folded back
+into the prompt, so she can bring up something you told her days earlier. Conversation history is
+kept separately and trimmed to a configurable depth.
 
----
+### Providers
 
-## 🚀 Build & run
+Two request formats are supported and selected per configuration:
 
-Requires the **.NET 8 SDK**. The app is **x64-only**.
+- **Anthropic** — the native Messages API, including streaming and tool use.
+- **OpenAI-compatible** — any endpoint that speaks the OpenAI chat-completions format, which
+  covers most self-hosted and third-party gateways. Point `BaseUrl` at it and set the model name.
+
+Both paths stream, so text appears as it is generated instead of arriving all at once.
+
+## Configuration
+
+Right-click the character and open **System → Settings → chat API → settings**. The relevant
+fields:
+
+| Setting | Meaning |
+|---------|---------|
+| `Provider` | `anthropic` or an OpenAI-compatible endpoint. |
+| `BaseUrl` | API base URL. Leave blank to use the provider default. |
+| `ApiKey` | Your key. Stored locally, never sent anywhere but the provider. |
+| `Model` | Model name to call. |
+| `Persona` | The character's personality, injected into the system prompt. Rewrite it and she becomes someone else. |
+| `UserNick` | What she calls you. |
+| `EnableTools` | Whether the model may play animations, sleep, and save memory. |
+| `EnableReactions` | Whether she reacts to being touched or picked up. |
+| `EnableProactive` | Whether she speaks during idle periods. |
+| `ProactiveInterval` | How long a quiet stretch must be before she speaks. |
+| `QuietStart` / `QuietEnd` | Hours during which proactive speech is suppressed. |
+| `MaxHistory` | How many past turns to keep in context. |
+
+Configuration lives in the `AIPet` line of `Setting.lps`. Chat history, saved memories, and token
+usage are stored under `mod\AIPet\data\`.
+
+## Building from source
+
+Requires the **.NET 8 SDK**. The application is **x64 only**.
 
 ```powershell
-# Build the app (x64 required)
 dotnet build VPet-Simulator.Windows\VPet-Simulator.Windows.csproj -c Release -p:Platform=x64
-
-# Build the AI plugin
 dotnet build VPet.Plugin.AIPet\VPet.Plugin.AIPet.csproj -c Release
 ```
 
-Assemble the run directory (output lands in `VPet-Simulator.Windows\bin\x64\Release\net8.0-windows`):
+Assemble the run directory (build output goes to
+`VPet-Simulator.Windows\bin\x64\Release\net8.0-windows`):
 
 1. Copy `VPet-Simulator.Windows\mod` into the output `mod\` folder.
 2. Copy the built plugin DLL into `mod\AIPet\plugin\`.
 3. Run `VPet-Simulator.Windows.exe`.
 
----
+## Project layout
 
-## ⚙️ Configuration
+```
+VPet-Simulator.Core                Rendering, animation, and interaction engine
+VPet-Simulator.Windows             The desktop application (window, settings, mod loader)
+VPet-Simulator.Windows.Interface   Contracts shared between the app and plugins
+VPet.Plugin.AIPet                  The brain: conversation, tools, memory, usage stats
+mod/0000_core                      Character, themes, text, and UI assets
+tools/gen_pet.py                   Generates a character's animation frames from source poses
+```
 
-Right-click Yumi → **System → Settings → chat API "AIDeskPet" → open settings**, then set:
+## Roadmap
 
-- **Protocol** — Anthropic or OpenAI-compatible
-- **API base URL**, **API key**, **model name**
+- Spoken replies (EdgeTTS) and voice input (Vosk).
+- A self-hosted backend for shared, multi-user presence.
+- Screen and context awareness the model can act on.
+- Reworking the remaining secondary windows to match the current theme.
 
-Storage:
-- AI config → the `AIPet` line of `Setting.lps`
-- Chat history & token usage → `mod\AIPet\data\`
+## Notes
 
----
+Yumi is Windows-only; it is a WPF application on .NET 8. A few of the older secondary windows
+(the detailed stats panel, the shop) are inherited from the underlying engine and have not been
+restyled yet. The character ships as a set of pre-generated animation frames; `tools/gen_pet.py`
+is what turns a handful of source poses into the full set.
 
-## 🗺️ Roadmap
+## Credits
 
-**Phase 1 — Alive** ✅
-Core LLM loop, streaming speech, tool-driven animation, long-term memory, usage panel, Yumi character, terminal theme.
-
-**Phase 2 — Voice** 🔜
-- 🔊 Voice output (EdgeTTS) — Yumi speaks out loud
-- 🎙️ Voice input (Vosk) — talk to her hands-free
-
-**Phase 3 — Reach** 🧭
-- 🌐 Self-hosted backend for multiplayer / shared presence
-- 🖥️ Screen & context awareness she can act on
-
-**Phase 4 — Polish** 💅
-- Restyle the remaining secondary windows to match the theme
-- More characters and themes
-
----
-
-## ❓ FAQ
-
-**Does it send my data anywhere?**
-No. Your API key and conversations stay on your machine. The only network call is the one *you*
-configure — straight to your chosen LLM provider.
-
-**Which models work?**
-Any Anthropic Claude model (native Messages API) and any OpenAI-compatible endpoint.
-
-**Can I change her personality?**
-Yes — the persona is part of the prompt. Rewrite it and she becomes someone else.
-
-**Windows only?**
-For now, yes — it's a WPF / .NET 8 desktop app.
-
----
-
-<div align="center">
-<sub>Built on the VPet-Simulator engine (Apache-2.0).</sub>
-</div>
+Built on the VPet-Simulator engine (Apache-2.0).
