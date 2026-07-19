@@ -17,7 +17,7 @@ namespace VPet.Plugin.AIPet
         private ComboBox cbProvider;
         private TextBox tbBaseUrl, tbModel, tbUserNick, tbPersona, tbInterval, tbQuietStart, tbQuietEnd, tbMaxHistory;
         private PasswordBox pbApiKey;
-        private CheckBox chkTools, chkReactions, chkProactive;
+        private CheckBox chkTools, chkReactions, chkProactive, chkVision;
         private TextBlock tbStatus;
 
         public winAISetting(AIPetPlugin plugin)
@@ -89,6 +89,8 @@ namespace VPet.Plugin.AIPet
             root.Children.Add(chkReactions);
             chkProactive = new CheckBox { Content = "Allow proactive messages", Margin = new Thickness(0, 4, 0, 4) };
             root.Children.Add(chkProactive);
+            chkVision = new CheckBox { Content = "Let her see your screen (screen vision — needs a vision-capable model)", Margin = new Thickness(0, 4, 0, 4) };
+            root.Children.Add(chkVision);
 
             var grid = new Grid { Margin = new Thickness(0, 4, 0, 0) };
             grid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -147,6 +149,7 @@ namespace VPet.Plugin.AIPet
             chkTools.IsChecked = Config.EnableTools;
             chkReactions.IsChecked = Config.EnableReactions;
             chkProactive.IsChecked = Config.EnableProactive;
+            chkVision.IsChecked = Config.EnableVision;
             tbInterval.Text = Config.ProactiveInterval.ToString();
             tbQuietStart.Text = Config.QuietStart.ToString();
             tbQuietEnd.Text = Config.QuietEnd.ToString();
@@ -177,6 +180,7 @@ namespace VPet.Plugin.AIPet
             Config.EnableTools = chkTools.IsChecked == true;
             Config.EnableReactions = chkReactions.IsChecked == true;
             Config.EnableProactive = chkProactive.IsChecked == true;
+            Config.EnableVision = chkVision.IsChecked == true;
             if (int.TryParse(tbInterval.Text, out var i) && i >= 1) Config.ProactiveInterval = i;
             if (int.TryParse(tbQuietStart.Text, out var qs) && qs >= 0 && qs <= 23) Config.QuietStart = qs;
             if (int.TryParse(tbQuietEnd.Text, out var qe) && qe >= 0 && qe <= 23) Config.QuietEnd = qe;

@@ -41,5 +41,8 @@ namespace VPet.Plugin.AIPet.LLM
         /// <summary>Usage callback (input tokens, output tokens), invoked once per API round</summary>
         public Action<int, int> OnUsage;
         public int MaxTokens = 2048;
+        /// <summary>Optional base64 image attached to the current (last) user message — used for screen vision</summary>
+        public string ScreenImageBase64;
+        public string ScreenImageMediaType = "image/jpeg";
     }
 }

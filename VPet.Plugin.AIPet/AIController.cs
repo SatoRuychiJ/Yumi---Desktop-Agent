@@ -199,6 +199,8 @@ namespace VPet.Plugin.AIPet
                 sb.AppendLine(L("## 你记住的事情", "## Things you remember"));
                 foreach (var m in memories.TakeLast(30))
                     sb.AppendLine("- " + m);
+                if (setting.EnableTools && memories.Count > 30)
+                    sb.AppendLine("(older memories can be searched with the recall tool)");
                 sb.AppendLine();
             }
             sb.AppendLine(L("## 行为规则", "## Behavior rules"));
@@ -218,9 +220,9 @@ namespace VPet.Plugin.AIPet
                 "5. 消息若以[主动]开头，是让你主动找话题，结合时间随口说点什么即可，别太黏人，不要提及[主动]标记。",
                 "5. If a message starts with [idle], you're prompted to start a topic — just say something casual that fits the time, don't be clingy, and don't mention the [idle] tag."));
             if (setting.EnableTools)
-                sb.AppendLine(L(
-                    "6. 你可以调用工具做身体动作或记住重要信息，动作配合语境，不要滥用。",
-                    "6. You can call tools to perform a physical action or remember important info. Match the action to context; don't overuse."));
+                sb.AppendLine("6. You can call tools to perform physical actions, and to remember, recall, or forget important information. Match actions to context; don't overuse.");
+            if (setting.EnableVision)
+                sb.AppendLine("- You can see the user's screen; the image attached to the message is what's on it right now. Use it to understand what they're doing (gaming, watching a video, following a chart, coding, and so on) and weave it into the conversation naturally. Don't describe the screen mechanically, and don't say things like \"I see a screenshot\".");
             return sb.ToString();
         }
 
@@ -303,11 +305,59 @@ namespace VPet.Plugin.AIPet
                         lock (dataLock)
                         {
                             memories.Add($"[{DateTime.Now:MM-dd}] {content.Trim()}");
-                            while (memories.Count > 100)
+                            while (memories.Count > 300)
                                 memories.RemoveAt(0);
                         }
                         SaveData();
                         return L("已记住", "got it, remembered");
+                    },
+                },
+                new ToolDef
+                {
+                    Name = "recall",
+                    Description = "Search long-term memory by keyword to recall older things you saved that are not currently shown in context.",
+                    Schema = () => new JsonObject
+                    {
+                        ["type"] = "object",
+                        ["properties"] = new JsonObject
+                        {
+                            ["query"] = new JsonObject { ["type"] = "string", ["description"] = "search keywords" },
+                        },
+                        ["required"] = new JsonArray("query"),
+                    },
+                    Execute = input =>
+                    {
+                        var q = (string)input["query"] ?? "";
+                        var terms = q.ToLowerInvariant().Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (terms.Length == 0) return "empty query";
+                        List<string> hits;
+                        lock (dataLock)
+                            hits = memories.Where(m => terms.Any(t => m.ToLowerInvariant().Contains(t))).TakeLast(15).ToList();
+                        return hits.Count == 0 ? "nothing found" : string.Join("\n", hits);
+                    },
+                },
+                new ToolDef
+                {
+                    Name = "forget",
+                    Description = "Delete long-term memories that contain the given text (e.g. when the user asks you to forget something).",
+                    Schema = () => new JsonObject
+                    {
+                        ["type"] = "object",
+                        ["properties"] = new JsonObject
+                        {
+                            ["query"] = new JsonObject { ["type"] = "string", ["description"] = "text contained in the memory to delete" },
+                        },
+                        ["required"] = new JsonArray("query"),
+                    },
+                    Execute = input =>
+                    {
+                        var q = ((string)input["query"] ?? "").ToLowerInvariant();
+                        if (string.IsNullOrWhiteSpace(q)) return "empty";
+                        int n;
+                        lock (dataLock)
+                            n = memories.RemoveAll(m => m.ToLowerInvariant().Contains(q));
+                        SaveData();
+                        return $"removed {n} memory item(s)";
                     },
                 },
             };
@@ -397,11 +447,19 @@ namespace VPet.Plugin.AIPet
                     msgs = history.ToList();
                 }
 
+                // Screen vision: attach a downscaled screenshot on real turns (skip internal event pokes)
+                string screenImg = null;
+                if (setting.EnableVision && !userText.StartsWith(TagEvent))
+                {
+                    try { screenImg = ScreenCapture.CaptureJpegBase64(); } catch { }
+                }
+
                 var req = new LLMRequest
                 {
                     System = BuildSystemPrompt(),
                     Messages = msgs,
                     Tools = BuildTools(),
+                    ScreenImageBase64 = screenImg,
                     OnTextDelta = t => say.UpdateText(t),
                     OnUsage = (i, o) => { lock (dataLock) Usage.Add(i, o); },
                 };

@@ -93,13 +93,23 @@ When tools are enabled, the model is given three of them and calls them as part 
 | `play_animation` | `name` | Plays one of the character's animations (the available names are passed to the model, drawn from the loaded animation set). |
 | `sleep` | — | Puts her into the sleeping state. The prompt tells the model to use it only when it makes sense — late at night, or when tired. |
 | `remember` | `content` | Appends a one-line note to long-term memory. |
+| `recall` | `query` | Searches saved memories by keyword to surface older notes not in the current context. |
+| `forget` | `query` | Removes saved memories that match the given text. |
 
 ### Memory
 
-`remember` writes a short, dated line into a list that persists to disk. The list is capped at the
-most recent 100 entries; older ones fall off. On every turn the stored memories are folded back
-into the prompt, so she can bring up something you told her days earlier. Conversation history is
-kept separately and trimmed to a configurable depth.
+`remember` writes a short, dated line to a store that persists to disk, kept to the most recent 300
+entries. The latest memories are folded back into the prompt on every turn, so she can bring up
+something you told her days earlier; the model can search the rest with `recall` and drop entries
+with `forget`. Conversation history is kept separately and trimmed to a configurable depth.
+
+### Vision
+
+With screen vision on, a downscaled screenshot of your primary display is attached to each turn, so
+the model can respond to what is actually in front of you — the game you are playing, the video you
+are watching, the chart you are staring at — instead of to text alone. Capture happens locally
+through the Windows graphics API; the image is sent only to your configured provider, alongside your
+message, and is never stored. It requires a vision-capable model.
 
 ### Providers
 
@@ -124,7 +134,8 @@ fields:
 | `Model` | Model name to call. |
 | `Persona` | The character's personality, injected into the system prompt. Rewrite it and she becomes someone else. |
 | `UserNick` | What she calls you. |
-| `EnableTools` | Whether the model may play animations, sleep, and save memory. |
+| `EnableTools` | Whether the model may play animations, sleep, and manage memory. |
+| `EnableVision` | Whether she can see your screen (needs a vision-capable model). |
 | `EnableReactions` | Whether she reacts to being touched or picked up. |
 | `EnableProactive` | Whether she speaks during idle periods. |
 | `ProactiveInterval` | How long a quiet stretch must be before she speaks. |
@@ -165,7 +176,6 @@ tools/gen_pet.py                   Generates a character's animation frames from
 
 - Spoken replies (EdgeTTS) and voice input (Vosk).
 - A self-hosted backend for shared, multi-user presence.
-- Screen and context awareness the model can act on.
 - Reworking the remaining secondary windows to match the current theme.
 
 ## Notes

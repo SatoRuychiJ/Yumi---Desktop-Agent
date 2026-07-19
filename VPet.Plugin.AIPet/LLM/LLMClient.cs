@@ -74,6 +74,48 @@ namespace VPet.Plugin.AIPet.LLM
             }
             return resp;
         }
+
+        /// <summary>
+        /// If a screen image is present, attach it to the last user message, formatted for the given
+        /// provider (Anthropic image block, or OpenAI image_url). No-op when there is no image.
+        /// </summary>
+        protected static void AttachScreenImage(List<object> messages, LLMRequest req, bool anthropic)
+        {
+            if (string.IsNullOrEmpty(req.ScreenImageBase64) || messages.Count == 0)
+                return;
+            if (messages[messages.Count - 1] is not Dictionary<string, object> last)
+                return;
+            if (!last.TryGetValue("role", out var role) || (string)role != "user")
+                return;
+            if (!last.TryGetValue("content", out var content) || content is not string text)
+                return;
+
+            object imageBlock = anthropic
+                ? new Dictionary<string, object>
+                {
+                    ["type"] = "image",
+                    ["source"] = new Dictionary<string, object>
+                    {
+                        ["type"] = "base64",
+                        ["media_type"] = req.ScreenImageMediaType,
+                        ["data"] = req.ScreenImageBase64,
+                    },
+                }
+                : new Dictionary<string, object>
+                {
+                    ["type"] = "image_url",
+                    ["image_url"] = new Dictionary<string, object>
+                    {
+                        ["url"] = $"data:{req.ScreenImageMediaType};base64,{req.ScreenImageBase64}",
+                    },
+                };
+
+            last["content"] = new List<object>
+            {
+                new Dictionary<string, object> { ["type"] = "text", ["text"] = text },
+                imageBlock,
+            };
+        }
     }
 
     /// <summary>
@@ -91,6 +133,7 @@ namespace VPet.Plugin.AIPet.LLM
                 ["role"] = m.Role,
                 ["content"] = m.Text,
             }).ToList();
+            AttachScreenImage(messages, req, anthropic: true);
 
             var fullText = new StringBuilder();
 
@@ -246,6 +289,7 @@ namespace VPet.Plugin.AIPet.LLM
                 ["role"] = m.Role,
                 ["content"] = m.Text,
             }));
+            AttachScreenImage(messages, req, anthropic: false);
 
             var fullText = new StringBuilder();
 

@@ -43,8 +43,14 @@ namespace VPet.Plugin.AIPet
         /// <summary>How to address the user</summary>
         public string UserNick
         {
-            get => Line.GetString("usernick", "你");
+            get => Line.GetString("usernick", "you");
             set => Line.SetString("usernick", value);
+        }
+        /// <summary>Whether the AI can see the user's screen (screen vision; needs a vision-capable model)</summary>
+        public bool EnableVision
+        {
+            get => Line.GetString("enablevision", "0") == "1";
+            set => Line.SetString("enablevision", value ? "1" : "0");
         }
         /// <summary>Whether the AI is allowed to control the body (play animations, etc.)</summary>
         public bool EnableTools

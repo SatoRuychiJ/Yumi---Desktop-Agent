@@ -9,7 +9,7 @@
 		<RootNamespace>VPet.Plugin.AIPet</RootNamespace>
 		<Version>1.0.0</Version>
 		<Authors>AIDeskPet</Authors>
-		<Description>AI 助手插件</Description>
+		<Description>AI assistant plugin</Description>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 
