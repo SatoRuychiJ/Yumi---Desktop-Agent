@@ -59,6 +59,28 @@ is the only place your text is sent: no account, no backend, no telemetry.
 </table>
 </div>
 
+## One image to a companion
+
+Yumi is not hand-animated. Her entire look is generated from a small set of reference poses — about
+ten images: idle, happy, thinking, waving, sleeping, and so on. Those poses go into
+[`tools/gen_pet.py`](tools/gen_pet.py), which expands them into the full animation set — breathing,
+blinking, mouth movement — that brings a character to life on the desktop. Attach the AI brain and
+you have a companion that talks, reacts, and remembers.
+
+Which means a companion is really just **ten images and a model**. That is the whole idea: an AI
+character should be *minted*, not commissioned — and anyone should be able to make their own from a
+single picture:
+
+```
+one reference image
+  →  an image model paints 10 poses from a fixed set of prompts
+  →  gen_pet.py expands them into a full animation set
+  →  the AI brain is attached
+  →  a living desktop companion
+```
+
+One image in, one agent out.
+
 ## How it works
 
 The application is split in two. The host is the desktop app: the window, the character, the
