@@ -13,7 +13,18 @@
 ![Claude](https://img.shields.io/badge/Anthropic-Claude-D97757)
 ![OpenAI](https://img.shields.io/badge/OpenAI-compatible-412991?logo=openai&logoColor=white)
 ![Local First](https://img.shields.io/badge/local--first-no%20telemetry-2ea44f)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
+
+<p>
+<a href="https://pump.fun/">
+  <img src="https://img.shields.io/badge/pump.fun-Buy%20%24YUMI-2FD57C?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNiIgZmlsbD0iI2ZmZiIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00NSAxMiAxMikiPjxyZWN0IHg9IjciIHk9IjMiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiM1NGQ4OGEiLz48cmVjdCB4PSI3IiB5PSIzIiB3aWR0aD0iMTAiIGhlaWdodD0iOSIgcng9IjUiIGZpbGw9IiM4YmVkYjciLz48L2c+PC9zdmc+&logoColor=white" alt="pump.fun" height="36"/>
+</a>
+&nbsp;&nbsp;
+<a href="https://x.com/">
+  <img src="https://img.shields.io/badge/Follow%20on-X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" height="36"/>
+</a>
+</p>
+
+<sub>⚠️ social links are placeholders — swap in the real pump.fun / X URLs</sub>
 
 </div>
 
