@@ -4,11 +4,6 @@ An **AI-powered desktop assistant** for Windows. A small animated character (Yum
 your desktop and is driven end-to-end by a large language model — you talk to it, it talks
 back, and it controls its own animations, reactions, and behavior.
 
-Yumi is a standalone fork of the open-source
-[VPet-Simulator](https://github.com/LorisYounger/VPet) (Apache-2.0). It **does not depend on
-Steam** and is built from source. The original project is a virtual pet game; this fork
-strips the game systems away and rebuilds it as an English, AI-first assistant.
-
 ## What's different from the upstream game
 
 | Area | Yumi — Desktop Agent |
