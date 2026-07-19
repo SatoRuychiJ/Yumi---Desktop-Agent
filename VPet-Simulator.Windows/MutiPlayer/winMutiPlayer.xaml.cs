@@ -235,7 +235,6 @@ public partial class winMutiPlayer : WindowX, IMPWindows
         //    isOPEN = false;
         //    lb.Leave();
         //    lb = default;
-        //    MessageBoxX.Show("{0}生病了,已自动退出访客表".Translate(obj.Core.Save.Name));
         //    Close();
         //    return;
         //}

@@ -1,4 +1,4 @@
-using LinePutScript;
+﻿using LinePutScript;
 using LinePutScript.Localization.WPF;
 using NAudio.SoundFont;
 using Panuon.WPF.UI;
@@ -219,7 +219,6 @@ namespace VPet_Simulator.Windows
             {
                 //case "API":
                 //    RBCGPTUseAPI.IsChecked = true;
-                //    BtnCGPTReSet.Content = "打开 ChatGPT API 设置".Translate();
                 //    break;
                 case "DIY":
                     RBCGPTDIY.IsChecked = true;
@@ -905,8 +904,6 @@ namespace VPet_Simulator.Windows
             //else
             //{
             //    mf.Set["SingleTips"][(gint)"open"] = 1;
-            //    MessageBoxX.Show("游戏开机启动的实现方式是创建快捷方式,不是注册表,更健康,所以游戏卸了也不知道\n如果游戏打不开,可以去这里手动删除游戏开机启动快捷方式:\n%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\".Translate()
-            //        , "关于卸载不掉的问题是因为开启了开机启动".Translate(), MessageBoxIcon.Info);
             //}
 
             mw.Set.StartUPBoot = StartUpBox.IsChecked == true;
@@ -1049,7 +1046,6 @@ namespace VPet_Simulator.Windows
                     //    if (((TalkBox)mf.TalkBox).ChatGPT_Reset())
                     //    {
                     //        ((TalkBox)mf.TalkBox).btn_startup.Visibility = Visibility.Visible;
-                    //        MessageBoxX.Show("桌宠重置成功".Translate());
                     //    }
                     //});
                     //((TalkSelect)mf.TalkBox).RelsTime
@@ -1086,7 +1082,6 @@ namespace VPet_Simulator.Windows
             {
                 //case "API":
                 //    BtnCGPTReSet.IsEnabled = true;
-                //    BtnCGPTReSet.Content = "打开 ChatGPT API 设置".Translate();
                 //    if (mf.TalkBox != null)
                 //        mf.Main.ToolBar.MainGrid.Children.Remove(mf.TalkBox);
                 //    mf.TalkBox = new TalkBoxAPI(mf);
@@ -1172,7 +1167,6 @@ namespace VPet_Simulator.Windows
         {
             if (!AllowChange)
                 return;
-            //MessageBoxX.Show("由于没做完,暂不支持数据计算\n敬请期待后续更新", "没做完!", MessageBoxButton.OK, MessageBoxIcon.Warning);
             if (CalFunctionBox.IsChecked == true)
             {
                 mw.Set.EnableFunction = true;

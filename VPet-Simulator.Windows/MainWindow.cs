@@ -1,4 +1,4 @@
-using LinePutScript;
+﻿using LinePutScript;
 using LinePutScript.Converter;
 using LinePutScript.Dictionary;
 using LinePutScript.Localization.WPF;
@@ -1641,20 +1641,9 @@ namespace VPet_Simulator.Windows
             ClickTexts.Add(new ClickText("You can change the display scale in the settings."));
             ClickTexts.Add(new ClickText("Don't want me wandering around? Set smart movement or turn movement off in the settings."));
             ClickTexts.Add(new ClickText("Thanks for spending time with me today."));
-            //ClickTexts.Add(new ClickText("有建议/游玩反馈? 来 菜单-系统-反馈中心 反馈吧"));
             ClickTexts.Add(new ClickText("Press and hold my head to drag me anywhere you like."));
 
             ////Temporary chat content
-            //ClickTexts.Add(new ClickText("主人，sbema秋季促销开始了哦，还有游戏大奖赛，快去给{name}去投一票吧。"));
-            //ClickTexts.Add(new ClickText("主人主人，{name}参加了sbeam大奖赛哦，给人家投一票喵"));
-            //ClickTexts.Add(new ClickText("那个。。主人。。\n人家参加了sbeam大奖赛哦。能不能。。给{name}投一票呢～"));
-            //ClickTexts.Add(new ClickText("电脑里有一款《虚拟桌宠模拟器》的游戏正在参加2023的sbeam大奖赛，快来给桌宠投一票吧"));
-            //"如果你觉得目前功能太少,那就多挂会机. 宠物会自己动的".Translate(),
-            //"你知道吗? 你可以在设置里面修改游戏的缩放比例".Translate(),
-            //"你现在乱点说话是说话系统的一部分,不过还没做,在做了在做了ing".Translate(),
-            //"你添加了虚拟主播模拟器和虚拟桌宠模拟器到愿望单了吗? 快去加吧".Translate(),
-            //"这游戏开发这么慢,都怪画师太咕了".Translate(),
-            //"欢迎加入 虚拟主播模拟器群 430081239".Translate()
 
             await Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "尝试加载Steam内容".Translate()));
             //A small feature for streamers / video creators playing this game
@@ -1696,7 +1685,6 @@ namespace VPet_Simulator.Windows
             MusicTimer.Elapsed += MusicTimer_Elapsed;
 
 
-            //await Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "尝试加载游戏动画".Translate()));
             await Dispatcher.InvokeAsync(new Action(() => LoadingText.Content = "尝试加载动画和生成缓存\n该步骤可能会耗时比较长\n请耐心等待".Translate()));
             Core.Graph = petloader.Graph(Set.Resolution, Dispatcher);
 
@@ -1947,12 +1935,10 @@ namespace VPet_Simulator.Windows
 
                   //this.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Res/TopLogo2019.PNG")));
 
-                  //Main.ToolBar.AddMenuButton(VPet_Simulator.Core.ToolBar.MenuType.Feed, "喂食测试", () =>
                   //    {
                   //        Main.ToolBar.Visibility = Visibility.Collapsed;
                   //        IRunImage eat = (IRunImage)Core.Graph.FindGraph(GraphType.Eat, GameSave.ModeType.Nomal);
                   //        var b = Main.FindDisplayBorder(eat);
-                  //        eat.Run(b, new BitmapImage(new Uri("pack://application:,,,/Res/汉堡.png")), Main.DisplayToNomal);
                   //    }
                   //);
                   Main.ToolBar.AddMenuButton(ToolBar.MenuType.Feed, "吃饭".Translate(), () =>
@@ -2112,7 +2098,6 @@ namespace VPet_Simulator.Windows
                           NoticeBox.Show("欢迎使用 AIDeskPet!\n如果遇到助手爬不见了,可以在我这里设置居中或退出".Translate(),
                              "你好".Translate() + (IsSteamUser ? SteamClient.Name : Environment.UserName), Panuon.WPF.UI.MessageBoxIcon.Info, true, 5000);
                           //Thread.Sleep(2000);
-                          //Main.SayRnd("欢迎使用虚拟桌宠模拟器\n这是个中期的测试版,若有bug请多多包涵\n欢迎加群虚拟主播模拟器430081239或在菜单栏-管理-反馈中提交bug或建议".Translate());
                       });
                   }
                   if (Set["v"][(gint)"rank"] != DateTime.Now.Year && GameSavesData.Statistics[(gint)"stat_total_time"] > 3600)
@@ -2269,13 +2254,11 @@ namespace VPet_Simulator.Windows
                   //    Task.Run(() =>
                   //    {
                   //        Thread.Sleep(5000);
-                  //        Main.SayRnd("25年都跨过去了, 还有什么是跨不过的呢? {0}这一年辛苦了! 新年请多多指教!".Translate(GameSavesData.GameSave.HostName));
                   //    });
                   //}
                   //Fix the issue where the 2026 New Year bug invalidated HashCheck
                   //In short, restore HashCheck once for all users who have the "2026 New Year" photo, as a bonus, since anyone with this photo was basically in the bug window
                   //Anyone who sees this code, please don't share it, to avoid abuse
-                  //var photo25 = Photos.Find(x => x.Name == "2026跨年");
                   //if (photo25?.IsUnlock == true && GameSavesData.HashCheck == false && GameSavesData.Data["debug"][(gbol)"fix26"] == false)
                   //{
                   //    GameSave_v2 ogs = GameSavesData;
@@ -2355,9 +2338,6 @@ namespace VPet_Simulator.Windows
             //{
             //    await Dispatcher.InvokeAsync(new Action(() =>
             //    {
-            //        MessageBoxX.Show("检测到您开启了开机启动, 以下是开机启动相关提示信息: (仅显示一次)".Translate() + "\n------\n" +
-            //             "游戏开机启动的实现方式是创建快捷方式,不是注册表,更健康,所以游戏卸了也不知道\n如果游戏打不开,可以去这里手动删除游戏开机启动快捷方式:\n%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\".Translate()
-            //          , "关于卸载不掉的问题是因为开启了开机启动".Translate(), Panuon.WPF.UI.MessageBoxIcon.Info);
             //        Set["SingleTips"][(gint)"open"] = 1;
             //    }));
             //}
