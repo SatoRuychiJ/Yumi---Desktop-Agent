@@ -365,3 +365,8 @@ cache/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# character generation artifacts
+tools/test_poses/
+tools/poses/
+tools/pet_out/

@@ -1,28 +1,41 @@
 # -*- coding: utf-8 -*-
-"""十姿势版: 从10张AI立绘生成完整桌宠动画帧集"""
+"""Ten-pose build: expand 10 character poses into a full desktop-companion animation set.
+
+Usage:
+    python gen_pet.py --src poses --out path/to/mod/pet/aigirl
+
+The ten source PNGs are named by pose key (as produced by gen_character.py):
+    stand, blink, mouth, think, sleep, raised, happy, shy, typing, wave
+"""
+import argparse
 import math
 import os
 import shutil
 from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 
-SRC_DIR = r"C:\Users\Administrator\Desktop\桌宠\角色"
-OUT = r"C:\Users\Administrator\Desktop\桌宠\AIDeskPet\VPet-Simulator.Windows\mod\0000_core\pet\aigirl"
+_ap = argparse.ArgumentParser(description="Expand 10 poses into a companion animation set.")
+_ap.add_argument("--src", default="poses", help="folder holding the 10 pose PNGs")
+_ap.add_argument("--out", default="pet_out", help="output folder for the animation set")
+_args = _ap.parse_args()
+
+SRC_DIR = _args.src
+OUT = _args.out
 CANVAS = 500
 BOTTOM_Y = 480
 MODES = ["Nomal", "Happy", "PoorCondition", "Ill"]
 
 POSES = {
-    "stand":  ("角色站立.png", 400),
-    "blink":  ("角色闭眼.png", 400),
-    "mouth":  ("角色张嘴微笑.png", 400),
-    "think":  ("角色托腮思考.png", 400),
-    "sleep":  ("角色横躺睡觉.png", None),   # 横构图: 按宽度适配
-    "raised": ("角色拎着悬空.png", 400),
-    "happy":  ("角色眯眼开心笑.png", 400),
-    "shy":    ("角色害羞.png", 400),
-    "typing": ("角色电脑打字.png", 380),
-    "wave":   ("角色挥手.png", 400),
+    "stand":  ("stand.png", 400),
+    "blink":  ("blink.png", 400),
+    "mouth":  ("mouth.png", 400),
+    "think":  ("think.png", 400),
+    "sleep":  ("sleep.png", None),   # horizontal composition: fit by width
+    "raised": ("raised.png", 400),
+    "happy":  ("happy.png", 400),
+    "shy":    ("shy.png", 400),
+    "typing": ("typing.png", 380),
+    "wave":   ("wave.png", 400),
 }
 
 def remove_bg(img, tol=18):
